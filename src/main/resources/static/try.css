@@ -1,0 +1,9 @@
+/* styles.css */
+body {
+    text-align: center;
+    padding: 20px;
+}
+
+#audioPlayer {
+    margin-top: 20px;
+}
