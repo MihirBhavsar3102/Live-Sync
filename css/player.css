@@ -1,0 +1,541 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --brand-color: #FF955C;
+    --primary-color: black;
+    --secondary-color: white;
+    --gray-color: #afafaf;
+}
+
+body {
+    margin: 0;
+    padding: 0 10px 0 10px;
+    font-family: 'Poppins', sans-serif;
+    color: var(--secondary-color);
+    font-weight: lighter;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+    background-color: black;
+    z-index: -1;
+}
+
+.nav {
+    width: 99%;
+    height: 8vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    /* padding: 10px; */
+}
+
+.nav h1 {
+    margin-top:15px;
+    font-size: 35px;
+    /* font-weight: 400; */
+    color: white;
+}
+
+.end-btn {
+    font-weight:500;
+    background-color: #ad0300;
+    color: rgb(255, 255, 255);
+    border: none;
+    font-size: 20px;
+    padding: 10px 30px 10px 30px;
+    margin-top:15px;
+    border-radius: 25px;
+    transition: all 0.25s ease;
+}
+
+.end-btn:hover{
+    background-color: #7c0200;
+    transition: all 0.25s ease;
+    border:2px solid white;
+}
+.player {
+    width: 100%;
+    height: 92vh;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    width: 99%;
+    height: 95%;
+    /* Glassmorphism */
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.search-box {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    width: 1%;
+    height: 95%;
+    padding: 0px 15px 0px 15px;
+    font-size: 25px;
+    /*Glassmorphism*/
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: width 0.25s ease;
+}
+
+.search-header{
+    position: absolute;
+    top:0;
+    right:0;
+    transform:translate(-30%,-10%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:25px;
+}
+
+.search-screen{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+}
+.search-fld{
+    width:100%;
+    border-radius: 15px;
+    font-size: 20px;
+    padding:5px 0 5px 12px;
+}
+
+.search-result , .user-result{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:5px;
+    padding: 2px 3px 2px 3px;
+    width:95%;
+    background-color: transparent;
+    /* background: rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3); */
+}
+
+.result{
+    font-size:22px;
+    width:100%;
+    height:50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap:15px;
+    padding:5px 5px 5px 15px;
+    border-radius: 10px;
+    background: rgb(0, 0, 0);
+}
+
+.result div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:40px;
+    aspect-ratio:1/1;
+    border-radius: 50%;
+    color:black;
+    background: rgb(255, 255, 255);
+}
+.invisible{
+    display:none;
+}
+
+.active{
+    color:black;
+}
+/* .search-box::after {
+    content: "<";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 25px;
+    height: 40px;
+    background-color: black;
+    transform: translate(-100%, -50%);
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px 0px 0px 10px;
+    color:var(--brand-color);
+} */
+
+.details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.credits {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+.song_details {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+}
+
+.track-art {
+    margin: 25px;
+    height: 250px;
+    width: 250px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20%;
+    -moz-box-shadow: 0px 8px 6px black;
+    -webkit-box-shadow: 0px 8px 6px black;
+    box-shadow: 0px 8px 6px black;
+    -moz-border-radius: 190px;
+    -webkit-border-radius: 190px;
+    border-radius: 10%;
+    position: relative;
+}
+
+.track-art::after {
+    content: "H";
+    font-size:25px;
+    font-weight: 600;
+    color:black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+    height: 15%;
+    border-radius: 50%;
+    background-color:var(--brand-color);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(50%, 50%);
+}
+
+.now-playing {
+    font-size: 1rem;
+    margin-left: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.track-name {
+    font-weight: bold;
+    font-size: 2.5rem;
+}
+
+.track-artist {
+    margin-top: 5px;
+    font-size: 1.5rem;
+}
+
+.buttons {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-left: 2.75rem;
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+}
+
+.left {
+    justify-content: flex-start;
+}
+
+.center {
+    justify-content: center;
+}
+
+.right {
+    justify-content: flex-end;
+}
+
+.active {
+    color: var(--primary-color);
+}
+
+.repeat-track,
+.random-track,
+.playpause-track,
+.prev-track,
+.next-track {
+    padding: 20px;
+    opacity: 0.8;
+    transition: opacity .2s;
+}
+
+.repeat-track:hover,
+.random-track:hover,
+.playpause-track:hover,
+.prev-track:hover,
+.next-track:hover {
+    opacity: 1.0;
+}
+
+.slider_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3rem;
+}
+
+.progress_container {
+    background: var(--gray-color);
+    border-radius: 5px;
+    cursor: pointer;
+    height: 5px;
+    width: 90%;
+}
+
+.progress {
+    position: relative;
+    background-color: var(--brand-color);
+    border-radius: 5px;
+    height: 100%;
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.progress::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 15px;
+    height: 15px;
+    opacity: 0;
+    background-color: var(--secondary-color);
+    /* border: 3px solid var(--primary-color); */
+    border-radius: 50%;
+    transition: opacity 0.2s ease;
+}
+
+.progress_container:hover .progress::after {
+    opacity: 1;
+    transition: opacity 0.1s ease;
+}
+
+.volume_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+}
+
+.volume_slider_container {
+    background: var(--gray-color);
+    border-radius: 3px;
+    cursor: pointer;
+    height: 5px;
+    width: 100%;
+}
+
+.volume_slider {
+    position: relative;
+    background-color: var(--secondary-color);
+    border-radius: 3px;
+    height: 100%;
+    width: 100%;
+    transition: width 0.05s linear;
+}
+
+.volume_slider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 13px;
+    height: 13px;
+    opacity: 0;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 50%;
+    transition: opacity 0.2s ease;
+}
+
+.volume_slider_container:hover .volume_slider::after {
+    opacity: 1;
+    transition: opacity 0.1s ease;
+}
+
+.current-time,
+.total-duration {
+    padding: 10px;
+}
+
+i.fa-volume-down,
+i.fa-volume-mute {
+    padding: 10px;
+}
+
+
+i,
+i.fa-play-circle,
+i.fa-pause-circle,
+i.fa-step-forward,
+i.fa-step-backward,
+p {
+    cursor: pointer;
+}
+
+.randomActive {
+    color: var(--brand-color);
+}
+
+.rotate {
+    animation: rotation 8s infinite linear;
+}
+
+.loader {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader .stroke {
+    background: var(--secondary-color);
+    height: 150%;
+    width: 10px;
+    border-radius: 50px;
+    margin: 0 5px;
+    animation: animate 1.4s linear infinite;
+}
+
+@keyframes animate {
+    50% {
+        height: 20%;
+        background: var(--brand-color);
+    }
+
+    100% {
+        background: var(--brand-color);
+        height: 100%;
+    }
+}
+
+.stroke:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.stroke:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.stroke:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.stroke:nth-child(4) {
+    animation-delay: 0.9s;
+}
+
+.stroke:nth-child(5) {
+    animation-delay: 0.6s;
+}
+
+.stroke:nth-child(6) {
+    animation-delay: 0.3s;
+}
+
+.stroke:nth-child(7) {
+    animation-delay: 0s;
+}
+
+
+/* .second-half{
+    opacity:0;
+    transition:opacity 0.5s ease-in-out;
+}
+
+.second-half:hover{
+    opacity:1;
+    transition:opacity 0.5s ease-in-out;
+} */
+
+/* Toggle Button */
+/* #toggle {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 60px;
+    height: 30px;
+    border-radius: 30px;
+    background-color: var(--gray-color);
+    transition: all 0.5s ease-in;
+    cursor: pointer;
+} */
+
+/* Making a dot switch inside the Toggle Button */
+/* #toggle::before {
+    content: "";
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    position: absolute;
+    top: 50%;
+    left: 3px;
+    transform: translateY(-50%);
+    transition: all 0.25s ease-out;
+} */
+
+/* Changing toggle button background when checked */
+/* #toggle:checked {
+    background: var(--brand-color);
+} */
+
+/* Changing dot switch color and moving to the right side when checked */
+/* #toggle:checked::before {
+    background: #333;
+    left: 32px;
+} */

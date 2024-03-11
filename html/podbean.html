@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podbean Song Player</title>
+</head>
+<body>
+    <h1>Podbean Song Player</h1>
+    <button id="playButton">Play Song</button>
+
+    <audio id="audioPlayer" controls style="display:none;"></audio>
+
+    <script>
+        const playButton = document.getElementById('playButton');
+        const audioPlayer = document.getElementById('audioPlayer');
+
+        playButton.addEventListener('click', () => {
+            // Replace "PODBEAN_SONG_URL" with the actual Podbean song URL
+            const podbeanSongUrl = "https://bhdkraval6.podbean.com/e/song1/";
+
+            audioPlayer.src = podbeanSongUrl;
+            audioPlayer.play();
+        });
+    </script>
+</body>
+</html>

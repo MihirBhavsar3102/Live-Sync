@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Website</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.8/lottie.min.js"></script>
+    <link rel="stylesheet" href="../css/collab.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>LiveSync</h1>
+        <nav>
+            <a href="index_music.html" class="active">Home</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="info">
+            <h1>The Easiest Way to Jam <br>Together</h1>
+            <p>LiveSync provides easiest way to sync your music library<br> across any device.</p>
+            <div class="buttons">
+                <button class="cta-btn">+ New Collabaration</button>
+                <input type="text" placeholder="Enter code or link" class="input-fld">
+                <button class="sub-btn" onclick="validateInput()" disabled>Join</button>
+            </div>
+        </div>
+        <div class="animation-container"></div>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" class="wave" viewBox="0 0 1440 320"><path fill="#000000" fill-opacity="1" d="M0,320L60,298.7C120,277,240,235,360,197.3C480,160,600,128,720,138.7C840,149,960,203,1080,202.7C1200,203,1320,149,1380,122.7L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+
+    <script>
+        const animationContainer = document.querySelector('.animation-container');
+        const animData = {
+            container: animationContainer,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: '../assets/images/Music-animation.json'
+        };
+        const anim = lottie.loadAnimation(animData);
+    </script>
+    <script src="../javascript/collab.js"></script>
+</body>
+
+</html>

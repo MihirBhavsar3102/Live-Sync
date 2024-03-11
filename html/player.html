@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="../css/player.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
+</head>
+
+<body>
+
+    <div class="nav">
+        <h1>LiveSync</h1>
+        <button class="end-btn">End Collab</button>
+    </div>
+
+    <div class="player">
+        <div class="wrapper">
+            <div class="now-playing">PLAYING x OF y</div>
+            <div class="details">
+                <div class="song_details">
+                    <div class="track-art"></div>
+                    <div class="credits">
+                        <div class="track-name">Track Name</div>
+                        <div class="track-artist">Track Artist</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="second-half">
+                <div class="slider_container">
+                    <div class="current-time">00:00</div>
+                    <div class="progress_container">
+                        <div class="progress"></div>
+                    </div>
+
+                    <div class="total-duration">00:00</div>
+                </div>
+
+                <div class="buttons">
+                    <div class="button-group left">
+                        <div class="like-track" onclick="likeTrack()">
+                            <i class="far fa-heart hollow-heart-icon fa-2x" title="like"></i>
+                        </div>
+                    </div>
+
+                    <div class="button-group center">
+                        <div class="random-track" onclick="randomTrack()">
+                            <i class="fas fa-random fa-2x" title="random"></i>
+                        </div>
+                        <div class="prev-track" onclick="prevTrack()">
+                            <i class="fa fa-step-backward fa-2x"></i>
+                        </div>
+                        <div class="playpause-track" onclick="playpauseTrack()">
+                            <i class="fa fa-play-circle fa-5x"></i>
+                        </div>
+                        <div class="next-track" onclick="nextTrack()">
+                            <i class="fa fa-step-forward fa-2x"></i>
+                        </div>
+                        <div class="repeat-track" onclick="repeatTrack()">
+                            <i class="fa fa-repeat fa-2x" title="repeat"></i>
+                        </div>
+                    </div>
+
+                    <div class="volume_container right">
+                        <div class="mute-track" onclick="muteTrack()">
+                            <i class="fa fa-volume-down fa-2x"></i>
+                        </div>
+                        <div class="volume_slider_container">
+                            <div class="volume_slider"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="search-box">
+            <p class="expand-search"><</p>
+            <div class="search-box-content invisible">
+                <div class="search-header">
+                    <p class="users-btn"><i class="fa fa-users" aria-hidden="true"></i></p>
+                    <p class="close-search">x</p>
+                </div>
+                <div class="search-screen">
+                    <input type="text" class="search-fld" placeholder="Search for songs">
+                    <div class="search-result">
+                        <div class="result"><div>H</div><p>Hello</p></div>
+                        <div class="result"><div>H</div><p>Hello</p></div>
+                        <div class="result"><div>H</div><p>Hello</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="user-screen invisible">
+                <div class="user-result">
+                    <div class="result"><div>H</div><p>Hello</p></div>
+                    <div class="result"><div>H</div><p>Hello</p></div>
+                    <div class="result"><div>H</div><p>Hello</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../javascript/player.js" defer></script>
+</body>
+
+</html>
