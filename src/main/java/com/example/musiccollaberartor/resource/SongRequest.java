@@ -4,7 +4,7 @@ public class SongRequest {
     private String title;
     private String artist;
     private String movie;
-    private int likes;
+    private String  imgUrl;
     private String url;
 
     public SongRequest() {
@@ -15,7 +15,7 @@ public class SongRequest {
         this.title = title;
         this.artist = artist;
         this.movie = movie;
-        this.likes = likes;
+        this. imgUrl =  imgUrl;
         this.url = url;
     }
 
@@ -31,8 +31,8 @@ public class SongRequest {
         return movie;
     }
 
-    public int getLikes() {
-        return likes;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
     public String getUrl() {

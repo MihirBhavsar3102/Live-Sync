@@ -45,7 +45,7 @@ public ResponseEntity<List<Song>> getAllSongs() {
         song.setTitle(songRequest.getTitle());
         song.setArtist(songRequest.getArtist());
         song.setUrl(songRequest.getUrl());
-        song.setLikes(songRequest.getLikes());
+        song.setImgUrl(songRequest.getImgUrl());
         song.setMovie(songRequest.getMovie());
         // Save the received song to MongoDB
         return ResponseEntity.status(201).body(this.songRepository.save(song));

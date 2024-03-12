@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Website</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.8/lottie.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/index_style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>LiveSync</h1>
+        <nav>
+            <a href="#" class="active">Home</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="home">
+
+        <div class="circle"></div>
+        <img src="../assets/images/Artist%20collage%20(1).png" class="collage">
+        <h1 class="title">Listen to your<br>favourite Artists,<div class="hero">Together...</div>
+        </h1>
+
+    </section>
+
+    <section class="about">
+        <div>
+            <h1>LiveSync</h1>
+            <br>
+            <p>Experience seamless real-time music collaboration with LiveSync. Sync up with musicians worldwide, jam
+                effortlessly, and create stunning melodies together. Ready to make music magic? Start collaborating now!
+            </p>
+            <a href="collab.html"><button class="cta-btn">Start Collabaration<p>&rarr;</p></button></a>
+
+        </div>
+        <div class="animation-container"></div>
+
+    </section>
+
+
+    <script src="../javascript/index_script.js"></script>
+    <script>
+        const animationContainer = document.querySelector('.animation-container');
+        const animData = {
+            container: animationContainer,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: '../assets/images/Jam-animation.json' 
+        };
+        const anim = lottie.loadAnimation(animData);
+    </script>
+
+</body>
+
+</html>

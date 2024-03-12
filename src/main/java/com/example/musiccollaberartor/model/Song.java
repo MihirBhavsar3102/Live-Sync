@@ -13,7 +13,7 @@ public class Song {
     private String title;
     private String artist;
     private String movie;
-    private int likes;
+    private String imgUrl;
     private String url; // Assuming the URL to the audio file
 
     // Getters and setters
@@ -26,7 +26,7 @@ public class Song {
         this.title = title;
         this.artist = artist;
         this.movie = movie;
-        this.likes = likes;
+        this.imgUrl =  imgUrl;
         this.url = url;
     }
     @Override
@@ -36,7 +36,7 @@ public class Song {
                 ", title='" + title + '\'' +
                 ", artist='" + artist + '\'' +
                 ", movie='" + movie + '\'' +
-                ", likes=" + likes +
+                ",  imgUrl=" + imgUrl +
                 ", url='" + url + '\'' +
                 '}';
     }
@@ -57,8 +57,8 @@ public class Song {
         this.movie = movie;
     }
 
-    public void setLikes(int likes) {
-        this.likes = likes;
+    public void setImgUrl(String imgUrl) {
+        this. imgUrl =  imgUrl;
     }
 
     public void setUrl(String url) {
