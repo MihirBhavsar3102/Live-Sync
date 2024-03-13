@@ -33,11 +33,21 @@ public ResponseEntity<List<Song>> getAllSongs() {
 }
 
 
-    @GetMapping("/songs/{id}")
+    @GetMapping("/songs/id/{id}")
     public ResponseEntity<Song> getSongById(@PathVariable String id) {
         Optional<Song> song = songRepository.findById(id);
         return song.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/songs/query/{query}")
+    public ResponseEntity<List<Song>> getSongByQuery(@PathVariable String query) {
+        List<Song> songs = songRepository.findByTitleContainingIgnoreCaseOrArtistContainingIgnoreCaseOrMovieContainingIgnoreCase(query, query, query);
+        System.out.println("Fetched Songs: " + songs);
+        return ResponseEntity.ok(songs);
+    }
+
+
+
 
     @PostMapping("/songs")
     public ResponseEntity<Song> addSong(@RequestBody SongRequest songRequest) {

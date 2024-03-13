@@ -11,7 +11,7 @@ public class SongRequest {
 
     }
 
-    public SongRequest(String title, String artist, String movie, int likes, String url) {
+    public SongRequest(String title, String artist, String movie, String imgUrl, String url) {
         this.title = title;
         this.artist = artist;
         this.movie = movie;
