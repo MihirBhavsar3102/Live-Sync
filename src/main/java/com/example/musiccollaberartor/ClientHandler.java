@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 
 public class ClientHandler implements Runnable{
     
@@ -94,8 +94,8 @@ public class ClientHandler implements Runnable{
     }
 
     // Sample method to convert Java object to JSON string
-    public static String convertToJson(Object object) {
-        Gson gson = new Gson();
-        return gson.toJson(object);
-    }
+//    public static String convertToJson(Object object) {
+//        Gson gson = new Gson();
+//        return gson.toJson(object);
+//    }
 }

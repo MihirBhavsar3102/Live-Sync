@@ -339,6 +339,16 @@ const searchfld=document.querySelector('.search-fld')
 searchfld.addEventListener('keypress',function(event){
     if (event.key === "Enter") {
         event.preventDefault();
-        console.log(this.value)     //Get the value from here...
+        console.log(this.value)
+        const query=this.value;//Get the value from here...
+        fetch(`http://localhost:8080/songs/query/${query}`)
+    .then(response => response.json())
+            .then(data => {
+                // Process the retrieved data and update the UI accordingly
+                console.log(data); // Print the data in the console for testing
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
     }
 })
