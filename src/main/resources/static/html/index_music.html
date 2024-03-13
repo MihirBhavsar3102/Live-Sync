@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music Website</title>
+    <meta name="google-signin-client_id" content="328306164881-dpb86utrka1qall0ukktr920kuhj8shq.apps.googleusercontent.com">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.8/lottie.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/index_style.css">
 </head>
 
 <body>
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <header>
         <h1>LiveSync</h1>
@@ -17,7 +20,7 @@
             <a href="#" class="active">Home</a>
             <a href="#">About</a>
             <a href="#">Services</a>
-            <a href="#">Contact</a>
+            <a href="#"><div class="g-signin2" data-onsuccess="onSignIn"></div></a>
         </nav>
     </header>
 
