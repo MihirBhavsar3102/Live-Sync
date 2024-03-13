@@ -21,7 +21,7 @@ public class Song {
     public Song() {
     }
 
-    public Song(String id, String title, String artist, String movie, int likes, String url) {
+    public Song(String id, String title, String artist, String movie, String imgUrl, String url) {
         this.id = id;
         this.title = title;
         this.artist = artist;
@@ -41,9 +41,9 @@ public class Song {
                 '}';
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+//    public void setId(String id) {
+//        this.id = id;
+//    }
 
     public void setTitle(String title) {
         this.title = title;
