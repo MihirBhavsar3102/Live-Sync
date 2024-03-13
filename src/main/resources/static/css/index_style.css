@@ -56,7 +56,7 @@ header nav a.active {
     color: var(--primary-color);
 }
 
-header nav a:hover {
+header nav a:hover{
     background: var(--secondary-color)0;
     color: var(--primary-color);
 }

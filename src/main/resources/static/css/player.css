@@ -89,16 +89,17 @@ body::after {
 }
 
 .search-box {
+    position: relative;
     display: flex;
-
-    justify-content: center;
+    flex-direction:column;
+    justify-content: flex-start;
     align-items: center;
     width: 1%;
     height: 95%;
     padding: 0px 15px 0px 15px;
     font-size: 25px;
-    /*Glassmorphism*/
-    background: rgba(255, 255, 255, 0.18);
+/*/Glassmorphism/*/
+background: rgba(255, 255, 255, 0.18);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(8.5px);
@@ -108,22 +109,18 @@ body::after {
 }
 
 .search-header{
-    position: absolute;
-    top:0;
-    right:0;
-    transform:translate(-30%,-10%);
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     gap:25px;
 }
 
-.search-screen{
-    margin-top: 30px;
+.search-screen, .user-screen{
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap:10px;
 }
@@ -142,13 +139,6 @@ body::after {
     gap:5px;
     padding: 2px 3px 2px 3px;
     width:95%;
-    background-color: transparent;
-    /* background: rgba(255, 255, 255, 0.18);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8.5px);
-    -webkit-backdrop-filter: blur(8.5px);
-    border: 1px solid rgba(255, 255, 255, 0.3); */
 }
 
 .result{
@@ -175,12 +165,21 @@ body::after {
     color:black;
     background: rgb(255, 255, 255);
 }
+
+
 .invisible{
     display:none;
 }
 
 .active{
     color:black;
+}
+
+.expand-search{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-70%);
 }
 /* .search-box::after {
     content: "<";

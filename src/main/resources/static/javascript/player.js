@@ -333,3 +333,12 @@ document.querySelector('.end-btn').addEventListener('click',function(){
         window.location.href = 'collab.html';
     }
 })
+
+const searchfld=document.querySelector('.search-fld')
+
+searchfld.addEventListener('keypress',function(event){
+    if (event.key === "Enter") {
+        event.preventDefault();
+        console.log(this.value)     //Get the value from here...
+    }
+})
