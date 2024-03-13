@@ -307,6 +307,8 @@ const searchcontent = document.querySelector('.search-box-content')
 const searchscreen = document.querySelector('.search-screen')
 const usrscreen = document.querySelector('.user-screen')
 
+
+
 expandbtn.addEventListener('click', function () {
     document.querySelector('.search-box').style.width = '20%'
     searchcontent.classList.remove('invisible')
