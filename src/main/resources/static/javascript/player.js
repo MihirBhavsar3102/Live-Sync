@@ -231,6 +231,7 @@ function updateProgress() {
         const progressPercent = (curr_track.currentTime / curr_track.duration) * 100;
         progress.style.width = `${progressPercent}%`;
         setText();
+           //
     }
 }
 
@@ -244,6 +245,7 @@ function setProgress(e) {
         const clickX = e.offsetX;
         curr_track.currentTime = (clickX / width) * curr_track.duration;
         setText();
+
     }
 }
 

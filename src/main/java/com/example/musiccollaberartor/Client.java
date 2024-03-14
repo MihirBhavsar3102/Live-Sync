@@ -15,6 +15,9 @@ public class Client {
     private BufferedWriter bufferedWriter;
     private String username;
 
+    public Client(){
+
+    }
     public Client(Socket socket, String username){
         try{
             this.socket=socket;
@@ -26,6 +29,12 @@ public class Client {
         }
     }
 
+    //receving the msg from the javascript
+    public void receive_msg(String msg){
+        System.out.println("processing msg:"+msg);
+
+    }
+
     public void sendMessage(){
         try{
             bufferedWriter.write(username);
@@ -34,6 +43,8 @@ public class Client {
 
             Scanner scanner=new Scanner(System.in);
             while(socket.isConnected()){
+                //msg recevied on the any changes on the frontend:
+
                 String messageToSend=scanner.nextLine();
                 bufferedWriter.write(username+": "+messageToSend);
                 bufferedWriter.newLine();
@@ -87,6 +98,5 @@ public class Client {
         Client client=new Client(socket,username);
         client.listenForMessage();
         client.sendMessage();
-
     }
 }
