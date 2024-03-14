@@ -352,19 +352,28 @@ document.querySelector('.end-btn').addEventListener('click',function(){
 
 const searchfld=document.querySelector('.search-fld')
 
+const search_data=[];
 searchfld.addEventListener('keypress',function(event){
     if (event.key === "Enter") {
         event.preventDefault();
         console.log(this.value)
         const query=this.value;//Get the value from here...
         fetch(`http://localhost:8080/songs/query/${query}`)
-    .then(response => response.json())
+    .then(response =>response.json())
             .then(data => {
                 // Process the retrieved data and update the UI accordingly
-                console.log(data); // Print the data in the console for testing
+                console.log(data);
+                data.forEach(song=>
+                {
+                    const row=[song.title,song.movie,song.artist,song.imgUrl,song.url];
+                    search_data.push(row);
+                    console.log(song);
+                })
+
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
+
     }
 })
