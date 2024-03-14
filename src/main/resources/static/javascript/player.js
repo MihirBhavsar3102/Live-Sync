@@ -231,6 +231,7 @@ function updateProgress() {
         const progressPercent = (curr_track.currentTime / curr_track.duration) * 100;
         progress.style.width = `${progressPercent}%`;
         setText();
+           //
     }
 }
 
@@ -244,6 +245,21 @@ function setProgress(e) {
         const clickX = e.offsetX;
         curr_track.currentTime = (clickX / width) * curr_track.duration;
         setText();
+        const msg="hello";
+        fetch(`http://localhost:8080/send_msg`,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({query:msg})
+
+        })
+            .then(response=>response.text())
+            .then(data=>console.log(data))
+            .catch(error=>console.error('Error:',error));
+
+
+
     }
 }
 
