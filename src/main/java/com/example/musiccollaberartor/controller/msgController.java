@@ -15,7 +15,6 @@ public class msgController {
         System.out.println("msg :"+send_msg);
         Client client=new Client();
         client.receive_msg(send_msg);
-
         return "msg received successfully!!";
 
 

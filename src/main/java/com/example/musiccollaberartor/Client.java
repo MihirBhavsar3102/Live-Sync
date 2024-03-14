@@ -15,9 +15,8 @@ public class Client {
     private BufferedWriter bufferedWriter;
     private String username;
 
-    public Client(){
-
-    }
+    public Client()
+        {}
     public Client(Socket socket, String username){
         try{
             this.socket=socket;
