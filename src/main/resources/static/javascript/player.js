@@ -57,7 +57,7 @@ const music_list = [
         music: '../assets/music/Rather Be.mp3'
     },
     {
-        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/dhaga.jpeg?alt=media&token=aa81f2ea-8db3-4d43-b138-9267dbb85179',
+        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/dhaga.jpeg?alt=media&token=aa81f2ea-8db3-4d43-b138-9267dbb85179 ',
         name: 'Dhaaga',
         artist: 'Niloptal Bora',
         music: '../assets/music/Dhaga.mp3'

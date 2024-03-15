@@ -1,101 +1,154 @@
 package com.example.musiccollaberartor;
 
+//import java.io.BufferedReader;
+//import java.io.BufferedWriter;
+//import java.io.IOException;
+//import java.io.InputStreamReader;
+//import java.io.OutputStreamWriter;
+//import java.net.Socket;
+//import java.util.Scanner;
+//
+//public class Client {
+//
+//    private Socket socket;
+//    private BufferedReader bufferedReader;
+//    private BufferedWriter bufferedWriter;
+//    private String username;
+//
+//    public Client()
+//        {}
+//    public Client(Socket socket, String username){
+//        try{
+//            this.socket=socket;
+//            this.username=username;
+//            this.bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//            this.bufferedWriter=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+//        }catch(IOException ioe){
+//            closeEverything(socket, bufferedReader,bufferedWriter);
+//        }
+//    }
+//
+//    //receving the msg from the javascript
+//    public void receive_msg(String msg){
+//        System.out.println("processing msg:"+msg);
+//
+//    }
+//
+//    public void sendMessage(){
+//        try{
+//            bufferedWriter.write(username);
+//            bufferedWriter.newLine();
+//            bufferedWriter.flush();
+//
+//            Scanner scanner=new Scanner(System.in);
+//            while(socket.isConnected()){
+//                //msg recevied on the any changes on the frontend:
+//
+//                String messageToSend=scanner.nextLine();
+//                bufferedWriter.write(username+": "+messageToSend);
+//                bufferedWriter.newLine();
+//                bufferedWriter.flush();
+//            }
+//        }catch(IOException ioe){
+//            closeEverything(socket, bufferedReader,bufferedWriter);
+//        }
+//    }
+//
+//    public void listenForMessage(){
+//        new Thread(new Runnable(){
+//            @Override
+//            public void run(){
+//                String msgFromGroupChat;
+//
+//                while(socket.isConnected()){
+//                    try{
+//                        msgFromGroupChat=bufferedReader.readLine();
+//                        System.out.println(msgFromGroupChat);
+//                    }catch(IOException ioe){
+//                        closeEverything(socket, bufferedReader,bufferedWriter);
+//                    }
+//                }
+//            }
+//        }).start();
+//    }
+//
+//    public void closeEverything(Socket socket,BufferedReader bufferedReader,BufferedWriter bufferedWriter){
+//        try{
+//            if(bufferedReader!=null){
+//                bufferedReader.close();
+//            }
+//            if(bufferedWriter!=null){
+//                bufferedWriter.close();
+//            }
+//            if(socket!=null){
+//                socket.close();
+//            }
+//        }catch(IOException ioe){
+//            ioe.printStackTrace();
+//        }
+//    }
+//
+//    public static void main(String[] args) throws IOException{
+//
+//        Scanner scanner=new Scanner(System.in);
+//        System.out.println("Enter your username for the group chat: ");
+//        String username=scanner.nextLine();
+//        Socket socket=new Socket("localhost",8080);
+//        Client client=new Client(socket,username);
+//        client.listenForMessage();
+//        client.sendMessage();
+//    }
+//}
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.util.Scanner;
 
+@SpringBootApplication
 public class Client {
 
-    private Socket socket;
-    private BufferedReader bufferedReader;
-    private BufferedWriter bufferedWriter;
-    private String username;
-
-    public Client()
-        {}
-    public Client(Socket socket, String username){
-        try{
-            this.socket=socket;
-            this.username=username;
-            this.bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.bufferedWriter=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        }catch(IOException ioe){
-            closeEverything(socket, bufferedReader,bufferedWriter);
-        }
+    public static void main(String[] args) {
+        SpringApplication.run(Client.class, args);
     }
 
-    //receving the msg from the javascript
-    public void receive_msg(String msg){
-        System.out.println("processing msg:"+msg);
+    @RestController
+    public static class ClientController {
 
-    }
+        private Socket socket;
+        private BufferedReader bufferedReader;
+        private BufferedWriter bufferedWriter;
+        private String username;
 
-    public void sendMessage(){
-        try{
-            bufferedWriter.write(username);
+        @GetMapping("/sendMessage")
+        public void sendMessage(String messageToSend) throws IOException{
+            bufferedWriter.write(username + ": " + messageToSend);
             bufferedWriter.newLine();
             bufferedWriter.flush();
-
-            Scanner scanner=new Scanner(System.in);
-            while(socket.isConnected()){
-                //msg recevied on the any changes on the frontend:
-
-                String messageToSend=scanner.nextLine();
-                bufferedWriter.write(username+": "+messageToSend);
-                bufferedWriter.newLine();
-                bufferedWriter.flush();
-            }
-        }catch(IOException ioe){
-            closeEverything(socket, bufferedReader,bufferedWriter);
         }
-    }
 
-    public void listenForMessage(){
-        new Thread(new Runnable(){
-            @Override
-            public void run(){
-                String msgFromGroupChat;
+        @GetMapping("/listenForMessage")
+        public void listenForMessage() throws IOException{
+            String msgFromGroupChat;
 
-                while(socket.isConnected()){
-                    try{
-                        msgFromGroupChat=bufferedReader.readLine();
-                        System.out.println(msgFromGroupChat);
-                    }catch(IOException ioe){
-                        closeEverything(socket, bufferedReader,bufferedWriter);
-                    }
-                }
+            while (socket.isConnected()) {
+                msgFromGroupChat = bufferedReader.readLine();
+                System.out.println(msgFromGroupChat);
             }
-        }).start();
-    }
-    
-    public void closeEverything(Socket socket,BufferedReader bufferedReader,BufferedWriter bufferedWriter){
-        try{
-            if(bufferedReader!=null){
-                bufferedReader.close();
-            }
-            if(bufferedWriter!=null){
-                bufferedWriter.close();
-            }
-            if(socket!=null){
-                socket.close();
-            }
-        }catch(IOException ioe){
-            ioe.printStackTrace();
         }
-    }
 
-    public static void main(String[] args) throws IOException{
-        
-        Scanner scanner=new Scanner(System.in);
-        System.out.println("Enter your username for the group chat: ");
-        String username=scanner.nextLine();
-        Socket socket=new Socket("localhost",8080);
-        Client client=new Client(socket,username);
-        client.listenForMessage();
-        client.sendMessage();
+        @GetMapping("/closeEverything")
+        public void closeEverything() throws IOException{
+            if (bufferedReader != null) bufferedReader.close();
+            if (bufferedWriter != null) bufferedWriter.close();
+            if (socket != null) socket.close();
+        }
     }
 }
