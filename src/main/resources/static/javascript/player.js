@@ -363,12 +363,31 @@ searchfld.addEventListener('keypress',function(event){
             .then(data => {
                 // Process the retrieved data and update the UI accordingly
                 console.log(data);
-                data.forEach(song=>
-                {
-                    const row=[song.title,song.movie,song.artist,song.imgUrl,song.url];
+                data.forEach(song => {
+                    const row = [song.title, song.movie, song.artist, song.imgUrl, song.url];
                     search_data.push(row);
                     console.log(song);
-                })
+
+                    // Creating a new search result element
+                    const searchResultDiv = document.createElement('div');
+                    searchResultDiv.classList.add('result');
+
+                    // Creating the div with the 'H' content
+                    const hDiv = document.createElement('div');
+                    hDiv.textContent = 'H';
+
+                    // Creating the paragraph with the 'Hello' content
+                    const pElement = document.createElement('p');
+                    pElement.textContent = 'row[1]';
+
+                    // Appending 'H' and 'Hello' elements to the search result div
+                    searchResultDiv.appendChild(hDiv);
+                    searchResultDiv.appendChild(pElement);
+
+                    // Appending the search result div to the search result container
+                    document.querySelector('.search-result').appendChild(searchResultDiv);
+                });
+
 
             })
             .catch(error => {

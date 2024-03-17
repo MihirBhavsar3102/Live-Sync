@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class msgController {
 
-//    @PostMapping("/send_msg")
-//    public String msg_client(@RequestBody String send_msg){
-//        System.out.println("msg :"+send_msg);
-//        Client client=new Client();
-//        client.receive_msg(send_msg);
-//        return "msg received successfully!!";
-//
-//
-//
-//    }
+    @PostMapping("/send_msg")
+    public String msg_client(@RequestBody String send_msg){
+        System.out.println("msg :"+send_msg);
+        Client client=new Client();
+        client.receive_msg(send_msg);
+        return "msg received successfully!!";
+
+
+
+    }
 
 }
