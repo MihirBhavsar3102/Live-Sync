@@ -40,12 +40,42 @@ body::after {
     /* padding: 10px; */
 }
 
-.nav h1 {
+.title{
     margin-top:15px;
     font-size: 35px;
-    /* font-weight: 400; */
+    font-weight: 500;
     color: white;
 }
+
+.right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap:50px;
+}
+
+.collab-info{
+    margin-top:15px;
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+}
+
+#copyButton ,#textToCopy {
+    background: none;
+    border: none;
+    transition: opacity 0.2s ease-in-out;
+    cursor:pointer;
+}
+
+#textToCopy{
+    font-size: 18px;
+}
+
+.animate-out {
+    opacity: 0;
+}
+
 
 .end-btn {
     font-weight:500;
@@ -98,8 +128,8 @@ body::after {
     height: 95%;
     padding: 0px 15px 0px 15px;
     font-size: 25px;
-/*/Glassmorphism/*/
-background: rgba(255, 255, 255, 0.18);
+    /*/Glassmorphism/*/
+    background: rgba(255, 255, 255, 0.18);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(8.5px);

@@ -31,6 +31,13 @@ let isLiked = false;
 let isDark = true;
 let updateTimer;
 
+const urlParams = new URLSearchParams(window.location.search);
+const ipAddress = urlParams.get('ip');
+const port = urlParams.get('port');
+
+// Display IP address and port
+document.getElementById('textToCopy').innerText = `${ipAddress}:${port}`;
+
 const music_list = [
     {
         img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/stay.png?alt=media&token=97e9368e-d516-4652-afa1-9accc2aee5ec',
@@ -377,3 +384,45 @@ searchfld.addEventListener('keypress',function(event){
 
     }
 })
+
+const copyBtn=document.getElementById('copyButton');
+
+copyBtn.addEventListener('click', function() {
+    const textToCopy = document.getElementById('textToCopy');
+    const ip_port=textToCopy.innerText
+
+    // Use the Clipboard API to copy the text to the clipboard
+    navigator.clipboard.writeText(ip_port)
+        .then(() => {
+
+// First part animation
+            copyBtn.classList.add('animate-out');
+            textToCopy.classList.add('animate-out');
+
+            setTimeout(function() {
+                copyBtn.innerHTML='<i class="fa fa-check-circle fa-2x content" aria-hidden="true" style="color:white"></i>'
+                textToCopy.innerText='Copied to clipboard!!';
+
+                copyBtn.classList.remove('animate-out');
+                textToCopy.classList.remove('animate-out');
+
+                setTimeout(function() {
+                    copyBtn.classList.add('animate-out');
+                    textToCopy.classList.add('animate-out');
+
+                    setTimeout(function() {
+                        copyBtn.innerHTML='<i class="fa fa-clone fa-2x content" aria-hidden="true" style="color:white"></i>'
+                        textToCopy.innerText=ip_port;
+
+                        copyBtn.classList.remove('animate-out');
+                        textToCopy.classList.remove('animate-out');
+                    }, 200);
+                }, 3000);
+            }, 200);
+
+
+        })
+        .catch(err => {
+            console.error('Error copying text to clipboard:', err);
+        });
+});
