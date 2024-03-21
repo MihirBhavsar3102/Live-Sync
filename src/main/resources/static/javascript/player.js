@@ -380,7 +380,7 @@ searchfld.addEventListener('keypress',function(event){
                     const pElement = document.createElement('p');
                     pElement.textContent = 'row[1]';
 
-                    // Appending 'H' and 'Hello' elements  to the search result div
+                    // Appending 'H' and 'Hello' elements to the search result div
                     searchResultDiv.appendChild(hDiv);
                     searchResultDiv.appendChild(pElement);
 
