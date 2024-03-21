@@ -1,5 +1,3 @@
-package com.example.musiccollaberartor;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -15,8 +13,6 @@ public class Client {
     private BufferedWriter bufferedWriter;
     private String username;
 
-    public Client()
-        {}
     public Client(Socket socket, String username){
         try{
             this.socket=socket;
@@ -28,12 +24,6 @@ public class Client {
         }
     }
 
-    //receving the msg from the javascript
-    public void receive_msg(String msg){
-        System.out.println("processing msg:"+msg);
-
-    }
-
     public void sendMessage(){
         try{
             bufferedWriter.write(username);
@@ -42,9 +32,7 @@ public class Client {
 
             Scanner scanner=new Scanner(System.in);
             while(socket.isConnected()){
-                //msg recevied on the any changes on the frontend:
-
-                String messageToSend=scanner.nextLine();            //Message from Front-end
+                String messageToSend=scanner.nextLine();
                 bufferedWriter.write(username+": "+messageToSend);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
@@ -63,7 +51,7 @@ public class Client {
                 while(socket.isConnected()){
                     try{
                         msgFromGroupChat=bufferedReader.readLine();
-                        System.out.println(msgFromGroupChat);       //Send to the front-end
+                        System.out.println(msgFromGroupChat);
                     }catch(IOException ioe){
                         closeEverything(socket, bufferedReader,bufferedWriter);
                     }
@@ -71,7 +59,7 @@ public class Client {
             }
         }).start();
     }
-
+    
     public void closeEverything(Socket socket,BufferedReader bufferedReader,BufferedWriter bufferedWriter){
         try{
             if(bufferedReader!=null){
@@ -89,13 +77,14 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException{
-
+        
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter your username for the group chat: ");
         String username=scanner.nextLine();
-        Socket socket=new Socket("localhost",8080); //IP and port yaha laana hai..
+        Socket socket=new Socket("172.26.100.230",3000);
         Client client=new Client(socket,username);
         client.listenForMessage();
         client.sendMessage();
+
     }
 }

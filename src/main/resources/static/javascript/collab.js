@@ -40,3 +40,20 @@ function validateInput() {
 
 }
 
+document.querySelector('.cta-btn').addEventListener('click',function(){
+    // Fetch IP address and port
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+            const ipAddress = data.ip;
+            const port = window.location.port || '80'; // Use default port 80 if not specified
+            console.log('IP Address: ' + ipAddress + '\nPort: ' + port);
+            const url = `player.html?ip=${ipAddress}&port=${port}`;
+            window.location.href = url;
+        })
+        .catch(error => {
+            console.error('Error fetching IP address:', error);
+        });
+
+})
+
