@@ -44,7 +44,7 @@ public class Client {
             while(socket.isConnected()){
                 //msg recevied on the any changes on the frontend:
 
-                String messageToSend=scanner.nextLine();
+                String messageToSend=scanner.nextLine();            //Message from Front-end
                 bufferedWriter.write(username+": "+messageToSend);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
@@ -63,7 +63,7 @@ public class Client {
                 while(socket.isConnected()){
                     try{
                         msgFromGroupChat=bufferedReader.readLine();
-                        System.out.println(msgFromGroupChat);
+                        System.out.println(msgFromGroupChat);       //Send to the front-end
                     }catch(IOException ioe){
                         closeEverything(socket, bufferedReader,bufferedWriter);
                     }
@@ -93,7 +93,7 @@ public class Client {
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter your username for the group chat: ");
         String username=scanner.nextLine();
-        Socket socket=new Socket("localhost",8080);
+        Socket socket=new Socket("localhost",8080); //IP and port yaha laana hai..
         Client client=new Client(socket,username);
         client.listenForMessage();
         client.sendMessage();
