@@ -93,7 +93,7 @@ public class Client {
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter your username for the group chat: ");
         String username=scanner.nextLine();
-        Socket socket=new Socket("localhost",8080); //IP and port yaha laana hai..
+        Socket socket=new Socket("172.26.100.230",8080); //IP and port yaha laana hai..
         Client client=new Client(socket,username);
         client.listenForMessage();
         client.sendMessage();
