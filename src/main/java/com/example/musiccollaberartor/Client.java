@@ -1,11 +1,8 @@
 package com.example.musiccollaberartor;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.Socket;
+import java.util.List;
 import java.util.Scanner;
 
 public class Client {
@@ -13,25 +10,19 @@ public class Client {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
+    private ObjectInputStream ois;
     private String username;
 
-    public Client()
-        {}
     public Client(Socket socket, String username){
         try{
             this.socket=socket;
             this.username=username;
             this.bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.bufferedWriter=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.ois=new ObjectInputStream(socket.getInputStream());
         }catch(IOException ioe){
             closeEverything(socket, bufferedReader,bufferedWriter);
         }
-    }
-
-    //receving the msg from the javascript
-    public void receive_msg(String msg){
-        System.out.println("processing msg:"+msg);
-
     }
 
     public void sendMessage(){
@@ -42,9 +33,7 @@ public class Client {
 
             Scanner scanner=new Scanner(System.in);
             while(socket.isConnected()){
-                //msg recevied on the any changes on the frontend:
-
-                String messageToSend=scanner.nextLine();            //Message from Front-end
+                String messageToSend=scanner.nextLine(); //From Front-end
                 bufferedWriter.write(username+": "+messageToSend);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
@@ -62,16 +51,25 @@ public class Client {
 
                 while(socket.isConnected()){
                     try{
-                        msgFromGroupChat=bufferedReader.readLine();
-                        System.out.println(msgFromGroupChat);       //Send to the front-end
+                        msgFromGroupChat= ois.readUTF();
+                        if(msgFromGroupChat.contains("aRrAy")){
+                            List<String> usernames=(List<String>)ois.readObject(); //
+                            for(String username:usernames){
+                                System.out.println(username);
+                            }
+                        }else{
+                            System.out.println(msgFromGroupChat);
+                        }
                     }catch(IOException ioe){
                         closeEverything(socket, bufferedReader,bufferedWriter);
+                    } catch (ClassNotFoundException e) {
+                        //
                     }
                 }
             }
         }).start();
     }
-    
+
     public void closeEverything(Socket socket,BufferedReader bufferedReader,BufferedWriter bufferedWriter){
         try{
             if(bufferedReader!=null){
@@ -89,13 +87,14 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException{
-        
+
         Scanner scanner=new Scanner(System.in);
         System.out.println("Enter your username for the group chat: ");
         String username=scanner.nextLine();
-        Socket socket=new Socket("172.26.100.230",8080); //IP and port yaha laana hai..
+        Socket socket=new Socket("localhost",3000);
         Client client=new Client(socket,username);
         client.listenForMessage();
         client.sendMessage();
+
     }
 }
