@@ -52,6 +52,7 @@ public class ClientHandler implements Runnable{
                     if(isArray){
                         clientHandler.oos.writeUTF("aRrAy");
                         clientHandler.oos.writeObject(getUsernames());
+                        clientHandler.oos.writeUTF("Hello");
                         clientHandler.oos.flush();
                     }
                     else{

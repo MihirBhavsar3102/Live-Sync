@@ -53,10 +53,12 @@ public class Client {
                     try{
                         msgFromGroupChat= ois.readUTF();
                         if(msgFromGroupChat.contains("aRrAy")){
-                            List<String> usernames=(List<String>)ois.readObject(); //
+                            List<String> usernames=(List<String>)ois.readObject();
+                            String test=ois.readUTF();//
                             for(String username:usernames){
                                 System.out.println(username);
                             }
+                            System.out.println(test);
                         }else{
                             System.out.println(msgFromGroupChat);
                         }
