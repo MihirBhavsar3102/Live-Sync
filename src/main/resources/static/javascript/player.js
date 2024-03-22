@@ -31,13 +31,6 @@ let isLiked = false;
 let isDark = true;
 let updateTimer;
 
-const urlParams = new URLSearchParams(window.location.search);
-const ipAddress = urlParams.get('ip');
-const port = urlParams.get('port');
-
-// Display IP address and port
-document.getElementById('textToCopy').innerText = `${ipAddress}:${port}`;
-
 const music_list = [
     {
         img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/stay.png?alt=media&token=97e9368e-d516-4652-afa1-9accc2aee5ec',
@@ -64,72 +57,44 @@ const music_list = [
         music: '../assets/music/Rather Be.mp3'
     },
     {
-        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/dhaga.jpeg?alt=media&token=aa81f2ea-8db3-4d43-b138-9267dbb85179',
+        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/dhaga.jpeg?alt=media&token=aa81f2ea-8db3-4d43-b138-9267dbb85179 ',
         name: 'Dhaaga',
         artist: 'Niloptal Bora',
         music: '../assets/music/Dhaga.mp3'
     }
 ];
 
-// loadTrack(track_index);
+loadTrack(track_index);
 
-// function loadTrack(track_index) {
-//     clearInterval(updateTimer);
-//     reset();
-//
-//     // curr_track.src = music_list[track_index].music;
-//     curr_track.src ="https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/Kun%20Faya%20Kun%20-%20A.R.%20Rahman.mp3?alt=media&token=cd615ace-2e38-479c-89dc-b91f444e2fd8";
-//
-//     curr_track.load();
-//
-//     track_art.style.backgroundImage = "url(" + music_list[track_index].img + ")";
-//     track_name.textContent = music_list[track_index].name;
-//     track_artist.textContent = music_list[track_index].artist;
-//     now_playing.textContent = "Playing music " + (track_index + 1) + " of " + music_list.length;
-//
-//
-//     curr_track.addEventListener('ended', nextTrack);
-//
-//
-//     dominant_bg_color(track_index);
-// }
-let loadedSongs = [];
-function loadTrack(track_index, songData) {
+function loadTrack(track_index) {
     clearInterval(updateTimer);
     reset();
 
-    const isLoaded = loadedSongs.some(song => song.title === songData.title && song.movie === songData.movie);
-    let songIndex = -1;
+    // curr_track.src = music_list[track_index].music;
+    curr_track.src ="https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/Kun%20Faya%20Kun%20-%20A.R.%20Rahman.mp3?alt=media&token=cd615ace-2e38-479c-89dc-b91f444e2fd8";
 
-    if (!isLoaded) {
-        loadedSongs.push(songData);
-        songIndex = loadedSongs.length - 1;
-        // console.log(loadedSongs)
-    }else{
-        songIndex = loadedSongs.findIndex(song => song.title === songData.title && song.movie === songData.movie);
-    }
-    curr_track.src = songData.url;
     curr_track.load();
 
-    track_art.style.backgroundImage = "url(" + songData.imgUrl + ")";
-    track_name.textContent = songData.title;
-    track_artist.textContent = songData.movie;
-    now_playing.textContent = "Playing music " + (songIndex + 1) + " of " + loadedSongs.length;
+    track_art.style.backgroundImage = "url(" + music_list[track_index].img + ")";
+    track_name.textContent = music_list[track_index].name;
+    track_artist.textContent = music_list[track_index].artist;
+    now_playing.textContent = "Playing music " + (track_index + 1) + " of " + music_list.length;
+
 
     curr_track.addEventListener('ended', nextTrack);
-    dominant_bg_color(songData);
-    playTrack();
 
+
+    dominant_bg_color(track_index);
 }
 
 
-function dominant_bg_color(songData) {
+function dominant_bg_color(track_index) {
 
     // Get the reference to the div
     let div = document.body;
 
     // Set the background image using JavaScript
-    div.style.backgroundImage = "url('" + songData.imgUrl + "')";
+    div.style.backgroundImage = "url('" + music_list[track_index].img + "')";
     div.style.backgroundSize = "cover";
     div.style.backgroundSize = "cover";
     div.style.backgroundPosition = "center"; // Center the background image
@@ -189,6 +154,8 @@ function playTrack() {
     curr_track.play();
     isPlaying = true;
     track_art.classList.add('rotate');
+    // wave.classList.add('loader');
+    // playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
     playpause_btn.innerHTML = '<i class="fa fa-pause-circle fa-5x"></i>';
 }
 
@@ -201,20 +168,28 @@ function pauseTrack() {
 }
 
 function nextTrack() {
+    // if (track_index < music_list.length - 1 && isRandom === false && isRepeat===false) {
+    //     track_index += 1;
+    // } else if (track_index < music_list.length - 1 && isRandom === true) {
+    //     let random_index = Number.parseInt(Math.random() * music_list.length);
+    //     track_index = random_index;
+    // } else {
+    //     track_index = 0;
+    // }
 
-    if (track_index <= loadedSongs.length - 1) {        //Bug: Last song not repeating the first
+    if (track_index < music_list.length - 1) {
         if (isRandom === false && isRepeat === false) {
             track_index += 1;
         }
         else if (isRandom === true) {
-            let random_index = Number.parseInt(Math.random() * loadedSongs.length);
+            let random_index = Number.parseInt(Math.random() * music_list.length);
             track_index = random_index;
         }
     } else {
         track_index = 0;
     }
 
-    loadTrack(track_index,loadedSongs[track_index]);
+    loadTrack(track_index);
     playTrack();
 }
 
@@ -222,9 +197,9 @@ function prevTrack() {
     if (track_index > 0) {
         track_index -= 1;
     } else {
-        track_index = loadedSongs.length - 1;
+        track_index = music_list.length - 1;
     }
-    loadTrack(track_index,loadedSongs[track_index]);
+    loadTrack(track_index);
     playTrack();
 }
 
@@ -351,9 +326,10 @@ const usrscreen = document.querySelector('.user-screen')
 
 
 expandbtn.addEventListener('click', function () {
-    document.querySelector('.search-box').style.width = '25%'
+    document.querySelector('.search-box').style.width = '20%'
     searchcontent.classList.remove('invisible')
     this.classList.add('invisible')
+
 })
 
 closebtn.addEventListener('click', function () {
@@ -374,104 +350,49 @@ document.querySelector('.end-btn').addEventListener('click',function(){
     }
 })
 
-const search_data = [];
-const searchfld = document.querySelector('.search-fld');
-const searchResultDiv = document.querySelector('.search-result');
+const searchfld=document.querySelector('.search-fld')
 
-searchfld.addEventListener('keypress', function (event) {
+const search_data=[];
+searchfld.addEventListener('keypress',function(event){
     if (event.key === "Enter") {
         event.preventDefault();
-        console.log(this.value);
-        const query = this.value; // Get the value from the input field
-
-        // Fetch data from the server
+        console.log(this.value)
+        const query=this.value;//Get the value from here...
         fetch(`http://localhost:8080/songs/query/${query}`)
-            .then(response => response.json())
+    .then(response =>response.json())
             .then(data => {
-                // Clear previous search results
-                search_data.length = 0;
-                searchResultDiv.innerHTML = ''; // Clear existing results
-                if (data.length === 0) {
-                    searchResultDiv.innerHTML = '<p>No results found</p>';
-                }
-                else {
-                    // Process the retrieved data and update the UI accordingly
-                    data.forEach(song => {
-                        const row = [song.title, song.movie, song.artist, song.imgUrl, song.url];
-                        search_data.push(row);
+                // Process the retrieved data and update the UI accordingly
+                console.log(data);
+                data.forEach(song => {
+                    const row = [song.title, song.movie, song.artist, song.imgUrl, song.url];
+                    search_data.push(row);
+                    console.log(song);
+
+                    // Creating a new search result element
+                    const searchResultDiv = document.createElement('div');
+                    searchResultDiv.classList.add('result');
+
+                    // Creating the div with the 'H' content
+                    const hDiv = document.createElement('div');
+                    hDiv.textContent = 'H';
+
+                    // Creating the paragraph with the 'Hello' content
+                    const pElement = document.createElement('p');
+                    pElement.textContent = 'row[1]';
+
+                    // Appending 'H' and 'Hello' elements to the search result div
+                    searchResultDiv.appendChild(hDiv);
+                    searchResultDiv.appendChild(pElement);
+
+                    // Appending the search result div to the search result container
+                    document.querySelector('.search-result').appendChild(searchResultDiv);
+                });
 
 
-                        const resultDiv = document.createElement('div');
-                        resultDiv.classList.add('result');
-                        const img = document.createElement('img');
-                        img.src = song.imgUrl; // Set the image source
-                        img.alt = `${song.title} Poster`; // Set alternative text
-                        resultDiv.appendChild(img); // Append image to result div
-
-
-                        const titlePara = document.createElement('p');
-                        titlePara.innerHTML = `${song.title} <br> <span style="font-size: 14px;">${song.movie}</span>`
-
-
-                        resultDiv.appendChild(titlePara);
-
-
-                        resultDiv.addEventListener('click', function () {
-                            loadTrack(search_data.findIndex(item => item[0] === song.title && item[1] === song.movie), song);
-                        });
-
-                        // Append the new div to the search result container
-                        searchResultDiv.appendChild(resultDiv);
-
-                    });
-                }
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
+
     }
-});
-
-console.log(search_data);
-
-const copyBtn=document.getElementById('copyButton');
-
-copyBtn.addEventListener('click', function() {
-    const textToCopy = document.getElementById('textToCopy');
-    const ip_port=textToCopy.innerText
-
-    // Use the Clipboard API to copy the text to the clipboard
-    navigator.clipboard.writeText(ip_port)
-        .then(() => {
-
-// First part animation
-            copyBtn.classList.add('animate-out');
-            textToCopy.classList.add('animate-out');
-
-            setTimeout(function() {
-                copyBtn.innerHTML='<i class="fa fa-check-circle fa-2x content" aria-hidden="true" style="color:white"></i>'
-                textToCopy.innerText='Copied to clipboard!!';
-
-                copyBtn.classList.remove('animate-out');
-                textToCopy.classList.remove('animate-out');
-
-                setTimeout(function() {
-                    copyBtn.classList.add('animate-out');
-                    textToCopy.classList.add('animate-out');
-
-                    setTimeout(function() {
-                        copyBtn.innerHTML='<i class="fa fa-clone fa-2x content" aria-hidden="true" style="color:white"></i>'
-                        textToCopy.innerText=ip_port;
-
-                        copyBtn.classList.remove('animate-out');
-                        textToCopy.classList.remove('animate-out');
-                    }, 200);
-                }, 3000);
-            }, 200);
-
-
-        })
-        .catch(err => {
-            console.error('Error copying text to clipboard:', err);
-        });
-});
+})
