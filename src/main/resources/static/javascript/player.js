@@ -76,6 +76,7 @@ let loadedSongs = [];
 function loadTrack(track_index, songData) {
     clearInterval(updateTimer);
     reset();
+
     const isLoaded = loadedSongs.some(song => song.title === songData.title && song.movie === songData.movie);
     let songIndex = -1;
 
@@ -175,6 +176,16 @@ function pauseTrack() {
     playpause_btn.innerHTML = '<i class="fa fa-play-circle fa-5x"></i>';
 }
 
+function prevTrack() {
+    if (track_index > 0) {
+        track_index -= 1;
+    } else {
+        track_index = loadedSongs.length - 1;
+    }
+    loadTrack(track_index,loadedSongs[track_index]);
+    playTrack();
+}
+
 function nextTrack() {
     // if (track_index < music_list.length - 1 && isRandom === false && isRepeat===false) {
     //     track_index += 1;
@@ -185,26 +196,12 @@ function nextTrack() {
     //     track_index = 0;
     // }
 
-    if (track_index <= loadedSongs.length - 1) {        //Bug: Last song not repeating the first
-        if (isRandom === false && isRepeat === false) {
-            track_index += 1;
-        }
-        else if (isRandom === true) {
-            let random_index = Number.parseInt(Math.random() * loadedSongs.length);
-            track_index = random_index;
-        }
-    } else {
-        track_index = 0;
+    if(isRandom==false && isRepeat==false){
+        track_index=(track_index+1)%loadedSongs.length;
     }
-    loadTrack(track_index,loadedSongs[track_index]);
-    playTrack();
-}
-
-function prevTrack() {
-    if (track_index > 0) {
-        track_index -= 1;
-    } else {
-        track_index = loadedSongs.length - 1;
+    else if(isRandom==true){
+        let random_index = Number.parseInt(Math.random() * loadedSongs.length);
+        track_index = random_index;
     }
     loadTrack(track_index,loadedSongs[track_index]);
     playTrack();
