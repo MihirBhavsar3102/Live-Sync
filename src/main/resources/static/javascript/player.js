@@ -31,6 +31,13 @@ let isLiked = false;
 let isDark = true;
 let updateTimer;
 
+const urlParams = new URLSearchParams(window.location.search);
+const ipAddress = urlParams.get('ip');
+const port = urlParams.get('port');
+
+// Display IP address and port
+document.getElementById('textToCopy').innerText = `${ipAddress}:${port}`;
+
 const music_list = [
     {
         img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/stay.png?alt=media&token=97e9368e-d516-4652-afa1-9accc2aee5ec',
@@ -193,11 +200,16 @@ function nextTrack() {
     playTrack();
 }
 
-// function prevTrack() {
-//     if (track_index > 0) {
-//         track_index -= 1;
-//     } else {
-// }
+function prevTrack() {
+    if (track_index > 0) {
+        track_index -= 1;
+    } else {
+        track_index = loadedSongs.length - 1;
+    }
+    loadTrack(track_index,loadedSongs[track_index]);
+    playTrack();
+}
+
 
 
 volume_slider_container.addEventListener('click', setVolume)
@@ -330,7 +342,7 @@ expandbtn.addEventListener('click', function () {
 })
 
 closebtn.addEventListener('click', function () {
-   
+
     document.querySelector('.search-box').style.width = '1%'
     expandbtn.classList.remove('invisible')
     searchcontent.classList.add('invisible')
@@ -366,7 +378,7 @@ searchfld.addEventListener('keypress', function (event) {
                 search_data.length = 0;
                 searchResultDiv.innerHTML = ''; // Clear existing results
                 if (data.length === 0) {
-                    searchResultDiv.innerHTML = '<p>No results found</p>';
+                    searchResultDiv.innerHTML = '<p>No results found</p><br><div class="animation-container-2"></div>';
                 }
                 else {
                     // Process the retrieved data and update the UI accordingly
@@ -389,8 +401,16 @@ searchfld.addEventListener('keypress', function (event) {
 
                         resultDiv.appendChild(titlePara);
 
+                        const playerscreen = document.querySelector('.player-screen');
+                        const initscreen = document.querySelector('.init-screen');
 
                         resultDiv.addEventListener('click', function () {
+                            if (playerscreen.classList.contains('invisible')) {
+                                playerscreen.classList.remove('invisible');
+                            }
+                            if(!initscreen.classList.contains('invisible')){
+                                initscreen.classList.add('invisible');
+                            }
                             loadTrack(search_data.findIndex(item => item[0] === song.title && item[1] === song.movie), song);
                         });
 
@@ -406,7 +426,6 @@ searchfld.addEventListener('keypress', function (event) {
     }
 });
 
-console.log(search_data);
 
 const copyBtn=document.getElementById('copyButton');
 

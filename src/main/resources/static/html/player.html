@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.8/lottie.min.js"></script>
     <!--    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">-->
 </head>
 
@@ -29,6 +30,7 @@
 
     <div class="player">
         <div class="wrapper">
+            <div class="player-screen invisible">
             <div class="now-playing">PLAYING x OF y</div>
             <div class="details">
                 <div class="song_details">
@@ -85,6 +87,10 @@
                     </div>
                 </div>
             </div>
+            </div>
+            <div class="init-screen">
+                <div class="animation-container"></div>
+            </div>
         </div>
         <div class="search-box">
             <p class="expand-search"><</p>
@@ -108,6 +114,29 @@
             </div>
         </div>
     </div>
+<script>
+    const animationContainer = document.querySelector('.animation-container');
+    const animData = {
+        container: animationContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../assets/media/nightsky.json'
+    };
+    const anim = lottie.loadAnimation(animData);
+
+    const animationContainer2 = document.querySelector('.animation-container-2');
+    const animData2 = {
+        container: animationContainer2,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../assets/media/notfound.json'
+    };
+    const anim2 = lottie.loadAnimation(animData2);
+
+
+</script>
     <script src="../javascript/player.js" defer></script>
 </body>
 

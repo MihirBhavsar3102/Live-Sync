@@ -191,8 +191,8 @@ body::after {
     gap:15px;
     padding:2px 5px 2px 15px;
     border-radius:10px;
-    background: rgb(255, 255, 255);
-    color:black;
+    background: rgb(0, 0, 0);
+    color: #ffffff;
 }
 
 .result div{
@@ -537,6 +537,19 @@ p {
     animation-delay: 0s;
 }
 
+.init-screen{
+    width:100%;
+    height:100%;
+}
+.animation-container {
+    width: 100%;
+    height:100%;
+}
+
+.animation-container-2 {
+    width: 100%;
+    height:100%;
+}
 
 /* .second-half{
     opacity:0;
