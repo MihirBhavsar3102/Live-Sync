@@ -125,6 +125,12 @@ function playpauseTrack() {
     isPlaying ? pauseTrack() : playTrack();
 }
 
+document.addEventListener("keydown", function(event) {
+    if (event.code === "Space") {
+        playpauseTrack();
+    }
+});
+
 function playTrack() {
     curr_track.play();
     isPlaying = true;
@@ -143,6 +149,7 @@ function pauseTrack() {
 }
 
 function prevTrack() {
+
     if (track_index > 0) {
         track_index -= 1;
     } else {
@@ -153,14 +160,6 @@ function prevTrack() {
 }
 
 function nextTrack() {
-    // if (track_index < music_list.length - 1 && isRandom === false && isRepeat===false) {
-    //     track_index += 1;
-    // } else if (track_index < music_list.length - 1 && isRandom === true) {
-    //     let random_index = Number.parseInt(Math.random() * music_list.length);
-    //     track_index = random_index;
-    // } else {
-    //     track_index = 0;
-    // }
 
     if(isRandom==false && isRepeat==false){
         track_index=(track_index+1)%loadedSongs.length;
@@ -216,13 +215,17 @@ function setProgress(e) {
         const clickX = e.offsetX;
         curr_track.currentTime = (clickX / width) * curr_track.duration;
         setText();
-        const msg="hello";
+        const trackData = {
+            objectId: loadedSongs[track_index].id,
+            currentTime: curr_track.currentTime,
+            // totalTime: curr_track.duration
+        };
         fetch(`http://localhost:8080/send_msg`,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
-            body:JSON.stringify({query:msg})
+            body:JSON.stringify(trackData)
 
         })
             .then(response=>response.text())
@@ -341,7 +344,16 @@ searchfld.addEventListener('keypress', function (event) {
                 search_data.length = 0;
                 searchResultDiv.innerHTML = ''; // Clear existing results
                 if (data.length === 0) {
-                    searchResultDiv.innerHTML = '<p>No results found</p><br><div class="animation-container-2"></div>';
+                    searchResultDiv.innerHTML = '<p>No results found</p><div class="animation-container-2"></div>';
+                    const animationContainer2 = document.querySelector('.animation-container-2');
+                    const animData2 = {
+                        container: animationContainer2,
+                        renderer: 'svg',
+                        loop: true,
+                        autoplay: true,
+                        path: '../assets/media/Empty.json'
+                    };
+                    const anim2 = lottie.loadAnimation(animData2);
                 }
                 else {
                     // Process the retrieved data and update the UI accordingly
@@ -359,13 +371,18 @@ searchfld.addEventListener('keypress', function (event) {
 
 
                         const titlePara = document.createElement('p');
-                        titlePara.innerHTML = `${song.title} <br> <span style="font-size: 14px;">${song.movie}</span>`
+                        titlePara.innerHTML = `${song.title} <br> <span style="font-size: 14px;">${song.movie} | ${song.artist}</span>`
 
 
                         resultDiv.appendChild(titlePara);
 
                         const playerscreen = document.querySelector('.player-screen');
                         const initscreen = document.querySelector('.init-screen');
+                        const bgAnimation = document.querySelector('.bgAnimation');
+                        const bodyElement = document.querySelector('body');
+
+
+
 
                         resultDiv.addEventListener('click', function () {
                             if (playerscreen.classList.contains('invisible')) {
@@ -374,6 +391,11 @@ searchfld.addEventListener('keypress', function (event) {
                             if(!initscreen.classList.contains('invisible')){
                                 initscreen.classList.add('invisible');
                             }
+                            if (bgAnimation) {
+                                bgAnimation.parentElement.removeChild(bgAnimation);
+                            }
+                            bodyElement.style.setProperty('--opacity', '0.8');
+
                             loadTrack(search_data.findIndex(item => item[0] === song.title && item[1] === song.movie), song);
                         });
 
