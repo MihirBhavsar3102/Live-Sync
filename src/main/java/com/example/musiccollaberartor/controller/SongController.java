@@ -2,7 +2,6 @@ package com.example.musiccollaberartor.controller;
 
 import com.example.musiccollaberartor.model.Song;
 import com.example.musiccollaberartor.repository.SongRepository;
-import com.example.musiccollaberartor.resource.SongRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,16 +47,10 @@ public ResponseEntity<List<Song>> getAllSongs() {
 
 
 
-
     @PostMapping("/songs")
-    public ResponseEntity<Song> addSong(@RequestBody SongRequest songRequest) {
-        Song song=new Song();
-        song.setTitle(songRequest.getTitle());
-        song.setArtist(songRequest.getArtist());
-        song.setUrl(songRequest.getUrl());
-        song.setImgUrl(songRequest.getImgUrl());
-        song.setMovie(songRequest.getMovie());
+    public ResponseEntity<Song> addSong(@RequestBody Song song) {
         // Save the received song to MongoDB
         return ResponseEntity.status(201).body(this.songRepository.save(song));
     }
+
 }

@@ -38,40 +38,6 @@ const port = urlParams.get('port');
 // Display IP address and port
 document.getElementById('textToCopy').innerText = `${ipAddress}:${port}`;
 
-const music_list = [
-    {
-        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/stay.png?alt=media&token=97e9368e-d516-4652-afa1-9accc2aee5ec',
-        name: 'Stay',
-        artist: 'The Kid LAROI, Justin Bieber',
-        music: '../assets/music/stay.mp3'
-    },
-    {
-        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/fallingdown.jpg?alt=media&token=c5b51615-f53d-46e9-93cd-e395fbc319c7',
-        name: 'Falling Down',
-        artist: 'Wid Cards',
-        music: '../assets/music/fallingdown.mp3'
-    },
-    {
-        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/faded.png?alt=media&token=e2304ca3-2c51-43cc-abc4-621282206086',
-        name: 'Faded',
-        artist: 'Alan Walker',
-        music: '../assets/music/Faded.mp3'
-    },
-    {
-        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/ratherbe.jpg?alt=media&token=d32d00c5-abf0-4014-be8e-29743d7729ec',
-        name: 'Rather Be',
-        artist: 'Clean Bandit',
-        music: '../assets/music/Rather Be.mp3'
-    },
-    {
-        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/dhaga.jpeg?alt=media&token=aa81f2ea-8db3-4d43-b138-9267dbb85179 ',
-        name: 'Dhaaga',
-        artist: 'Niloptal Bora',
-        music: '../assets/music/Dhaga.mp3'
-    }
-];
-
-
 let loadedSongs = [];
 function loadTrack(track_index, songData) {
     clearInterval(updateTimer);

@@ -1,10 +1,15 @@
 package com.example.musiccollaberartor;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+//import com.google.gson.Gson;
 
 public class ClientHandler implements Runnable{
 
@@ -12,7 +17,6 @@ public class ClientHandler implements Runnable{
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
-    private ObjectOutputStream oos;
     private String clientUsername;
 
     public ClientHandler(Socket socket){
@@ -20,10 +24,10 @@ public class ClientHandler implements Runnable{
             this.socket=socket;
             this.bufferedWriter=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.oos=new ObjectOutputStream(socket.getOutputStream());
             this.clientUsername=bufferedReader.readLine(); //Waiting for the Client to send the message
             clientHandlers.add(this);
-            broadcastMessage("SERVER: "+clientUsername+" has entered the chat!",true);
+            broadcastMessage("SERVER: "+clientUsername+" has entered the chat!");   ///Arraylist to be send from here to front-end
+
         }catch(IOException e){
             closeEverything(socket,bufferedReader,bufferedWriter);
         }
@@ -37,7 +41,7 @@ public class ClientHandler implements Runnable{
         while(socket.isConnected()){
             try{
                 messageFromClient=bufferedReader.readLine();
-                broadcastMessage(messageFromClient,false);
+                broadcastMessage(messageFromClient);
             }catch(IOException e){
                 closeEverything(socket,bufferedReader,bufferedWriter);
                 break;
@@ -45,24 +49,14 @@ public class ClientHandler implements Runnable{
         }
     }
 
-    public void broadcastMessage(String messageToSend,boolean isArray){
+    public void broadcastMessage(String messageToSend){
         for(ClientHandler clientHandler: clientHandlers){
             try{
-
-                    if(isArray){
-                        clientHandler.oos.writeUTF("aRrAy");
-                        clientHandler.oos.writeObject(getUsernames());
-                        clientHandler.oos.writeUTF("Hello");
-                        clientHandler.oos.flush();
-                    }
-                    else{
-                        if(!clientHandler.clientUsername.equals(clientUsername)){
-                        clientHandler.oos.writeUTF(messageToSend);
-                        clientHandler.bufferedWriter.newLine();
-                        clientHandler.oos.flush();
-                        }
-                    }
-
+                if(!clientHandler.clientUsername.equals(clientUsername)){
+                    clientHandler.bufferedWriter.write(messageToSend);
+                    clientHandler.bufferedWriter.newLine();
+                    clientHandler.bufferedWriter.flush();
+                }
             }catch(IOException ioe){
                 closeEverything(socket, bufferedReader, bufferedWriter);
             }
@@ -71,7 +65,7 @@ public class ClientHandler implements Runnable{
 
     public void removeClientHandler(){
         clientHandlers.remove(this);
-        broadcastMessage("SERVER: "+clientUsername+" has left the chat!",true);
+        broadcastMessage("SERVER: "+clientUsername+"has left the chat!");
     }
 
     public void closeEverything(Socket socket,BufferedReader bufferedReader,BufferedWriter bufferedWriter){
@@ -93,9 +87,16 @@ public class ClientHandler implements Runnable{
 
     public static List<String> getUsernames() {
         List<String> usernames = new ArrayList<>();
-        for(ClientHandler clientHandler:clientHandlers){
-            usernames.add(clientHandler.clientUsername);
-        }
+
+        usernames.add("Harsh");
+        usernames.add("Mihir");
+        usernames.add("Bhadrika");
         return usernames;
     }
+
+    // Sample method to convert Java object to JSON string
+//    public static String convertToJson(Object object) {
+//        Gson gson = new Gson();
+//        return gson.toJson(object);
+//    }
 }

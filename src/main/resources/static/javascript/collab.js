@@ -1,5 +1,6 @@
 const inputField = document.querySelector('.input-fld');
 const submitButton = document.querySelector('.sub-btn');
+const start_collab=document.querySelector('.cta-btn');
 
 inputField.addEventListener('input', function () {
     if (inputField.value.trim() !== '') {
