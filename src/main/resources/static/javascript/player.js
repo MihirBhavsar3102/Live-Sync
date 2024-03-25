@@ -422,3 +422,36 @@ copyBtn.addEventListener('click', function() {
             console.error('Error copying text to clipboard:', err);
         });
 });
+
+
+    function fetchMessage() {
+        fetch(`http://localhost:8080/receive_msg`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Failed to fetch message from server');
+                }
+            })
+            .then(message => {
+                // Update the UI with the received message
+                console.log('Message received from server:', message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+// Fetch message initially and every 5 seconds thereafter
+    fetchMessage();
+    setInterval(fetchMessage, 5000); // 5000 milliseconds = 5 seconds
+
+
+
+
+

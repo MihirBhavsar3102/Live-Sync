@@ -58,3 +58,40 @@ document.querySelector('.cta-btn').addEventListener('click',function(){
 
 })
 
+document.addEventListener('DOMContentLoaded', function() {
+    const startClientButton = document.getElementById('startClientButton');
+
+    startClientButton.addEventListener('click', function() {
+        const ip = document.getElementById('ip').value;
+        const port = document.getElementById('port').value;
+        const username = document.getElementById('username').value;
+
+        fetch('/Client', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ip: ip,
+                port: port,
+                username: username
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Failed to start client');
+                }
+            })
+            .then(message => {
+                console.log('Response from server:', message);
+                alert('Client started successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to start client. Please check console for details.');
+            });
+    });
+});
+

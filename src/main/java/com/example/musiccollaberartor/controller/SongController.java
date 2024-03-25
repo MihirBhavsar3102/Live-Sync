@@ -5,7 +5,6 @@ import com.example.musiccollaberartor.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +39,7 @@ public ResponseEntity<List<Song>> getAllSongs() {
 
     @GetMapping("/songs/query/{query}")
     public ResponseEntity<List<Song>> getSongByQuery(@PathVariable String query) {
-        List<Song> songs = songRepository.findByTitleContainingIgnoreCaseOrArtistContainingIgnoreCaseOrMovieContainingIgnoreCase(query, query, query);
+        List<Song> songs = songRepository.findByTitleIsLikeIgnoreCaseOrArtistIsLikeIgnoreCaseOrMovieIsLikeIgnoreCase(query, query, query);
         System.out.println("Fetched Songs: " + songs);
         return ResponseEntity.ok(songs);
     }

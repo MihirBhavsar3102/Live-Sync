@@ -1,5 +1,6 @@
 package com.example.musiccollaberartor;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -219,8 +220,14 @@ public class Client {
                             System.out.println(test);
                         }else{
                             System.out.println(msgFromGroupChat);
-                            String response = restTemplate.postForObject("http://localhost:8080/receive_msg",msgFromGroupChat, String.class);
-                            System.out.println("Response from server: " + response);
+                            ResponseEntity<Void> response = restTemplate.postForObject("http://localhost:8080/receive_msg",msgFromGroupChat, ResponseEntity.class);
+//                            System.out.println("Response from server: " + response.getBody());
+                            if (response.getStatusCode().is2xxSuccessful()) {
+                                System.out.println("Message sent successfully");
+                            } else {
+                                System.err.println("Failed to send message to server");
+                            }
+
                         }
 
                     }catch(IOException ioe){
