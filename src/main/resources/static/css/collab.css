@@ -29,10 +29,19 @@ header {
 }
 
 header h1 {
-    font-size: 40px;
+    font-size: 35px;
+    font-weight: 500;
     color: var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:5px;
 }
 
+header h1 img{
+    width:60px;
+    height:60px;
+}
 header nav {
     display: flex;
     gap: 30px;

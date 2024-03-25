@@ -38,40 +38,6 @@ const port = urlParams.get('port');
 // Display IP address and port
 document.getElementById('textToCopy').innerText = `${ipAddress}:${port}`;
 
-const music_list = [
-    {
-        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/stay.png?alt=media&token=97e9368e-d516-4652-afa1-9accc2aee5ec',
-        name: 'Stay',
-        artist: 'The Kid LAROI, Justin Bieber',
-        music: '../assets/music/stay.mp3'
-    },
-    {
-        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/fallingdown.jpg?alt=media&token=c5b51615-f53d-46e9-93cd-e395fbc319c7',
-        name: 'Falling Down',
-        artist: 'Wid Cards',
-        music: '../assets/music/fallingdown.mp3'
-    },
-    {
-        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/faded.png?alt=media&token=e2304ca3-2c51-43cc-abc4-621282206086',
-        name: 'Faded',
-        artist: 'Alan Walker',
-        music: '../assets/music/Faded.mp3'
-    },
-    {
-        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/ratherbe.jpg?alt=media&token=d32d00c5-abf0-4014-be8e-29743d7729ec',
-        name: 'Rather Be',
-        artist: 'Clean Bandit',
-        music: '../assets/music/Rather Be.mp3'
-    },
-    {
-        img: 'https://firebasestorage.googleapis.com/v0/b/live-sync-7015a.appspot.com/o/dhaga.jpeg?alt=media&token=aa81f2ea-8db3-4d43-b138-9267dbb85179 ',
-        name: 'Dhaaga',
-        artist: 'Niloptal Bora',
-        music: '../assets/music/Dhaga.mp3'
-    }
-];
-
-
 let loadedSongs = [];
 function loadTrack(track_index, songData) {
     clearInterval(updateTimer);
@@ -159,6 +125,12 @@ function playpauseTrack() {
     isPlaying ? pauseTrack() : playTrack();
 }
 
+document.addEventListener("keydown", function(event) {
+    if (event.code === "Space") {
+        playpauseTrack();
+    }
+});
+
 function playTrack() {
     curr_track.play();
     isPlaying = true;
@@ -177,6 +149,7 @@ function pauseTrack() {
 }
 
 function prevTrack() {
+
     if (track_index > 0) {
         track_index -= 1;
     } else {
@@ -187,14 +160,6 @@ function prevTrack() {
 }
 
 function nextTrack() {
-    // if (track_index < music_list.length - 1 && isRandom === false && isRepeat===false) {
-    //     track_index += 1;
-    // } else if (track_index < music_list.length - 1 && isRandom === true) {
-    //     let random_index = Number.parseInt(Math.random() * music_list.length);
-    //     track_index = random_index;
-    // } else {
-    //     track_index = 0;
-    // }
 
     if(isRandom==false && isRepeat==false){
         track_index=(track_index+1)%loadedSongs.length;
@@ -250,13 +215,17 @@ function setProgress(e) {
         const clickX = e.offsetX;
         curr_track.currentTime = (clickX / width) * curr_track.duration;
         setText();
-        const msg="hello";
+        const trackData = {
+            objectId: loadedSongs[track_index].id,
+            currentTime: curr_track.currentTime,
+            // totalTime: curr_track.duration
+        };
         fetch(`http://localhost:8080/send_msg`,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
             },
-            body:JSON.stringify({query:msg})
+            body:JSON.stringify(trackData)
 
         })
             .then(response=>response.text())
@@ -375,7 +344,16 @@ searchfld.addEventListener('keypress', function (event) {
                 search_data.length = 0;
                 searchResultDiv.innerHTML = ''; // Clear existing results
                 if (data.length === 0) {
-                    searchResultDiv.innerHTML = '<p>No results found</p><br><div class="animation-container-2"></div>';
+                    searchResultDiv.innerHTML = '<p>No results found</p><div class="animation-container-2"></div>';
+                    const animationContainer2 = document.querySelector('.animation-container-2');
+                    const animData2 = {
+                        container: animationContainer2,
+                        renderer: 'svg',
+                        loop: true,
+                        autoplay: true,
+                        path: '../assets/media/Empty.json'
+                    };
+                    const anim2 = lottie.loadAnimation(animData2);
                 }
                 else {
                     // Process the retrieved data and update the UI accordingly
@@ -393,13 +371,18 @@ searchfld.addEventListener('keypress', function (event) {
 
 
                         const titlePara = document.createElement('p');
-                        titlePara.innerHTML = `${song.title} <br> <span style="font-size: 14px;">${song.movie}</span>`
+                        titlePara.innerHTML = `${song.title} <br> <span style="font-size: 14px;">${song.movie} | ${song.artist}</span>`
 
 
                         resultDiv.appendChild(titlePara);
 
                         const playerscreen = document.querySelector('.player-screen');
                         const initscreen = document.querySelector('.init-screen');
+                        const bgAnimation = document.querySelector('.bgAnimation');
+                        const bodyElement = document.querySelector('body');
+
+
+
 
                         resultDiv.addEventListener('click', function () {
                             if (playerscreen.classList.contains('invisible')) {
@@ -408,6 +391,11 @@ searchfld.addEventListener('keypress', function (event) {
                             if(!initscreen.classList.contains('invisible')){
                                 initscreen.classList.add('invisible');
                             }
+                            if (bgAnimation) {
+                                bgAnimation.parentElement.removeChild(bgAnimation);
+                            }
+                            bodyElement.style.setProperty('--opacity', '0.8');
+
                             loadTrack(search_data.findIndex(item => item[0] === song.title && item[1] === song.movie), song);
                         });
 

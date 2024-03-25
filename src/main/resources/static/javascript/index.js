@@ -22,11 +22,12 @@ document.addEventListener('scroll', function () {
         circle.style.transform = 'translate(-50%,-10%)';
         circle.style.marginTop = -scrollPosition * 1.1 + 'px';
 
-        var newImageSize = 65 - scrollPosition / 25;
+        var newImageSize = 65 - scrollPosition /50;
         collage.style.opacity = 1;
         collage.style.width = newImageSize + '%';
-        collage.style.transform='translate(-50%,-10%)';
-        collage.style.marginTop = scrollPosition + 'px';
+        collage.style.transform='translate(-50%,-125%)';
+        // collage.style.marginTop = scrollPosition + 'px';
+        collage.style.marginBottom = -scrollPosition + 'px';
 
     }
     else {
@@ -41,8 +42,9 @@ document.addEventListener('scroll', function () {
         circle.style.marginTop = scrollPosition + 'px';
         circle.style.transform = 'translate(-50%,-45%)'
         
-        collage.style.marginTop = scrollPosition + 'px';
-        collage.style.transform='translate(-50%,-10%)';
+        // collage.style.marginTop = scrollPosition + 'px';
+        collage.style.marginBottom = -scrollPosition + 'px';
+        collage.style.transform='translate(-50%,-125%)';
 
 
     }

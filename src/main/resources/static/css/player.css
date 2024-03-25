@@ -5,6 +5,7 @@
     --primary-color: black;
     --secondary-color: white;
     --gray-color: #afafaf;
+    --opacity: 0.25;
 }
 
 body {
@@ -18,6 +19,7 @@ body {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    position: relative;
 }
 
 body::after {
@@ -25,7 +27,7 @@ body::after {
     position: absolute;
     width: 100%;
     height: 100%;
-    opacity: 0.8;
+    opacity: var(--opacity);
     background-color: black;
     z-index: -1;
 }
@@ -41,37 +43,44 @@ body::after {
     /* padding: 10px; */
 }
 
-.title{
-    margin-top:15px;
+.title {
+    margin-top: 15px;
     font-size: 35px;
     font-weight: 500;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
 }
 
+.title img {
+    width: 50px;
+    height: 50px;
+}
 
-
-.right{
+.right {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap:5px;
+    gap: 5px;
 }
 
-.collab-info{
-    margin-top:15px;
+.collab-info {
+    margin-top: 15px;
     display: flex;
     flex-direction: row;
-    gap:10px;
+    gap: 10px;
 }
 
-#copyButton ,#textToCopy {
+#copyButton, #textToCopy {
     background: none;
     border: none;
     transition: opacity 0.2s ease-in-out;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-#textToCopy{
+#textToCopy {
     font-size: 18px;
 }
 
@@ -81,22 +90,23 @@ body::after {
 
 
 .end-btn {
-    font-weight:500;
+    font-weight: 500;
     background-color: #ad0300;
     color: rgb(255, 255, 255);
     border: none;
     font-size: 20px;
     padding: 10px 30px 10px 30px;
-    margin-top:15px;
+    margin-top: 15px;
     border-radius: 25px;
-    transition: all 0.25s ease;
+    transition: all 0.5s ease;
 }
 
-.end-btn:hover{
+.end-btn:hover {
     background-color: #7c0200;
-    transition: all 0.25s ease;
-    border:2px solid white;
+    border: 1px solid white;
+    transition: all 0.5s ease;
 }
+
 .player {
     width: 100%;
     height: 92vh;
@@ -124,7 +134,7 @@ body::after {
 .search-box {
     position: relative;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     width: 1%;
@@ -142,67 +152,71 @@ body::after {
     overflow: hidden;
 }
 
-.search-header{
+.search-header {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    gap:25px;
+    gap: 25px;
 }
 
-.search-screen, .user-screen{
+.search-screen, .user-screen {
     margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap:10px;
-}
-.search-fld{
-    width:100%;
-    border-radius: 15px;
-    font-size: 20px;
-    padding:5px 0 5px 12px;
+    gap: 10px;
 }
 
-.search-result , .user-result{
+.search-fld {
+    width: 100%;
+    border-radius: 15px;
+    font-size: 20px;
+    padding: 5px 0 5px 12px;
+    border: none;
+}
+
+.search-result, .user-result {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap:5px;
-    padding:2px 3px 2px 3px;
-    width:100%;
+    gap: 5px;
+    padding: 2px 3px 2px 3px;
+    width: 100%;
     overflow-y: auto;
-    max-height:450px;
+    max-height: 450px;
     scrollbar-width: none; /* Hide scrollbar for Firefox */
     -ms-overflow-style: none;
 }
+
 .search-result::-webkit-scrollbar {
     display: none;
 }
-.result{
-    font-size:18px;
-    width:95%;
+
+.result {
+    font-size: 18px;
+    width: 95%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap:15px;
-    padding:2px 5px 2px 15px;
-    border-radius:10px;
+    gap: 15px;
+    padding: 2px 5px 2px 15px;
+    border-radius: 10px;
     background: rgb(0, 0, 0);
     color: #ffffff;
 }
 
-.result div{
+.result div {
     display: flex;
     justify-content: center;
     align-items: center;
-    width:40px;
-    aspect-ratio:1/1;
+    width: 40px;
+    aspect-ratio: 1/1;
     border-radius: 50%;
-    color:black;
+    color: black;
     background: rgb(255, 255, 255);
 }
 
@@ -212,20 +226,22 @@ body::after {
     height: 50px;
     margin-right: 10px;
 }
-.invisible{
-    display:none;
+
+.invisible {
+    display: none;
 }
 
-.active{
-    color:black;
+.active {
+    color: black;
 }
 
-.expand-search{
+.expand-search {
     position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
 }
+
 /* .search-box::after {
     content: "<";
     position: absolute;
@@ -282,20 +298,22 @@ body::after {
 
 .track-art::after {
     content: "H";
-    font-size:25px;
+    font-size: 25px;
     font-weight: 600;
-    color:black;
+    color: black;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 15%;
     height: 15%;
     border-radius: 50%;
-    background-color:var(--brand-color);
+    background-color: var(--brand-color);
     position: absolute;
     right: 0;
     bottom: 0;
-    transform: translate(50%, 50%);
+    transform: translate(50%,50%);
+    backdrop-filter: blur(5px);
+    box-shadow: 35px 35px 68px 0px rgba(255, 149, 92, 0.5), inset -8px -8px 16px 0px rgba(255, 149, 92, 0.6), inset 0px 11px 28px 0px rgb(255, 255, 255);
 }
 
 .now-playing {
@@ -411,7 +429,7 @@ body::after {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width:10%;
+    width: 10%;
 }
 
 
@@ -537,19 +555,54 @@ p {
     animation-delay: 0s;
 }
 
-.init-screen{
-    width:100%;
-    height:100%;
-}
-.animation-container {
+.init-screen {
     width: 100%;
-    height:100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.init-screen p {
+    font-size: 36px;
 }
 
 .animation-container-2 {
     width: 100%;
-    height:100%;
+    height: 100%;
 }
+
+.bgAnimation {
+    position: absolute;
+    left: 0;
+    top: 0;
+    /*transform:translate(-50%,-50%);*/
+    z-index: -1;
+}
+
+/*#lottieAnimation {*/
+/*    width: 700px;*/
+/*    height: 580px;*/
+/*    position: relative;*/
+/*    overflow: hidden;*/
+/*    margin: auto;*/
+/*    z-index: 1;*/
+/*    mask-image: url('../assets/media/blob.svg');*/
+/*    mask-size: cover;*/
+/*    -webkit-mask-image: url('../assets/media/blob.svg');*/
+/*    -webkit-mask-size: cover;*/
+/*}*/
+
+#lottieAnimation {
+    width: 500px;
+    height: 500px;
+    position: relative;
+}
+
 
 /* .second-half{
     opacity:0;
