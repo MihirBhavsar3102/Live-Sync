@@ -56,6 +56,7 @@ public class Server {
     private ServerSocket serverSocket;
 
     public Server(ServerSocket serverSocket) {
+        this.serverSocket= serverSocket;
     }
 
     @PostConstruct

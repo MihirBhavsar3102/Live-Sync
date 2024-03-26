@@ -45,8 +45,9 @@ public class msgController {
 //}
 
     @PostMapping("/Client")
-    public String StartClient(@RequestBody String ip,String Username,int port){
+    public String StartClient(@RequestBody String ip,String Username,Integer port){
         try{
+            System.out.println(port+" ");
             Socket socket=new Socket(ip,port);
             Client client=new Client(socket,Username);
             client.sendMessage();
@@ -63,7 +64,7 @@ public class msgController {
 
 
     @PostMapping("/Server")
-    public String StartServer(@RequestBody int Port){
+    public String StartServer(@RequestBody Integer Port){
        try{
         ServerSocket serverSocket=new ServerSocket(Port);
         Server server=new Server(serverSocket);

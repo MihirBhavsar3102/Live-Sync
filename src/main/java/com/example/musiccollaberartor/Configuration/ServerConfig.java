@@ -12,7 +12,7 @@ public class ServerConfig {
 
     @Bean
     public ServerSocket serverSocket() throws IOException {
-        return new ServerSocket(3000);
+        return new ServerSocket();
     }
 
     @Bean

@@ -38,18 +38,19 @@ startcollabbtn.addEventListener('click',function(){
         .then(response => response.json())
         .then(data => {
             const ipAddress = data.ip;
-            const port = window.location.port || '80'; // Use default port 80 if not specified
+            const port = 3000; // Use default port 80 if not specified
+            // const port=2000;
             console.log('IP Address: ' + ipAddress + '\nPort: ' + port);
             const url = `player.html?ip=${ipAddress}&port=${port}`;
 
 
             // Call Server API
-            fetch(`http://localhost:8080/Server`, {
+            fetch('/Server', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ Port: port })
+                body: JSON.stringify({ Port: Integer.valueOf(port) })
             })
                 .then(response => response.text())
                 .then(serverResponse => {
@@ -75,7 +76,7 @@ startcollabbtn.addEventListener('click',function(){
                     console.error('Error starting client:', error);
                 });
 
-            window.location.href = url;
+            // window.location.href = url;
 
         })
         .catch(error => {
