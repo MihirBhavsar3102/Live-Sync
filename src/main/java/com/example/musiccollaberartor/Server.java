@@ -63,6 +63,7 @@ public class Server {
     public void startServer() {
         try {
 //            serverSocket = new ServerSocket(3000);
+            System.out.println("Server has started");
             while (!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
                 System.out.println("A new client has connected");

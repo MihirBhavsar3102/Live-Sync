@@ -50,32 +50,18 @@ startcollabbtn.addEventListener('click',function(){
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ Port: Integer.valueOf(port) })
+                body: JSON.stringify(port)
             })
-                .then(response => response.text())
-                .then(serverResponse => {
-                    console.log('Server Response:', serverResponse);
-                })
+                // .then(response => response.text())
+                // .then(serverResponse => {
+                //     console.log('Server Response:', serverResponse);
+                //     startClient(ipAddress,port);
+                // })
                 .catch(error => {
                     console.error('Error starting server:', error);
                 });
 
-            // Call Client API
-            fetch(`http://localhost:8080/Client`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ ip: ipAddress, Username: 'Harshvardhan', port: port })
-            })
-                .then(response => response.text())
-                .then(clientResponse => {
-                    console.log('Client Response:', clientResponse);
-                })
-                .catch(error => {
-                    console.error('Error starting client:', error);
-                });
-
+            startClient(ipAddress,port)
             // window.location.href = url;
 
         })
@@ -85,7 +71,23 @@ startcollabbtn.addEventListener('click',function(){
 
 })
 
-
+function startClient(ipAddress, port) {
+    // Call Client API to start the client
+    fetch(`http://localhost:8080/Client`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ ip: ipAddress, username: 'Harshvardhan', port: port })
+    })
+        // .then(response => response.text())
+        // .then(clientResponse => {
+        //     console.log('Client Response:', clientResponse);
+        // })
+        .catch(error => {
+            console.error('Error starting client:', error);
+        });
+}
 
     joinbtn.addEventListener('click', function() {
 

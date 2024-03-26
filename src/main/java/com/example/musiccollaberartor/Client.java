@@ -178,6 +178,7 @@ public class Client {
             this.bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.bufferedWriter=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.ois=new ObjectInputStream(socket.getInputStream());
+            System.out.println("Client has connected");
         }catch(IOException ioe){
             closeEverything(socket, bufferedReader,bufferedWriter);
         }
