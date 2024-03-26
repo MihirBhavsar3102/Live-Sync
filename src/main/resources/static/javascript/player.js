@@ -462,7 +462,7 @@ copyBtn.addEventListener('click', function() {
             })
             .then(message => {
                 // Update the UI with the received message
-                console.log('Message received from server:', message);
+                console.log('Message received from server:', message); //Load track
             })
             .catch(error => {
                 console.error('Error:', error);

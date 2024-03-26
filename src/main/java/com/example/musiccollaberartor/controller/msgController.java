@@ -73,9 +73,6 @@ public class msgController {
            System.out.println(e);
        }
         return "server started successfully!!";
-
-
-
     }
 
 

@@ -1,6 +1,6 @@
 const inputField = document.querySelector('.input-fld');
-const submitButton = document.querySelector('.sub-btn');
-const start_collab=document.querySelector('.cta-btn');
+const joinbtn = document.querySelector('.sub-btn');
+const startcollabbtn=document.querySelector('.cta-btn');
 
 inputField.addEventListener('input', function () {
     if (inputField.value.trim() !== '') {
@@ -21,15 +21,6 @@ function validateInput() {
         
         var parts = input.split(':');
 
-        var ipAddress = parts[0];
-        var portNumber = parts[1];
-
-        var info= {
-            ip: ipAddress,
-            port: portNumber
-        };
-
-        console.log(info);
         alert(parts[0]+" "+parts[1]);
         window.location.href = 'player.html';
     }
@@ -41,7 +32,7 @@ function validateInput() {
 
 }
 
-document.querySelector('.cta-btn').addEventListener('click',function(){
+startcollabbtn.addEventListener('click',function(){
     // Fetch IP address and port
     fetch('https://api.ipify.org?format=json')
         .then(response => response.json())
@@ -50,7 +41,42 @@ document.querySelector('.cta-btn').addEventListener('click',function(){
             const port = window.location.port || '80'; // Use default port 80 if not specified
             console.log('IP Address: ' + ipAddress + '\nPort: ' + port);
             const url = `player.html?ip=${ipAddress}&port=${port}`;
+
+
+            // Call Server API
+            fetch(`http://localhost:8080/Server`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ Port: port })
+            })
+                .then(response => response.text())
+                .then(serverResponse => {
+                    console.log('Server Response:', serverResponse);
+                })
+                .catch(error => {
+                    console.error('Error starting server:', error);
+                });
+
+            // Call Client API
+            fetch(`http://localhost:8080/Client`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ip: ipAddress, Username: 'Harshvardhan', port: port })
+            })
+                .then(response => response.text())
+                .then(clientResponse => {
+                    console.log('Client Response:', clientResponse);
+                })
+                .catch(error => {
+                    console.error('Error starting client:', error);
+                });
+
             window.location.href = url;
+
         })
         .catch(error => {
             console.error('Error fetching IP address:', error);
@@ -58,23 +84,19 @@ document.querySelector('.cta-btn').addEventListener('click',function(){
 
 })
 
-document.addEventListener('DOMContentLoaded', function() {
-    const startClientButton = document.getElementById('startClientButton');
 
-    startClientButton.addEventListener('click', function() {
-        const ip = document.getElementById('ip').value;
-        const port = document.getElementById('port').value;
-        const username = document.getElementById('username').value;
 
-        fetch('/Client', {
+    joinbtn.addEventListener('click', function() {
+
+        fetch(`http://localhost:8080/Client`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                ip: ip,
-                port: port,
-                username: username
+                ip: parts[0],
+                port: parts[1],
+                username: "Harshvardhan"
             })
         })
             .then(response => {
@@ -93,5 +115,4 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Failed to start client. Please check console for details.');
             });
     });
-});
 

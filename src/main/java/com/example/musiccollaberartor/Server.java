@@ -61,7 +61,7 @@ public class Server {
     @PostConstruct
     public void startServer() {
         try {
-            serverSocket = new ServerSocket(3000);
+//            serverSocket = new ServerSocket(3000);
             while (!serverSocket.isClosed()) {
                 Socket socket = serverSocket.accept();
                 System.out.println("A new client has connected");

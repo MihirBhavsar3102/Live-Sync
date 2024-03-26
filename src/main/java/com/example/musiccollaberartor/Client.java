@@ -162,7 +162,7 @@ public class Client {
     private BufferedWriter bufferedWriter;
     private ObjectInputStream ois;
     private String username;
-    public static String msgToSend;
+    public static String msgToSend="Ram ram bhai sariye ne";
     public static boolean flag=false;
 
     RestTemplate restTemplate = new RestTemplate();
