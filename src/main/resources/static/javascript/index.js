@@ -50,5 +50,48 @@ document.addEventListener('scroll', function () {
     }
 })
 
+document.addEventListener('DOMContentLoaded', function () {
+    const signInButton = document.querySelector('.g-signin2');
+    const startCollaborationButton = document.querySelector('.cta-btn');
+
+    // Check if the user is signed in
+    if (isUserSignedIn()) {
+        // Redirect to collaboration page if signed in
+        startCollaborationButton.addEventListener('click', function () {
+            window.location.href = '../html/collab.html';
+        });
+    } else {
+        // Redirect to login page if not signed in
+        startCollaborationButton.addEventListener('click', function () {
+            window.location.href = '../html/login.html';
+        });
+        signInButton.addEventListener('click', function () {
+            window.location.href = '../html/login.html';
+        });
+    }
+    function isUserSignedIn() {
+
+//         // Check if the user is authenticated (example for session-based authentication)
+//         function isUserAuthenticated() {
+//             // Check if a session cookie exists or any other authentication indicator
+//             return document.cookie.includes('session_id');
+//         }
+//
+// // Redirect logic based on authentication status
+//         document.addEventListener('DOMContentLoaded', function() {
+//             if (!isUserAuthenticated()) {
+//                 // Redirect to login page if not authenticated
+//                 window.location.href = '/login.html';
+//             }
+//         });
+
+        // You can implement your logic to check if the user is signed in using Google sign-in
+        // For example, if you're using Google Sign-In, you can check the auth2.currentUser.get() method
+        // Here, I'm assuming a dummy check where the user's information is displayed on the page
+        return document.querySelector('.user-info') !== null;
+    }
+});
+
+
 
 

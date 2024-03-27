@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+<!--    <link rel="stylesheet" href="styles.css">-->
+</head>
+<body>
+<div class="container">
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#])(?=.{6,})" title="Password must be at least 6 characters long and contain at least one lowercase letter, one uppercase letter, and one of the following special characters: @ or #" required>
+        <input type="text" id="username" placeholder="UserName" pattern="[a-z][a-z0-9_@]{4,}" title="Username must start with a lowercase letter, be at least 5 characters long, and can only contain lowercase letters, numbers, underscores (_), or @ symbol." required minlength="5" maxlength="20">
+        //upload photo
+        <button type="submit">Sign Up</button>
+    </form>
+</div>
+<script src="../javascript/signup.js"></script>
+</body>
+</html>
