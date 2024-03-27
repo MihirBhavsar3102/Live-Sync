@@ -38,7 +38,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
             // Handle successful signup
             alert('Signup successful!');
             // Optionally, you can redirect the user to another page after signup
-            window.location.href = `index.html?name=${user.UserName}`; // Replace 'success.html' with the actual path
+            window.location.href = `login.html`; // Replace 'success.html' with the actual path
         } else {
             const errorMessage = await response.text();
             // Handle signup error
