@@ -87,6 +87,6 @@ function startClient(ipAddress, port,Username) {
 }
 
     joinbtn.addEventListener('click', function() {
-        startClient(parts[0], parts[1],'Harshvardhan')
+        startClient("172.26.100.230", 3000,'Harshvardhan')
     });
 

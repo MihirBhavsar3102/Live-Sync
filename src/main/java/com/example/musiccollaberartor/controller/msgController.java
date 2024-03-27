@@ -16,15 +16,15 @@ public class msgController {
 
     @PostMapping("/send_msg")
     public String msgFromClient(@RequestBody String send_msg){
-        System.out.println("msg :"+send_msg);
-        Client.flag=true;
+        Client.sendflag =true;
         Client.msgToSend=send_msg;
-        return "msg received successfully!!";
+        return "msg sent successfully!!";
     }
 
     @PostMapping("/receive_msg")
-    public ResponseEntity<String> msgToClient(@RequestBody(required = false) String message) {
-        return ResponseEntity.status(HttpStatus.OK).body(message);
+    public ResponseEntity<String> msgToClient() {
+        Client.receiveflag=true;
+        return ResponseEntity.status(HttpStatus.OK).body(Client.msgToReceive);
     }
 //@PostMapping("/receive_msg")
 //public ResponseEntity<String> receiveMessage(
@@ -50,17 +50,15 @@ public class msgController {
                               @RequestParam String username){
         try{
 //            Socket socket=new Socket(ipAddress,port);
-            Socket socket=new Socket("localhost",port);
+            Socket socket=new Socket("172.26.100.230",port);
             Client client=new Client(socket,username);
-            client.sendMessage();
             client.listenForMessage();
+            client.sendMessage();
         }
         catch (IOException e){
             System.out.println(e);
         }
     }
-
-
 
 
     @PostMapping("/Server")
