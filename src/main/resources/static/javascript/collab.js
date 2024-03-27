@@ -62,7 +62,7 @@ startcollabbtn.addEventListener('click',function(){
                 });
 
             startClient(ipAddress,port)
-            // window.location.href = url;
+            window.location.href = url;
 
         })
         .catch(error => {
@@ -102,17 +102,17 @@ function startClient(ipAddress, port) {
                 username: "Harshvardhan"
             })
         })
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error('Failed to start client');
-                }
-            })
-            .then(message => {
-                console.log('Response from server:', message);
-                alert('Client started successfully!');
-            })
+            // .then(response => {
+            //     if (response.ok) {
+            //         return response.text();
+            //     } else {
+            //         throw new Error('Failed to start client');
+            //     }
+            // })
+            // .then(message => {
+            //     console.log('Response from server:', message);
+            //     alert('Client started successfully!');
+            // })
             .catch(error => {
                 console.error('Error:', error);
                 alert('Failed to start client. Please check console for details.');

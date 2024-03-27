@@ -59,7 +59,7 @@ public class Server {
         this.serverSocket= serverSocket;
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void startServer() {
         try {
 //            serverSocket = new ServerSocket(3000);

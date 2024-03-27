@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -20,7 +21,7 @@ public class msgController {
         System.out.println("msg :"+send_msg);
         Client.flag=true;
         Client.msgToSend=send_msg;
-        return "msg received successfully!!";
+        return "msg send successfully!!";
     }
 
     @PostMapping("/receive_msg")
@@ -49,9 +50,11 @@ public class msgController {
     public void StartClient(@RequestBody ClientData clientData){
         try{
 
-            String ipAddress = clientData.getIp();
+            InetAddress ipAddress = InetAddress.getByName(clientData.getIp());
             String username = clientData.getUsername();
             int port = clientData.getPort();
+
+            System.out.println(ipAddress+" "+username+" "+port);
 
             Socket socket=new Socket(ipAddress,port);
             Client client=new Client(socket,username);
