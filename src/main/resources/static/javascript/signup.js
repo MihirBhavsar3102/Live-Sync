@@ -12,16 +12,16 @@ const passwordInput = document.getElementById('password');
 document.getElementById('signupForm').addEventListener('submit', async function(event) {
     console.log('Form submitted');
 
-    // event.preventDefault(); // Prevent default form submission
+    event.preventDefault(); // Prevent default form submission
 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    const username = document.getElementById('username').value;
+    const UserName = document.getElementById('username').value;
 
     const userData = {
-        email: email,
-        password: password,
-        userName: username,
+        "email": email,
+        "password": password,
+        "UserName": UserName
     };
 
     try {
@@ -38,7 +38,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
             // Handle successful signup
             alert('Signup successful!');
             // Optionally, you can redirect the user to another page after signup
-            window.location.href = '../html/login.html'; // Replace 'success.html' with the actual path
+            window.location.href = '../html/success.html'; // Replace 'success.html' with the actual path
         } else {
             const errorMessage = await response.text();
             // Handle signup error

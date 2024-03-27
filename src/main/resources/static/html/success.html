@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveSync</title>
+    <link rel="shortcut icon" href="../assets/media/Logov1.png" type="image/x-icon">
+    <meta name="google-signin-client_id" content="328306164881-dpb86utrka1qall0ukktr920kuhj8shq.apps.googleusercontent.com">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.8/lottie.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/success.css">
+</head>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('UserName');
+        const photo = urlParams.get('photo');
+
+        // Use the parameters as needed
+        console.log('User Name:', userName);
+        console.log('Photo:', photo);
+    });
+</script>
+
+<body>
+
+<!--<script src="https://apis.google.com/js/platform.js" async defer></script>-->
+
+<header>
+    <h1><img src="../assets/media/Logov2.png">LiveSync</h1>
+    <nav>
+        <a href="#" class="active">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+<!--        <a href="login.html">Log In</a>-->
+        <a href="#">Name & DP</a>
+    </nav>
+</header>
+
+<section class="home">
+
+    <div class="circle"></div>
+    <img src="../assets/media/Artist-collage.png" class="collage">
+    <h1 class="title">Listen to your<br>favourite Artists,<div class="hero">Together...</div>
+    </h1>
+
+</section>
+
+<section class="about">
+    <div>
+        <h1>LiveSync</h1>
+        <br>
+        <p>Experience seamless real-time music collaboration with LiveSync. Sync up with musicians worldwide, jam
+            effortlessly, and create stunning melodies together. Ready to make music magic? Start collaborating now!
+        </p>
+        <!--            <a href="collab.html">-->
+        <button class="cta-btn">Start Collabaration<p>&rarr;</p></button>
+        <!--            </a>-->
+
+    </div>
+    <div class="animation-container"></div>
+
+</section>
+
+
+<script src="../javascript/index.js"></script>
+<script>
+    const animationContainer = document.querySelector('.animation-container');
+    const animData = {
+        container: animationContainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../assets/media/index.json'
+    };
+    const anim = lottie.loadAnimation(animData);
+</script>
+
+</body>
+
+</html>

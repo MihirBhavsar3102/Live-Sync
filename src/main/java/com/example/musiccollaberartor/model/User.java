@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User {
     @Id
     private String id;
-    @Indexed(unique = true)
+//    @Indexed(unique = true)
     private String UserName;
     private String email;
     private String password;
@@ -22,9 +22,9 @@ public class User {
     private Integer likes;
 
 
-    public User(String id, String name, String email, String photo, Integer likes, String password) {
+    public User(String id, String UserName, String email, String photo, Integer likes, String password) {
         this.id = id;
-        this.UserName = name;
+        this.UserName = UserName;
         this.email = email;
         this.photo = photo;
         this.likes = likes;
@@ -38,8 +38,8 @@ public class User {
         this.id = id;
     }
 
-    public void setUserName(String name) {
-        UserName = name;
+    public void setUserName(String UserName) {
+        this.UserName = UserName;
     }
 
     public void setEmail(String email) {
