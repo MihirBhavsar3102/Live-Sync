@@ -23,8 +23,20 @@ public class msgController {
 
     @PostMapping("/receive_msg")
     public ResponseEntity<String> msgToClient() {
+        String message="";
+        if(Client.newflag){
+
+            for(String content: Client.usernames){
+                message +=content+":";
+            }
+            Client.newflag=false;
+        }
+        else{
+           message= Client.msgToReceive;
         Client.receiveflag=true;
-        return ResponseEntity.status(HttpStatus.OK).body(Client.msgToReceive);
+
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 //@PostMapping("/receive_msg")
 //public ResponseEntity<String> receiveMessage(
@@ -50,7 +62,7 @@ public class msgController {
                               @RequestParam String username){
         try{
 //            Socket socket=new Socket(ipAddress,port);
-            Socket socket=new Socket("172.26.100.230",port);
+            Socket socket=new Socket("172.26.65.245",port);
             Client client=new Client(socket,username);
             client.listenForMessage();
             client.sendMessage();

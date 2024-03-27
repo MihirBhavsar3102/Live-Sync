@@ -166,6 +166,8 @@ public class Client {
     public static String msgToReceive="Mil gaya";
     public static boolean sendflag =false;
     public static boolean receiveflag =false;
+    public static boolean newflag=false;
+    public static List<String> usernames;
 
 //    RestTemplate restTemplate = new RestTemplate();
 
@@ -217,15 +219,17 @@ public class Client {
                     try{
                         msgFromGroupChat= ois.readUTF();
                         if(msgFromGroupChat.contains("aRrAy")){
-                            List<String> usernames=(List<String>)ois.readObject();
+                            newflag=true;
+                            usernames=(List<String>)ois.readObject();
                             String test=ois.readUTF();//
                             for(String username:usernames){
                                 System.out.println(username);
                             }
+
                             System.out.println(test);
+
                         }
                         else{
-
 //                            System.out.println("Group:"+msgFromGroupChat);
                             if(receiveflag){
                                 msgToReceive=msgFromGroupChat;

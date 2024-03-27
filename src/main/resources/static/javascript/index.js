@@ -3,6 +3,23 @@ const collage = document.querySelector('.collage')
 const circle = document.querySelector('.circle')
 const about = document.querySelector('.about')
 
+document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userName = urlParams.get('UserName');
+
+
+    // Use the parameters as needed
+    console.log('User Name:', userName);
+    if(userName){
+
+        const loginbtn=document.querySelector('#login_btn');
+        loginbtn.innerHTML=`<p>${userName}</p>`;
+        loginbtn.href="";
+
+
+    }
+});
+
 document.addEventListener('scroll', function () {
     let scrollPosition = window.scrollY
 
@@ -69,27 +86,11 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = '../html/login.html';
         });
     }
-    function isUserSignedIn() {
 
-//         // Check if the user is authenticated (example for session-based authentication)
-//         function isUserAuthenticated() {
-//             // Check if a session cookie exists or any other authentication indicator
-//             return document.cookie.includes('session_id');
-//         }
-//
-// // Redirect logic based on authentication status
-//         document.addEventListener('DOMContentLoaded', function() {
-//             if (!isUserAuthenticated()) {
-//                 // Redirect to login page if not authenticated
-//                 window.location.href = '/login.html';
-//             }
-//         });
 
-        // You can implement your logic to check if the user is signed in using Google sign-in
-        // For example, if you're using Google Sign-In, you can check the auth2.currentUser.get() method
-        // Here, I'm assuming a dummy check where the user's information is displayed on the page
-        return document.querySelector('.user-info') !== null;
-    }
+
+
+
 });
 
 
