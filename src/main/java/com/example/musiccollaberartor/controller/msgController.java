@@ -1,7 +1,6 @@
 package com.example.musiccollaberartor.controller;
 
 import com.example.musiccollaberartor.Client;
-import com.example.musiccollaberartor.ClientData;
 import com.example.musiccollaberartor.Server;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,14 +45,12 @@ public class msgController {
 //}
 
     @PostMapping("/Client")
-    public void StartClient(@RequestBody ClientData clientData){
+    public void StartClient(  @RequestParam String ipAddress,
+                              @RequestParam int port,
+                              @RequestParam String username){
         try{
-
-            String ipAddress = clientData.getIp();
-            String username = clientData.getUsername();
-            int port = clientData.getPort();
-
-            Socket socket=new Socket(ipAddress,port);
+//            Socket socket=new Socket(ipAddress,port);
+            Socket socket=new Socket("localhost",port);
             Client client=new Client(socket,username);
             client.sendMessage();
             client.listenForMessage();
