@@ -24,7 +24,6 @@ public class msgController {
 
     @PostMapping("/receive_msg")
     public ResponseEntity<String> msgToClient(@RequestBody(required = false) String message) {
-        System.out.println(message);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 //@PostMapping("/receive_msg")
@@ -51,7 +50,7 @@ public class msgController {
                               @RequestParam String username){
         try{
 //            Socket socket=new Socket(ipAddress,port);
-            Socket socket=new Socket(ipAddress,port);
+            Socket socket=new Socket("localhost",port);
             Client client=new Client(socket,username);
             client.sendMessage();
             client.listenForMessage();
