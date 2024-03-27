@@ -39,6 +39,7 @@ startcollabbtn.addEventListener('click',function(){
         .then(data => {
             const ipAddress = data.ip;
             const port = 3000; // Use default port 80 if not specified
+            const Username='bhadrika';
             // const port=2000;
             console.log('IP Address: ' + ipAddress + '\nPort: ' + port);
             const url = `player.html?ip=${ipAddress}&port=${port}`;
@@ -61,8 +62,8 @@ startcollabbtn.addEventListener('click',function(){
                     console.error('Error starting server:', error);
                 });
 
-            startClient(ipAddress,port)
-            // window.location.href = url;
+            startClient(ipAddress,port,Username)
+             window.location.href = url;
 
         })
         .catch(error => {
@@ -71,19 +72,15 @@ startcollabbtn.addEventListener('click',function(){
 
 })
 
-function startClient(ipAddress, port) {
+function startClient(ipAddress, port,Username) {
     // Call Client API to start the client
     fetch(`http://localhost:8080/Client`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type':  'application/x-www-form-urlencoded'
         },
-        body: JSON.stringify({ ip: ipAddress, username: 'Harshvardhan', port: port })
+        body: `ipAddress=${ipAddress}&port=${port}&username=${Username}`
     })
-        // .then(response => response.text())
-        // .then(clientResponse => {
-        //     console.log('Client Response:', clientResponse);
-        // })
         .catch(error => {
             console.error('Error starting client:', error);
         });
@@ -91,31 +88,6 @@ function startClient(ipAddress, port) {
 
     joinbtn.addEventListener('click', function() {
 
-        fetch(`http://localhost:8080/Client`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                ip: parts[0],
-                port: parts[1],
-                username: "Harshvardhan"
-            })
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error('Failed to start client');
-                }
-            })
-            .then(message => {
-                console.log('Response from server:', message);
-                alert('Client started successfully!');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Failed to start client. Please check console for details.');
-            });
+        startClient(parts[0], parts[1],'Harshvardhan')
     });
 

@@ -1,14 +1,14 @@
-const passwordInput = document.getElementById('password');
-//
-// passwordInput.addEventListener('input', function() {
-//     const password = passwordInput.value;
-//     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#])(?=.{6,})/;
-//     if (!passwordRegex.test(password)) {
-//         passwordInput.setCustomValidity('Password must be at least 6 characters long and contain at least one lowercase letter, one uppercase letter, and one of the following special characters: @ or #');
-//     } else {
-//         passwordInput.setCustomValidity('');
-//     }
-// });
+// const passwordInput = document.getElementById('password');
+// //
+// // passwordInput.addEventListener('input', function() {
+// //     const password = passwordInput.value;
+// //     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#])(?=.{6,})/;
+// //     if (!passwordRegex.test(password)) {
+// //         passwordInput.setCustomValidity('Password must be at least 6 characters long and contain at least one lowercase letter, one uppercase letter, and one of the following special characters: @ or #');
+// //     } else {
+// //         passwordInput.setCustomValidity('');
+// //     }
+// // });
 document.getElementById('signupForm').addEventListener('submit', async function(event) {
     console.log('Form submitted');
 

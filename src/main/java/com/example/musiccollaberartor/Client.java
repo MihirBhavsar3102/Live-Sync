@@ -2,7 +2,6 @@ package com.example.musiccollaberartor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.*;
 import java.net.Socket;
@@ -163,9 +162,12 @@ public class Client {
     private ObjectInputStream ois;
     private String username;
     public static String msgToSend="Ram ram bhai sariye ne";
-    public static boolean flag=false;
 
-    RestTemplate restTemplate = new RestTemplate();
+    public static String msgToReceive="Mil gaya";
+    public static boolean sendflag =false;
+    public static boolean receiveflag =false;
+
+//    RestTemplate restTemplate = new RestTemplate();
 
 //    public Client(Socket socket, String username){
 //
@@ -191,11 +193,12 @@ public class Client {
 
 
             while(socket.isConnected()){
-                if (flag == true) {
+                if (sendflag == true) {
+                    System.out.println("Mein thread hu"+msgToSend);
                     bufferedWriter.write(username + ": " + msgToSend);
                     bufferedWriter.newLine();
                     bufferedWriter.flush();
-                    flag=false;
+                    sendflag =false;
                 }
             }
         }catch(IOException ioe){
@@ -207,6 +210,7 @@ public class Client {
         new Thread(new Runnable(){
             @Override
             public void run(){
+
                 String msgFromGroupChat;
 
                 while(socket.isConnected()){
@@ -219,15 +223,21 @@ public class Client {
                                 System.out.println(username);
                             }
                             System.out.println(test);
-                        }else{
-                            System.out.println(msgFromGroupChat);
-                            ResponseEntity<Void> response = restTemplate.postForObject("http://localhost:8080/receive_msg",msgFromGroupChat, ResponseEntity.class);
-//                            System.out.println("Response from server: " + response.getBody());
-                            if (response.getStatusCode().is2xxSuccessful()) {
-                                System.out.println("Message sent successfully");
-                            } else {
-                                System.err.println("Failed to send message to server");
+                        }
+                        else{
+
+//                            System.out.println("Group:"+msgFromGroupChat);
+                            if(receiveflag){
+                                msgToReceive=msgFromGroupChat;
+                                receiveflag=false;
                             }
+//                            ResponseEntity<Void> response = restTemplate.postForObject("http://localhost:8080/receive_msg",msgFromGroupChat, ResponseEntity.class);
+//                            System.out.println("Response from server: " + response.getBody());
+//                            if (response.getStatusCode().is2xxSuccessful()) {
+//                                System.out.println("Message sent successfully");
+//                            } else {
+//                                System.err.println("Failed to send message to server");
+//                            }
 
                         }
 
