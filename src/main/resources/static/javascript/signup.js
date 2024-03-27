@@ -21,7 +21,7 @@ document.getElementById('signupForm').addEventListener('submit', async function(
     const userData = {
         "email": email,
         "password": password,
-        "UserName": UserName
+        "userName": UserName
     };
 
     try {

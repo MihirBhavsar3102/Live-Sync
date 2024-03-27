@@ -15,16 +15,16 @@ public class User {
     @Id
     private String id;
 //    @Indexed(unique = true)
-    private String UserName;
+    private String userName;
     private String email;
     private String password;
     private String photo;
     private Integer likes;
 
 
-    public User(String id, String UserName, String email, String photo, Integer likes, String password) {
+    public User(String id, String userName, String email, String photo, Integer likes, String password) {
         this.id = id;
-        this.UserName = UserName;
+        this.userName = userName;
         this.email = email;
         this.photo = photo;
         this.likes = likes;
@@ -38,8 +38,8 @@ public class User {
         this.id = id;
     }
 
-    public void setUserName(String UserName) {
-        this.UserName = UserName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setEmail(String email) {
@@ -63,7 +63,7 @@ public class User {
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public String getEmail() {
