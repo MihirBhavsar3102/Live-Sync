@@ -29,7 +29,7 @@ let bgAnimation = document.querySelector('.bgAnimation');
 let bodyElement = document.querySelector('body');
 
 var track_index = 0;
-let isPlaying = false;
+var isPlaying = false;
 let isRandom = false;
 let isRepeat = false;
 let isLiked = false;
@@ -543,7 +543,7 @@ function sendMsg() {
     const trackData = {
         objectId: loadedSongs[track_index].id,
         currentTime: curr_track.currentTime,
-        // totalTime: curr_track.duration
+        playstatus: isPlaying
     };
     console.log(JSON.stringify(trackData))
     fetch(`http://localhost:8080/send_msg`, {
