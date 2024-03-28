@@ -247,9 +247,9 @@ function setText() {
     total_duration.textContent = durationMinutes + ":" + durationSeconds;
 }
 
-function toggleMode() {
-    const root = document.documentElement;
-    isDark = !isDark;
+    function toggleMode() {
+        const root = document.documentElement;
+        isDark = !isDark;
 
     if (isDark === true) {
         // document.querySelector('#toggle').innerHTML = '<i class="fas fa-moon fa-2x" style="color:white"></i>';
@@ -276,220 +276,212 @@ function toggleMode() {
 //     });
 // });
 
-const expandbtn = document.querySelector('.expand-search')
-const closebtn = document.querySelector('.close-search')
-const usrbtn = document.querySelector('.users-btn')
-const searchcontent = document.querySelector('.search-box-content')
-const searchscreen = document.querySelector('.search-screen')
-const usrscreen = document.querySelector('.user-screen')
+    const expandbtn = document.querySelector('.expand-search')
+    const closebtn = document.querySelector('.close-search')
+    const usrbtn = document.querySelector('.users-btn')
+    const searchcontent = document.querySelector('.search-box-content')
+    const searchscreen = document.querySelector('.search-screen')
+    const usrscreen = document.querySelector('.user-screen')
 
 
-expandbtn.addEventListener('click', function () {
+    expandbtn.addEventListener('click', function () {
 
-    document.querySelector('.search-box').style.width = '25%'
-    searchcontent.classList.remove('invisible')
-    if (usrbtn.childNodes[0].classList.contains('active')) {
-        usrscreen.classList.remove('invisible')
-        searchscreen.classList.add('invisible')
-    } else {
-        searchscreen.classList.remove('invisible')
-        usrscreen.classList.add('invisible')
-    }
-    this.classList.add('invisible')
+        document.querySelector('.search-box').style.width = '25%'
+        searchcontent.classList.remove('invisible')
+        if (usrbtn.childNodes[0].classList.contains('active')) {
+            usrscreen.classList.remove('invisible')
+            searchscreen.classList.add('invisible')
+        } else {
+            searchscreen.classList.remove('invisible')
+            usrscreen.classList.add('invisible')
+        }
+        this.classList.add('invisible')
 
-})
+    })
 
-closebtn.addEventListener('click', function () {
+    closebtn.addEventListener('click', function () {
 
-    document.querySelector('.search-box').style.width = '1%'
-    expandbtn.classList.remove('invisible')
-    searchcontent.classList.add('invisible')
-    if (!usrscreen.classList.contains('invisible')) {
-        usrscreen.classList.add('invisible')
-    }
-})
+        document.querySelector('.search-box').style.width = '1%'
+        expandbtn.classList.remove('invisible')
+        searchcontent.classList.add('invisible')
+        if (!usrscreen.classList.contains('invisible')) {
+            usrscreen.classList.add('invisible')
+        }
+    })
 
-usrbtn.addEventListener('click', function () {
-    usrbtn.childNodes[0].classList.toggle('active')
-    if (usrbtn.childNodes[0].classList.contains('active')) {
-        usrscreen.classList.remove('invisible')
-        searchscreen.classList.add('invisible')
-    } else {
-        searchscreen.classList.remove('invisible')
-        usrscreen.classList.add('invisible')
-    }
-})
+    usrbtn.addEventListener('click', function () {
+        usrbtn.childNodes[0].classList.toggle('active')
+        if (usrbtn.childNodes[0].classList.contains('active')) {
+            usrscreen.classList.remove('invisible')
+            searchscreen.classList.add('invisible')
+        } else {
+            searchscreen.classList.remove('invisible')
+            usrscreen.classList.add('invisible')
+        }
+    })
 
-document.querySelector('.end-btn').addEventListener('click', function () {
-    if (confirm("Want to end collab?")) {
-        window.location.href = 'collab.html';
-    }
-})
+    document.querySelector('.end-btn').addEventListener('click', function () {
+        if (confirm("Want to end collab?")) {
+            window.location.href = 'collab.html';
+        }
+    })
 
-const search_data = [];
-const searchfld = document.querySelector('.search-fld');
-const searchResultDiv = document.querySelector('.search-result');
-searchfld.addEventListener('keypress', function (event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        console.log(this.value);
-        const query = this.value; // Get the value from the input field
+    const search_data = [];
+    const searchfld = document.querySelector('.search-fld');
+    const searchResultDiv = document.querySelector('.search-result');
+    searchfld.addEventListener('keypress', function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            console.log(this.value);
+            const query = this.value; // Get the value from the input field
 
-        // Fetch data from the server
-        fetch(`http://localhost:8080/songs/query/${query}`)
-            .then(response => response.json())
-            .then(data => {
-                // Process the retrieved data and update the UI accordingly
-                // Clear previous search results
-                search_data.length = 0;
-                searchResultDiv.innerHTML = ''; // Clear existing results
-                if (data.length === 0) {
-                    searchResultDiv.innerHTML = '<p>No results found</p><div class="animation-container-2"></div>';
-                    const animationContainer2 = document.querySelector('.animation-container-2');
-                    const animData2 = {
-                        container: animationContainer2,
-                        renderer: 'svg',
-                        loop: true,
-                        autoplay: true,
-                        path: '../assets/media/Empty.json'
-                    };
-                    const anim2 = lottie.loadAnimation(animData2);
-                } else {
+            // Fetch data from the server
+            fetch(`http://localhost:8080/songs/query/${query}`)
+                .then(response => response.json())
+                .then(data => {
                     // Process the retrieved data and update the UI accordingly
-                    data.forEach(song => {
-                        const row = [song.title, song.movie, song.artist, song.imgUrl, song.url];
-                        search_data.push(row);
+                    // Clear previous search results
+                    search_data.length = 0;
+                    searchResultDiv.innerHTML = ''; // Clear existing results
+                    if (data.length === 0) {
+                        searchResultDiv.innerHTML = '<p>No results found</p><div class="animation-container-2"></div>';
+                        const animationContainer2 = document.querySelector('.animation-container-2');
+                        const animData2 = {
+                            container: animationContainer2,
+                            renderer: 'svg',
+                            loop: true,
+                            autoplay: true,
+                            path: '../assets/media/Empty.json'
+                        };
+                        const anim2 = lottie.loadAnimation(animData2);
+                    } else {
+                        // Process the retrieved data and update the UI accordingly
+                        data.forEach(song => {
+                            const row = [song.title, song.movie, song.artist, song.imgUrl, song.url];
+                            search_data.push(row);
 
 
-                        const resultDiv = document.createElement('div');
-                        resultDiv.classList.add('result');
-                        const img = document.createElement('img');
-                        img.src = song.imgUrl; // Set the image source
-                        img.alt = `${song.title} Poster`; // Set alternative text
-                        resultDiv.appendChild(img); // Append image to result div
+                            const resultDiv = document.createElement('div');
+                            resultDiv.classList.add('result');
+                            const img = document.createElement('img');
+                            img.src = song.imgUrl; // Set the image source
+                            img.alt = `${song.title} Poster`; // Set alternative text
+                            resultDiv.appendChild(img); // Append image to result div
 
 
-                        const titlePara = document.createElement('p');
-                        titlePara.innerHTML = `${song.title} <br> <span style="font-size: 14px;">${song.movie} | ${song.artist}</span>`
+                            const titlePara = document.createElement('p');
+                            titlePara.innerHTML = `${song.title} <br> <span style="font-size: 14px;">${song.movie} | ${song.artist}</span>`
 
 
-                        resultDiv.appendChild(titlePara);
+                            resultDiv.appendChild(titlePara);
 
-                        resultDiv.addEventListener('click', function () {
-                            if (playerscreen.classList.contains('invisible')) {
-                                playerscreen.classList.remove('invisible');
-                            }
-                            if (!initscreen.classList.contains('invisible')) {
-                                initscreen.classList.add('invisible');
-                            }
-                            if (!bgAnimation.classList.contains('invisible')) {
-                                bgAnimation.classList.add('invisible');
-                            }
-                            bodyElement.style.setProperty('--opacity', '0.8');
+                            resultDiv.addEventListener('click', function () {
+                                if (playerscreen.classList.contains('invisible')) {
+                                    playerscreen.classList.remove('invisible');
+                                }
+                                if (!initscreen.classList.contains('invisible')) {
+                                    initscreen.classList.add('invisible');
+                                }
+                                if (bgAnimation) {
+                                    bgAnimation.parentElement.removeChild(bgAnimation);
+                                }
+                                bodyElement.style.setProperty('--opacity', '0.8');
 
-                            loadTrack(search_data.findIndex(item => item[0] === song.title && item[1] === song.movie), song);
+                                loadTrack(search_data.findIndex(item => item[0] === song.title && item[1] === song.movie), song);
+                            });
+
+                            // Append the new div to the search result container
+                            searchResultDiv.appendChild(resultDiv);
+
                         });
-
-                        // Append the new div to the search result container
-                        searchResultDiv.appendChild(resultDiv);
-
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }
-});
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+    });
 
 
-const copyBtn = document.getElementById('copyButton');
+    const copyBtn = document.getElementById('copyButton');
 
-copyBtn.addEventListener('click', function () {
-    const textToCopy = document.getElementById('textToCopy');
-    const ip_port = textToCopy.innerText
-    // Use the Clipboard API to copy the text to the clipboard
-    navigator.clipboard.writeText(ip_port)
-        .then(() => {
+    copyBtn.addEventListener('click', function () {
+        const textToCopy = document.getElementById('textToCopy');
+        const ip_port = textToCopy.innerText
+        // Use the Clipboard API to copy the text to the clipboard
+        navigator.clipboard.writeText(ip_port)
+            .then(() => {
 // First part animation
-            copyBtn.classList.add('animate-out');
-            textToCopy.classList.add('animate-out');
-            setTimeout(function () {
-                copyBtn.innerHTML = '<i class="fa fa-check-circle fa-2x content" aria-hidden="true" style="color:white"></i>'
-                textToCopy.innerText = 'Copied to clipboard!!';
-                copyBtn.classList.remove('animate-out');
-                textToCopy.classList.remove('animate-out');
+                copyBtn.classList.add('animate-out');
+                textToCopy.classList.add('animate-out');
                 setTimeout(function () {
-                    copyBtn.classList.add('animate-out');
-                    textToCopy.classList.add('animate-out');
+                    copyBtn.innerHTML = '<i class="fa fa-check-circle fa-2x content" aria-hidden="true" style="color:white"></i>'
+                    textToCopy.innerText = 'Copied to clipboard!!';
+                    copyBtn.classList.remove('animate-out');
+                    textToCopy.classList.remove('animate-out');
                     setTimeout(function () {
-                        copyBtn.innerHTML = '<i class="fa fa-clone fa-2x content" aria-hidden="true" style="color:white"></i>'
-                        textToCopy.innerText = ip_port;
-                        copyBtn.classList.remove('animate-out');
-                        textToCopy.classList.remove('animate-out');
-                    }, 200);
-                }, 3000);
-            }, 200);
-        })
-        .catch(err => {
-            console.error('Error copying text to clipboard:', err);
-        });
-});
+                        copyBtn.classList.add('animate-out');
+                        textToCopy.classList.add('animate-out');
+                        setTimeout(function () {
+                            copyBtn.innerHTML = '<i class="fa fa-clone fa-2x content" aria-hidden="true" style="color:white"></i>'
+                            textToCopy.innerText = ip_port;
+                            copyBtn.classList.remove('animate-out');
+                            textToCopy.classList.remove('animate-out');
+                        }, 200);
+                    }, 3000);
+                }, 200);
+            })
+            .catch(err => {
+                console.error('Error copying text to clipboard:', err);
+            });
+    });
 
 
 // Inside main.js
-let previousMessage = null;
-const worker = new Worker('../javascript/worker.js');
+    let previousMessage = null;
+    const worker = new Worker('../javascript/worker.js');
 
 // Set interval for fetching messages from worker thread
-const fetchInterval = 1000;
+    const fetchInterval = 10000;
 
 // Send fetch interval to worker thread
-worker.postMessage(fetchInterval);
+    worker.postMessage(fetchInterval);
 
 // Listen for messages from worker thread
-worker.onmessage = function (event) {
-    const data = event.data;
+    worker.onmessage = function (event) {
+        const data = event.data;
 
-    if (data.message) {
-        // console.log('Message received from server:', data.message);
+        if (data.message) {
+            console.log('Message received from server:', data.message);
 
-        if (data.message.endsWith(':')) {
-            const messageParts = data.message.split(':').filter(part => part.trim() !== ''); // Split message and filter out empty parts
-            const userResultContainer = document.querySelector('.user-result');
+            if (data.message.endsWith(':')) {
+                const messageParts = data.message.split(':').filter(part => part.trim() !== ''); // Split message and filter out empty parts
+                const userResultContainer = document.querySelector('.user-result');
 
-            // Clear previous content in userResultContainer
-            userResultContainer.innerHTML = '';
+                // Clear previous content in userResultContainer
+                userResultContainer.innerHTML = '';
 
-            messageParts.forEach(part => {
-                const resultDiv = document.createElement('div');
-                resultDiv.classList.add('result');
+                messageParts.forEach(part => {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.classList.add('result');
 
-                const headerDiv = document.createElement('div');
-                headerDiv.textContent = part.charAt(0).toUpperCase();
+                    const headerDiv = document.createElement('div');
+                    headerDiv.textContent = part.charAt(0).toUpperCase();
 
-                const paragraph = document.createElement('p');
-                paragraph.textContent = part;
+                    const paragraph = document.createElement('p');
+                    paragraph.textContent = part;
 
-                resultDiv.appendChild(headerDiv);
-                resultDiv.appendChild(paragraph);
+                    resultDiv.appendChild(headerDiv);
+                    resultDiv.appendChild(paragraph);
 
-                userResultContainer.appendChild(resultDiv);
-            });
-            sendMsg();
+                    userResultContainer.appendChild(resultDiv);
+                });
+                sendMsg();
 
-        } else if (data.message !== previousMessage) {
+            } else if (data.message !== previousMessage) {
 
-            let firstColonIndex = data.message.indexOf(":");
-            if (firstColonIndex !== -1) {
-                var part1 = data.message.slice(0, firstColonIndex);
-                var part2 = data.message.slice(firstColonIndex + 1);
-                console.log("Part 1:", part1);
-                console.log("Part 2:", part2);
-            }
-            try {
-                const songinfo = JSON.parse(part2);
-                console.log("LOAD")
+                console.log("loadtrack");
+                const songinfo = JSON.parse(data.message);
                 fetchSongById(songinfo.objectId)
                     .then(songData => {
                         console.log(songData); // You can access the resolved data here
@@ -500,62 +492,57 @@ worker.onmessage = function (event) {
                         if (!initscreen.classList.contains('invisible')) {
                             initscreen.classList.add('invisible');
                         }
-                        if (!bgAnimation.classList.contains('invisible')) {
-                            bgAnimation.classList.add('invisible');
+                        if (bgAnimation) {
+                            bgAnimation.parentElement.removeChild(bgAnimation);
                         }
-
                         loadTrack(search_data.findIndex(item => item[0] === songData.title && item[1] === songData.movie), songData);
-
-                        console.log(songinfo.currentTime)
-                        curr_track.currentTime = songinfo.currentTime;
+                        curr_track.currentTime=songinfo.currentTime;
 
                     })
                     .catch(error => {
                         console.error('Error fetching data:', error);
                     });
-            } catch (e) {
-                console.log("part2")
+
+
             }
 
-
+            previousMessage = data.message;
+        } else if (data.error) {
+            console.error('Error:', data.error);
         }
-
-        previousMessage = data.message;
-    } else if (data.error) {
-        console.error('Error:', data.error);
     }
-}
 
 
-async function fetchSongById(id) {
-    try {
-        const response = await fetch(`/songs/id/${id}`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok.');
+
+    async function fetchSongById(id) {
+        try {
+            const response = await fetch(`/songs/id/${id}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            const songData = await response.json();
+            const row = [songData.title, songData.movie, songData.artist, songData.imgUrl, songData.url];
+            const isRowDuplicate = search_data.some(existingRow => {
+                return existingRow.every((value, index) => value === row[index]);
+            });
+            if (!isRowDuplicate) {
+                console.log('Added')
+                search_data.push(row);
+            } else {
+                console.log('Row already exists:', row);
+            }
+            return songData;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            throw error;
         }
-        const songData = await response.json();
-        const row = [songData.title, songData.movie, songData.artist, songData.imgUrl, songData.url];
-        const isRowDuplicate = search_data.some(existingRow => {
-            return existingRow.every((value, index) => value === row[index]);
-        });
-        if (!isRowDuplicate) {
-            console.log('Added')
-            search_data.push(row);
-        } else {
-            console.log('Row already exists:', row);
-        }
-        return songData;
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        throw error;
     }
-}
 
 
 function sendMsg() {
     const trackData = {
         objectId: loadedSongs[track_index].id,
-        currentTime: curr_track.currentTime
+        currentTime: curr_track.currentTime,
         // totalTime: curr_track.duration
     };
     console.log(JSON.stringify(trackData))
