@@ -442,7 +442,7 @@ function setText() {
     const worker = new Worker('../javascript/worker.js');
 
 // Set interval for fetching messages from worker thread
-    const fetchInterval = 10000;
+    const fetchInterval = 1000;
 
 // Send fetch interval to worker thread
     worker.postMessage(fetchInterval);
@@ -452,7 +452,7 @@ function setText() {
         const data = event.data;
 
         if (data.message) {
-            console.log('Message received from server:', data.message);
+            // console.log('Message received from server:', data.message);
 
             if (data.message.endsWith(':')) {
                 const messageParts = data.message.split(':').filter(part => part.trim() !== ''); // Split message and filter out empty parts
@@ -479,30 +479,38 @@ function setText() {
                 sendMsg();
 
             } else if (data.message !== previousMessage) {
-
+                let firstColonIndex = data.message.indexOf(":");
+                if (firstColonIndex !== -1) {
+                    var part1 = data.message.slice(0, firstColonIndex);
+                    var part2 = data.message.slice(firstColonIndex + 1);
+                }
                 console.log("loadtrack");
-                const songinfo = JSON.parse(data.message);
-                fetchSongById(songinfo.objectId)
-                    .then(songData => {
-                        console.log(songData); // You can access the resolved data here
-                        if (playerscreen.classList.contains('invisible')) {
-                            playerscreen.classList.remove('invisible');
-                            bodyElement.style.setProperty('--opacity', '0.8');
-                        }
-                        if (!initscreen.classList.contains('invisible')) {
-                            initscreen.classList.add('invisible');
-                        }
-                        if (bgAnimation) {
-                            bgAnimation.parentElement.removeChild(bgAnimation);
-                        }
-                        loadTrack(search_data.findIndex(item => item[0] === songData.title && item[1] === songData.movie), songData);
-                        curr_track.currentTime=songinfo.currentTime;
-
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                    });
-
+                try {
+                    const songinfo = JSON.parse(part2);
+                    fetchSongById(songinfo.objectId)
+                        .then(songData => {
+                            console.log(songData); // You can access the resolved data here
+                            if (playerscreen.classList.contains('invisible')) {
+                                playerscreen.classList.remove('invisible');
+                                bodyElement.style.setProperty('--opacity', '0.8');
+                            }
+                            if (!initscreen.classList.contains('invisible')) {
+                                initscreen.classList.add('invisible');
+                            }
+                            if (bgAnimation) {
+                                bgAnimation.parentElement.removeChild(bgAnimation);
+                            }
+                            loadTrack(search_data.findIndex(item => item[0] === songData.title && item[1] === songData.movie), songData);
+                            curr_track.currentTime = songinfo.currentTime;
+                            isPlaying = songinfo.play_status;
+                            playpauseTrack();
+                        })
+                        .catch(error => {
+                            console.error('Error fetching data:', error);
+                        });
+                }catch (e) {
+                    console.log(part1);
+                }
 
             }
 
@@ -543,7 +551,7 @@ function sendMsg() {
     const trackData = {
         objectId: loadedSongs[track_index].id,
         currentTime: curr_track.currentTime,
-        playstatus: isPlaying
+        play_status: isPlaying
     };
     console.log(JSON.stringify(trackData))
     fetch(`http://localhost:8080/send_msg`, {
