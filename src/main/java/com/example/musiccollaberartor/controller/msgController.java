@@ -62,7 +62,7 @@ public class msgController {
                               @RequestParam String username){
         try{
 //            Socket socket=new Socket(ipAddress,port);
-            Socket socket=new Socket(ipAddress,port);
+            Socket socket=new Socket("172.26.100.230",3000);
             Client client=new Client(socket,username);
             client.listenForMessage();
             client.sendMessage();

@@ -163,7 +163,7 @@ public class Client {
     private String username;
     public static String msgToSend="Ram ram bhai sariye ne";
 
-    public static String msgToReceive="{\"objectId\":\"65f14c5054b3b52f7beffdd9\",\"currentTime\":83.81112}";
+    public static String msgToReceive="Me:{\"objectId\":\"65f14c5054b3b52f7beffdd9\",\"currentTime\":83.81112}";
     public static boolean sendflag =false;
     public static boolean receiveflag =false;
     public static boolean newflag=false;
@@ -197,7 +197,7 @@ public class Client {
             while(socket.isConnected()){
                 if (sendflag == true) {
                     System.out.println("Mein thread hu"+msgToSend);
-                    bufferedWriter.write(username + ": " + msgToSend);
+                    bufferedWriter.write(username + ":" + msgToSend);
                     bufferedWriter.newLine();
                     bufferedWriter.flush();
                     sendflag =false;
@@ -221,12 +221,9 @@ public class Client {
                         if(msgFromGroupChat.contains("aRrAy")){
                             newflag=true;
                             usernames=(List<String>)ois.readObject();
-                            String test=ois.readUTF();//
                             for(String username:usernames){
                                 System.out.println(username);
                             }
-
-                            System.out.println(test);
 
                         }
                         else{

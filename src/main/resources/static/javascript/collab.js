@@ -22,6 +22,7 @@ function validateInput() {
         var parts = input.split(':');
 
         alert(parts[0] + " " + parts[1]);
+        startClient(parts[0], parts[1], 'Harshvardhan')
         window.location.href = 'player.html';
     } else {
         alert("Enter a proper link");
@@ -43,10 +44,11 @@ startcollabbtn.addEventListener('click', function () {
         .then(ipv4Address => {
             const ipAddress = ipv4Address;
             const port = 3000; // Use default port 80 if not specified
-            const Username = 'harshvardhan';
-            console.log('IP Address: ' + ipAddress + '\nPort: ' + port);
+            const urlParams = new URLSearchParams(window.location.search);
+            const userName = urlParams.get('name');
+            console.log('IP Address: ' + ipAddress + '\nPort: ' + port+'\nUsername:'+userName);
 
-            const url = `player.html?ip=${ipAddress}&port=${port}`;
+            const url = `player.html?ip=${ipAddress}&port=${port}&username=${userName}`;
 
 
             // Call Server API
@@ -61,7 +63,7 @@ startcollabbtn.addEventListener('click', function () {
                     console.error('Error starting server:', error);
                 });
 
-            startClient(ipAddress, port, Username)
+            startClient(ipAddress, port, userName)
             window.location.href = url;
 
         })
@@ -73,6 +75,7 @@ startcollabbtn.addEventListener('click', function () {
 })
 
 function startClient(ipAddress, port, Username) {
+    console.log("oye");
     // Call Client API to start the client
     fetch(`http://localhost:8080/Client`, {
         method: 'POST',
@@ -86,9 +89,7 @@ function startClient(ipAddress, port, Username) {
         });
 }
 
-joinbtn.addEventListener('click', function () {
-    startClient(parts[0], parts[1], 'Harshvardhan')
-});
+
 
 
 
