@@ -163,7 +163,7 @@ public class Client {
     private String username;
     public static String msgToSend="Ram ram bhai sariye ne";
 
-    public static String msgToReceive="Mil gaya";
+    public static String msgToReceive="{\"objectId\":\"65f14c5054b3b52f7beffdd9\",\"currentTime\":83.81112}";
     public static boolean sendflag =false;
     public static boolean receiveflag =false;
     public static boolean newflag=false;
