@@ -5,20 +5,21 @@ const about = document.querySelector('.about')
 
 document.addEventListener("DOMContentLoaded", function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const userName = urlParams.get('UserName');
-
+    const userName = urlParams.get('name');
 
     // Use the parameters as needed
     console.log('User Name:', userName);
-    if(userName){
-
-        const loginbtn=document.querySelector('#login_btn');
-        loginbtn.innerHTML=`<p>${userName}</p>`;
-        loginbtn.href="";
-
-
+    if (userName) {
+        // Update the inner HTML of the element with ID 'loginLabel' to display the username
+        const loginLabel = document.getElementById('loginLabel');
+        loginLabel.innerHTML = '<img id="userDP" src="../assets/media/listen.png" alt="User DP" style="height: 35px; width: 35px; border-radius: 17px; align-items: center">'
+        loginLabel.innerHTML += userName;
+        document.getElementById("login_btn").href = "";
     }
 });
+
+
+
 
 document.addEventListener('scroll', function () {
     let scrollPosition = window.scrollY
@@ -63,7 +64,6 @@ document.addEventListener('scroll', function () {
         collage.style.marginBottom = -scrollPosition + 'px';
         collage.style.transform='translate(-50%,-125%)';
 
-
     }
 })
 
@@ -86,10 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = '../html/login.html';
         });
     }
-
-
-
-
 
 });
 
