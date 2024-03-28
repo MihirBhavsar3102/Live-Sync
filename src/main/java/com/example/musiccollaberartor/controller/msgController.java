@@ -62,10 +62,16 @@ public class msgController {
                               @RequestParam String username){
         try{
 //            Socket socket=new Socket(ipAddress,port);
-            Socket socket=new Socket("172.26.100.230",3000);
-            Client client=new Client(socket,username);
-            client.listenForMessage();
-            client.sendMessage();
+            if(Client.isRunning){
+                Client.closeEverything();
+            }
+            else {
+                Socket socket = new Socket(ipAddress, port);
+                Client client = new Client(socket, username);
+                Client.isRunning=true;
+                client.listenForMessage();
+                client.sendMessage();
+            }
         }
         catch (IOException e){
             System.out.println(e);
@@ -76,14 +82,35 @@ public class msgController {
     @PostMapping("/Server")
     public void StartServer(@RequestBody String Port){
        try{
-        ServerSocket serverSocket=new ServerSocket(Integer.parseInt(Port));
-        Server server=new Server(serverSocket);
-        server.startServer();
+               ServerSocket serverSocket = new ServerSocket(Integer.parseInt(Port));
+               Server server = new Server(serverSocket);
+               Server.isRunning=true;
+               server.startServer();
        }
        catch (IOException e){
            System.out.println(e);
        }
     }
+
+//    @PostMapping("/close_server")
+//    public ResponseEntity<String> closeServer(){
+//        if(Server.isRunning){
+//            Server.closeServerSocket();
+//            Server.isRunning=false;
+//            return ResponseEntity.status(HttpStatus.OK).body("Server closed successfully");
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body("Server could not be closed successfully");
+//    }
+//
+//    @PostMapping("/close_client")
+//    public ResponseEntity<String> closeClient(){
+//        if(Client.isRunning){
+//            Client.closeEverything();
+//            Client.isRunning=false;
+//            return ResponseEntity.status(HttpStatus.OK).body("Client closed successfully");
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body("Client could not be closed successfully");
+//    }
 
 
 

@@ -53,7 +53,8 @@ import java.net.Socket;
 @Service
 public class Server {
 
-    private ServerSocket serverSocket;
+    private static ServerSocket serverSocket;
+    public static boolean isRunning=false;
 
     public Server(ServerSocket serverSocket) {
         this.serverSocket= serverSocket;
@@ -73,14 +74,15 @@ public class Server {
                 thread.start();
             }
         } catch (IOException e) {
-            closeServerSocket();
+//            closeServerSocket();
         }
     }
 
-    public void closeServerSocket(){
+    public static void closeServerSocket(){
         try{
             if(serverSocket!=null){
                 serverSocket.close();
+                System.out.println("Server closed!!");
             }
         }catch(IOException e){
             e.printStackTrace();

@@ -1,17 +1,120 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    --brand-color: #FF955C;
+    --primary-color: white;
+    --secondary-color: black;
+}
+
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scrollbar-width: none;
+    /*to remove scrollbar*/
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    padding: 0 5%;
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+}
+
+header h1 {
+    font-size: 35px;
+    font-weight: 500;
+    color: var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:5px;
+}
+
+header h1 img{
+    width:60px;
+    height:60px;
+}
+
+header nav {
+    display: flex;
+    gap: 30px;
+}
+
+header nav a {
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 99px;
+    transition: 0.3s;
+    color: var(--secondary-color);
+}
+
+header nav a.active {
+    border:3px solid var(--secondary-color);
+    background: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+header nav a:hover{
+    background: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+header nav:hover>a:not(:hover), a.active {
+    color: var(--secondary-color);
+    background: none;
 }
 
 .container {
-    max-width: 400px;
-    margin: 100px auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    padding: 0% 10% 0 10%;
+}
+
+.wrapper {
+    width:40%;
     padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /*background-color: #fff;*/
+    /*border-radius: 8px;*/
+    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+    /*/Glassmorphism/*/
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: rgba(0, 0, 0, 1);
+    overflow: hidden;
+}
+
+form input{
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.5px);
+    -webkit-backdrop-filter: blur(8.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+    color: rgba(0, 0, 0, 1);
+}
+
+.bgAnimation {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
 }
 
 h2 {

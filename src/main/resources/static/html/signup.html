@@ -3,51 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up Page</title>
+    <title>LiveSync - Sign Up</title>
+    <link rel="shortcut icon" href="../assets/media/Logov1.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/signup.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.8/lottie.min.js"></script>
 
-    <script>
-        function validateForm() {
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-
-            // Email validation using regular expression
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert("Please enter a valid email address");
-                return false;
-            }
-
-            // Password validation
-            var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/;
-            if (!passwordRegex.test(password)) {
-                alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
 </head>
 <body>
+<header>
+    <h1><img src="../assets/media/Logov2.png">LiveSync</h1>
+    <nav>
+        <a href="#" class="active">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+    </nav>
+</header>
 <div class="container">
-    <h2>Sign Up</h2>
-    <form id="signupForm" onsubmit="return validateForm()">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password" required>
-        </div>
-        <button type="submit">Sign Up</button>
-    </form>
+    <div class="wrapper">
+        <h2>Sign Up</h2>
+        <form id="signupForm" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+    <div class="bgAnimation"></div>
 </div>
+<script>
+    const bgcontainer = document.querySelector('.bgAnimation');
+    const animData2 = {
+        container: bgcontainer,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../assets/media/Background.json'
+    };
+    const anim2 = lottie.loadAnimation(animData2)
+    anim2.setSpeed(0.25);
+
+    function validateForm() {
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+        // Email validation using regular expression
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email address");
+            return false;
+        }
+
+        // Password validation
+        var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/;
+        if (!passwordRegex.test(password)) {
+            alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character");
+            return false;
+        }
+
+        return true;
+    }
+</script>
 <script src="../javascript/signup.js"></script>
 </body>
 </html>

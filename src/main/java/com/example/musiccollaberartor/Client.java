@@ -156,17 +156,19 @@ import java.util.List;
 public class Client {
 
     // Consider using a dependency injection framework for Socket creation
-    private Socket socket;
-    private BufferedReader bufferedReader;
-    private BufferedWriter bufferedWriter;
-    private ObjectInputStream ois;
-    private String username;
-    public static String msgToSend="Ram ram bhai sariye ne";
+    private static Socket socket;
+    private static BufferedReader bufferedReader;
+    private static BufferedWriter bufferedWriter;
+    private static ObjectInputStream ois;
+    private static String username;
+    public static String msgToSend = "Ram ram bhai sariye ne";
 
-    public static String msgToReceive="Me:{\"objectId\":\"65f14c5054b3b52f7beffdd9\",\"currentTime\":83.81112,\"play_status\":true}";
-    public static boolean sendflag =false;
-    public static boolean receiveflag =false;
-    public static boolean newflag=false;
+//    public static String msgToReceive = "Me:{\"objectId\":\"65f14c5054b3b52f7beffdd9\",\"currentTime\":83.81112,\"play_status\":true}";
+    public static String msgToReceive = "";
+    public static boolean sendflag = false;
+    public static boolean receiveflag = false;
+    public static boolean newflag = false;
+    public static boolean isRunning = false;
     public static List<String> usernames;
 
 //    RestTemplate restTemplate = new RestTemplate();
@@ -175,62 +177,62 @@ public class Client {
 //
 //    }
 
-    public Client(Socket socket, String userName){
-        try{
-            this.socket=socket;
-            this.username=userName;
-            this.bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.bufferedWriter=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            this.ois=new ObjectInputStream(socket.getInputStream());
+    public Client(Socket socket, String userName) {
+        try {
+            this.socket = socket;
+            this.username = userName;
+            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.ois = new ObjectInputStream(socket.getInputStream());
             System.out.println("Client has connected");
-        }catch(IOException ioe){
-            closeEverything(socket, bufferedReader,bufferedWriter);
+        } catch (IOException ioe) {
+            closeEverything();
         }
     }
-    public void sendMessage(){
-        try{
+
+    public void sendMessage() {
+        try {
             bufferedWriter.write(username);
             bufferedWriter.newLine();
             bufferedWriter.flush();
 
 
-            while(socket.isConnected()){
+            while (socket.isConnected()) {
                 if (sendflag == true) {
-                    System.out.println("Mein thread hu"+msgToSend);
+                    System.out.println("Mein thread hu:" + msgToSend);
                     bufferedWriter.write(username + ":" + msgToSend);
                     bufferedWriter.newLine();
                     bufferedWriter.flush();
-                    sendflag =false;
+                    sendflag = false;
                 }
             }
-        }catch(IOException ioe){
-            closeEverything(socket, bufferedReader,bufferedWriter);
+        } catch (IOException ioe) {
+            closeEverything();
         }
     }
 
-    public void listenForMessage(){
-        new Thread(new Runnable(){
+    public void listenForMessage() {
+        new Thread(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
 
                 String msgFromGroupChat;
 
-                while(socket.isConnected()){
-                    try{
-                        msgFromGroupChat= ois.readUTF();
-                        if(msgFromGroupChat.contains("aRrAy")){
-                            newflag=true;
-                            usernames=(List<String>)ois.readObject();
-                            for(String username:usernames){
+                while (socket.isConnected()) {
+                    try {
+                        msgFromGroupChat = ois.readUTF();
+                        if (msgFromGroupChat.contains("aRrAy")) {
+                            newflag = true;
+                            usernames = (List<String>) ois.readObject();
+                            for (String username : usernames) {
                                 System.out.println(username);
                             }
 
-                        }
-                        else{
+                        } else {
 //                            System.out.println("Group:"+msgFromGroupChat);
-                            if(receiveflag){
-                                msgToReceive=msgFromGroupChat;
-                                receiveflag=false;
+                            if (receiveflag) {
+                                msgToReceive = msgFromGroupChat;
+                                receiveflag = false;
                             }
 //                            ResponseEntity<Void> response = restTemplate.postForObject("http://localhost:8080/receive_msg",msgFromGroupChat, ResponseEntity.class);
 //                            System.out.println("Response from server: " + response.getBody());
@@ -242,8 +244,8 @@ public class Client {
 
                         }
 
-                    }catch(IOException ioe){
-                        closeEverything(socket, bufferedReader,bufferedWriter);
+                    } catch (IOException ioe) {
+                        closeEverything();
                     } catch (ClassNotFoundException e) {
                         //
                     }
@@ -258,21 +260,18 @@ public class Client {
 //    }
 
 
-        // Initialize socket connection (consider pooling or lazy loading)
+    // Initialize socket connection (consider pooling or lazy loading)
 
 
+    // Send username (assuming the original logic is preserved)
+    // ... (code similar to original Client.sendMessage())
 
-
-
-        // Send username (assuming the original logic is preserved)
-        // ... (code similar to original Client.sendMessage())
-
-        // Handle sending custom data from the frontend (if applicable)
+    // Handle sending custom data from the frontend (if applicable)
 //        if (data != null && !data.isEmpty()) {
 //            // ... (send data using socket streams)
 //        }
 
-        // Start a separate thread for receiving messages
+    // Start a separate thread for receiving messages
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -281,19 +280,25 @@ public class Client {
 //        }).start();
 
 
-    public void closeEverything(Socket socket,BufferedReader bufferedReader,BufferedWriter bufferedWriter){
-        try{
-            if(bufferedReader!=null){
+    public static void closeEverything() {
+        try {
+            if (bufferedReader != null) {
                 bufferedReader.close();
             }
-            if(bufferedWriter!=null){
+            if (bufferedWriter != null) {
                 bufferedWriter.close();
             }
-            if(socket!=null){
+            if(ois!=null){
+                ois.close();
+            }
+            if (socket != null) {
                 socket.close();
             }
-        }catch(IOException ioe){
+        } catch (IOException ioe) {
             ioe.printStackTrace();
         }
-        }
+    }
+
+
+
 }

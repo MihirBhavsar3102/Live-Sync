@@ -15,15 +15,24 @@ function validateInput() {
 
     const input = document.querySelector('.input-fld').value;
 
-    var ipPortPattern = /^(\d{1,3}\.){3}\d{1,3}:\d{1,5}$/;
+    var ipPortPattern = /^\s*(localhost|\d{1,3}(?:\.\d{1,3}){3}):(\d{1,5})\s*$/;
+    // var ipPortPattern = /^\s*(\d{1,3}\.){3}\d{1,3}:\d{1,5}\s*$/;
 
     if (ipPortPattern.test(input)) {
 
         var parts = input.split(':');
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const userName = urlParams.get('name');
+        const participant="guest";
         alert(parts[0] + " " + parts[1]);
-        startClient(parts[0], parts[1], 'Harshvardhan')
-        window.location.href = 'player.html';
+        startClient(parts[0], parts[1], userName)
+
+        console.log('IP Address: ' + parts[0] + '\nPort: ' + parts[1]+'\nUsername:'+userName+'\nParticipant:'+participant);
+
+        const url = `player.html?ip=${parts[0]}&port=${parts[1]}&username=${userName}&participant_type=${participant}`;
+
+        window.location.href = url;
     } else {
         alert("Enter a proper link");
     }
@@ -46,9 +55,11 @@ startcollabbtn.addEventListener('click', function () {
             const port = 3000; // Use default port 80 if not specified
             const urlParams = new URLSearchParams(window.location.search);
             const userName = urlParams.get('name');
-            console.log('IP Address: ' + ipAddress + '\nPort: ' + port+'\nUsername:'+userName);
+            const participant="host";
 
-            const url = `player.html?ip=${ipAddress}&port=${port}&username=${userName}`;
+            console.log('IP Address: ' + ipAddress + '\nPort: ' + port+'\nUsername:'+userName+'\nParticipant:'+participant);
+
+            const url = `player.html?ip=${ipAddress}&port=${port}&username=${userName}&participant_type=${participant}`;
 
 
             // Call Server API
@@ -75,7 +86,6 @@ startcollabbtn.addEventListener('click', function () {
 })
 
 function startClient(ipAddress, port, Username) {
-    console.log("oye");
     // Call Client API to start the client
     fetch(`http://localhost:8080/Client`, {
         method: 'POST',
