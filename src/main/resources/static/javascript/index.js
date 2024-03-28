@@ -2,7 +2,7 @@ const title = document.querySelector('.title')
 const collage = document.querySelector('.collage')
 const circle = document.querySelector('.circle')
 const about = document.querySelector('.about')
-
+let isUserSignedIn=false;
 document.addEventListener("DOMContentLoaded", function() {
     const urlParams = new URLSearchParams(window.location.search);
     const userName = urlParams.get('name');
@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Use the parameters as needed
     console.log('User Name:', userName);
     if (userName) {
+        isUserSignedIn=true;
         // Update the inner HTML of the element with ID 'loginLabel' to display the username
         const loginLabel = document.getElementById('loginLabel');
         loginLabel.innerHTML = '<img id="userDP" src="../assets/media/listen.png" alt="User DP" style="height: 35px; width: 35px; border-radius: 17px; align-items: center">'
@@ -72,10 +73,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const startCollaborationButton = document.querySelector('.cta-btn');
 
     // Check if the user is signed in
-    if (isUserSignedIn()) {
+    if (isUserSignedIn) {
         // Redirect to collaboration page if signed in
         startCollaborationButton.addEventListener('click', function () {
-            window.location.href = '../html/collab.html';
+            const urlParams = new URLSearchParams(window.location.search);
+            const userName = urlParams.get('name');
+            const url = `collab.html?name=${userName}`;
+            window.location.href = url;
         });
     } else {
         // Redirect to login page if not signed in

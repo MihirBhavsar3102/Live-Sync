@@ -197,7 +197,8 @@ public class Client {
             while(socket.isConnected()){
                 if (sendflag == true) {
                     System.out.println("Mein thread hu"+msgToSend);
-                    bufferedWriter.write(username + ": " + msgToSend);
+//                    bufferedWriter.write(username + ": " + msgToSend);
+                    bufferedWriter.write(msgToSend);
                     bufferedWriter.newLine();
                     bufferedWriter.flush();
                     sendflag =false;

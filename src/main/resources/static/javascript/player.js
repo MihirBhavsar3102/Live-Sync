@@ -442,7 +442,7 @@ function setProgress(e) {
     const worker = new Worker('../javascript/worker.js');
 
 // Set interval for fetching messages from worker thread
-    const fetchInterval = 10000;
+    const fetchInterval = 1000;
 
 // Send fetch interval to worker thread
     worker.postMessage(fetchInterval);
@@ -481,27 +481,31 @@ function setProgress(e) {
             } else if (data.message !== previousMessage) {
 
                 console.log("loadtrack");
-                const songinfo = JSON.parse(data.message);
-                fetchSongById(songinfo.objectId)
-                    .then(songData => {
-                        console.log(songData); // You can access the resolved data here
-                        if (playerscreen.classList.contains('invisible')) {
-                            playerscreen.classList.remove('invisible');
-                            bodyElement.style.setProperty('--opacity', '0.8');
-                        }
-                        if (!initscreen.classList.contains('invisible')) {
-                            initscreen.classList.add('invisible');
-                        }
-                        if (bgAnimation) {
-                            bgAnimation.parentElement.removeChild(bgAnimation);
-                        }
-                        loadTrack(search_data.findIndex(item => item[0] === songData.title && item[1] === songData.movie), songData);
-                        curr_track.currentTime=songinfo.currentTime;
+                try {
+                    const songinfo = JSON.parse(data.message);
+                    fetchSongById(songinfo.objectId)
+                        .then(songData => {
+                            console.log(songData); // You can access the resolved data here
+                            if (playerscreen.classList.contains('invisible')) {
+                                playerscreen.classList.remove('invisible');
+                                bodyElement.style.setProperty('--opacity', '0.8');
+                            }
+                            if (!initscreen.classList.contains('invisible')) {
+                                initscreen.classList.add('invisible');
+                            }
+                            if (bgAnimation) {
+                                bgAnimation.parentElement.removeChild(bgAnimation);
+                            }
+                            loadTrack(search_data.findIndex(item => item[0] === songData.title && item[1] === songData.movie), songData);
+                            curr_track.currentTime = songinfo.currentTime;
 
-                    })
-                    .catch(error => {
-                        console.error('Error fetching data:', error);
-                    });
+                        })
+                        .catch(error => {
+                            console.error('Error fetching data:', error);
+                        });
+                }catch(e){
+                    console.log(data.message)
+                }
 
 
             }
