@@ -40,8 +40,8 @@ let urlParams = new URLSearchParams(window.location.search);
 const ipAddress = urlParams.get('ip');
 const port = urlParams.get('port');
 
-if(urlParams.get('participant_type')==="guest"){
-    document.querySelector('.end-btn').innerText='Leave Collab';
+if (urlParams.get('participant_type') === "guest") {
+    document.querySelector('.end-btn').innerText = 'Leave Collab';
 }
 // Display IP address and port
 document.getElementById('textToCopy').innerText = `${ipAddress}:${port}`;
@@ -346,7 +346,7 @@ document.querySelector('.end-btn').addEventListener('click', function () {
         // });
 
         console.log(urlParams.get('participant_type'));
-        if(urlParams.get('participant_type')==='host'){
+        if (urlParams.get('participant_type') === 'host') {
 
             // fetch(`http://localhost:8080/close_server`, {
             //     method: 'POST',
@@ -367,7 +367,7 @@ document.querySelector('.end-btn').addEventListener('click', function () {
             // });
 
         }
-        const username=urlParams.get('username')
+        const username = urlParams.get('username')
         window.location.href = `collab.html?username=${username}`;
     }
 })
@@ -543,10 +543,14 @@ worker.onmessage = function (event) {
                             initscreen.classList.add('invisible');
                             bgAnimation.classList.add('invisible');
                         }
-                        loadTrack(search_data.findIndex(item => item[0] === songData.title && item[1] === songData.movie), songData);
+
+                        if (songData.objectId !==loadedSongs[track_index].id) {
+                            loadTrack(search_data.findIndex(item => item[0] === songData.title && item[1] === songData.movie), songData);
+                        }
                         curr_track.currentTime = songinfo.currentTime;
                         isPlaying = songinfo.play_status;
-                        isPlaying ? pauseTrack() : playTrack();
+                        isPlaying ? playTrack() : pauseTrack();
+
                     })
                     .catch(error => {
                         console.error('Error fetching data:', error);
@@ -590,7 +594,7 @@ async function fetchSongById(id) {
 
 
 function sendMsg() {
-    if(loadedSongs.length!==0) {
+    if (loadedSongs.length !== 0) {
         const trackData = {
             objectId: loadedSongs[track_index].id,
             currentTime: curr_track.currentTime,

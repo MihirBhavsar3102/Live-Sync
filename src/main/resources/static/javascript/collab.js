@@ -1,6 +1,25 @@
 const inputField = document.querySelector('.input-fld');
 const joinbtn = document.querySelector('.sub-btn');
 const startcollabbtn = document.querySelector('.cta-btn');
+const images = ['Color-1.png', 'Color-2.png', 'Color-3.png', 'Color-4.png', 'Color-5.png'];
+
+document.addEventListener("DOMContentLoaded", function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const userName = urlParams.get('name');
+
+    // Use the parameters as needed
+    console.log('User Name:', userName);
+    if (userName) {
+        isUserSignedIn=true;
+        // Update the inner HTML of the element with ID 'loginLabel' to display the username
+        const loginLabel = document.getElementById('loginLabel');
+        const randomImage = images[urlParams.get('n')];
+        loginLabel.innerHTML = `<img id="userDP" src="../assets/media/${randomImage}" alt="User DP" style="aspect-ratio: 1/1; width: 40px; margin-right: 5px; align-items: center;-webkit-box-shadow: 5px 5px 20px -10px rgba(255,255,255,0.75);
+-moz-box-shadow: 5px 5px 20px -10px rgba(255,255,255,0.75);
+box-shadow: 5px 5px 20px -10px rgba(225,225,225,0.75);border-radius: 10px"><span class="user">${userName}</span>`
+        document.getElementById("login_btn").href = "";
+    }
+});
 
 inputField.addEventListener('input', function () {
     if (inputField.value.trim() !== '') {

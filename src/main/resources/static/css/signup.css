@@ -43,6 +43,8 @@ header h1 img{
 
 header nav {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 30px;
 }
 
