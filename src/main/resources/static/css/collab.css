@@ -44,8 +44,6 @@ header h1 img{
 }
 header nav {
     display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 30px;
 }
 
@@ -60,59 +58,17 @@ header nav a {
 }
 
 header nav a.active {
-    border:3px solid var(--secondary-color);
-    background: var(--secondary-color);
+    background: var(--secondary-color)0;
     color: var(--primary-color);
 }
 
-header nav a:hover{
-    background: var(--secondary-color);
+header nav a:hover {
+    background: var(--secondary-color)0;
     color: var(--primary-color);
-}
-
-header nav:hover>a:not(:hover), a.active {
-    color: var(--secondary-color);
-    background: none;
 }
 
 header nav:hover>a:not(:hover) {
     background: none;
-}
-
-#loginLabel{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.user{
-    width:0;
-    max-width: 200px;
-    opacity: 0;
-    overflow: hidden;
-    transition: width 0.25s ease-in-out, opacity 0.5s ease-in-out;
-}
-
-#loginLabel:hover .user{
-    width: 200px;
-    opacity: 1;
-}
-
-#login_btn{
-    font-weight: lighter;
-    transition: all 0.25s ease;
-}
-
-#login_btn:hover{
-    border:2px solid black;
-    background: transparent;
-    color:black;
-}
-
-#login_btn:hover .active{
-    background: black;
-    color:white;
 }
 
 .container {
