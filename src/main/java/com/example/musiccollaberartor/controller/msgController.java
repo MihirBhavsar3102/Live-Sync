@@ -1,6 +1,7 @@
 package com.example.musiccollaberartor.controller;
 
 import com.example.musiccollaberartor.Client;
+import com.example.musiccollaberartor.ClientHandler;
 import com.example.musiccollaberartor.Server;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,16 +63,12 @@ public class msgController {
                               @RequestParam String username){
         try{
 //            Socket socket=new Socket(ipAddress,port);
-            if(Client.isRunning){
-                Client.closeEverything();
-            }
-            else {
                 Socket socket = new Socket(ipAddress, port);
                 Client client = new Client(socket, username);
                 Client.isRunning=true;
                 client.listenForMessage();
                 client.sendMessage();
-            }
+
         }
         catch (IOException e){
             System.out.println(e);
@@ -92,25 +89,18 @@ public class msgController {
        }
     }
 
-//    @PostMapping("/close_server")
-//    public ResponseEntity<String> closeServer(){
-//        if(Server.isRunning){
-//            Server.closeServerSocket();
+    @PostMapping("/close_server")
+    public ResponseEntity<String> closeServer(){
+            ClientHandler.isRunning=false;
 //            Server.isRunning=false;
-//            return ResponseEntity.status(HttpStatus.OK).body("Server closed successfully");
-//        }
-//        return ResponseEntity.status(HttpStatus.OK).body("Server could not be closed successfully");
-//    }
-//
-//    @PostMapping("/close_client")
-//    public ResponseEntity<String> closeClient(){
-//        if(Client.isRunning){
-//            Client.closeEverything();
-//            Client.isRunning=false;
-//            return ResponseEntity.status(HttpStatus.OK).body("Client closed successfully");
-//        }
-//        return ResponseEntity.status(HttpStatus.OK).body("Client could not be closed successfully");
-//    }
+            return ResponseEntity.status(HttpStatus.OK).body("Server closed successfully");
+    }
+
+    @PostMapping("/close_client")
+    public ResponseEntity<String> closeClient(){
+            Client.isRunning=false;
+            return ResponseEntity.status(HttpStatus.OK).body("Client closed successfully");
+    }
 
 
 
