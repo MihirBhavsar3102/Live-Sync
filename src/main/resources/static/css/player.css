@@ -6,7 +6,6 @@
     --secondary-color: white;
     --gray-color: #afafaf;
     --opacity: 0.25;
-    --name:'H';
 }
 
 body {
@@ -243,6 +242,22 @@ body::after {
     transform: translate(-50%, -70%);
 }
 
+/* .search-box::after {
+    content: "<";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 25px;
+    height: 40px;
+    background-color: black;
+    transform: translate(-100%, -50%);
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px 0px 0px 10px;
+    color:var(--brand-color);
+} */
 
 .details {
     display: flex;
@@ -282,7 +297,7 @@ body::after {
 }
 
 .track-art::after {
-    content: var(--name);
+    content: "H";
     font-size: 25px;
     font-weight: 600;
     color: black;
@@ -301,23 +316,10 @@ body::after {
     box-shadow: 35px 35px 68px 0px rgba(255, 149, 92, 0.5), inset -8px -8px 16px 0px rgba(255, 149, 92, 0.6), inset 0px 11px 28px 0px rgb(255, 255, 255);
 }
 
-.player-header{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-
-.now-playing ,.user-playing{
+.now-playing {
     font-size: 1rem;
     margin-left: 1.5rem;
     margin-top: 1.5rem;
-}
-
-.user-playing{
-    margin-right: 1.5rem;
-    margin-left: 0;
 }
 
 .track-name {

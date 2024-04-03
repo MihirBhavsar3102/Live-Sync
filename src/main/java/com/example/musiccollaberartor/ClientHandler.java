@@ -15,8 +15,6 @@ public class ClientHandler implements Runnable{
     private ObjectOutputStream oos;
     private String clientUsername;
 
-    public static boolean isRunning=false;
-
     public ClientHandler(Socket socket){
         try{
             this.socket=socket;
@@ -38,16 +36,8 @@ public class ClientHandler implements Runnable{
 
         while(socket.isConnected()){
             try{
-                isRunning=true;
                 messageFromClient=bufferedReader.readLine();
                 broadcastMessage(messageFromClient,false);
-                if(!isRunning){
-                    closeEverything(socket,bufferedReader,bufferedWriter);
-                    System.out.println("Client-handler closed");
-                    Server.closeServerSocket();
-                    System.out.println("Server closed");
-                    break;
-                }
             }catch(IOException e){
                 closeEverything(socket,bufferedReader,bufferedWriter);
                 break;
