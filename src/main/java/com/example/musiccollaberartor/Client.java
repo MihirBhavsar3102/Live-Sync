@@ -50,7 +50,7 @@ public class Client {
 
             while (socket.isConnected()) {
                 if (sendflag) {
-                    System.out.println("Mein thread hu:" + msgToSend);
+                    System.out.println("Send:" + msgToSend);
                     bufferedWriter.write(username + ":" + msgToSend);
                     bufferedWriter.newLine();
                     bufferedWriter.flush();
@@ -88,6 +88,7 @@ public class Client {
 //                            System.out.println("Group:"+msgFromGroupChat);
                             if (receiveflag) {
                                 msgToReceive = msgFromGroupChat;
+                                System.out.println("Received:"+msgToReceive);
                                 receiveflag = false;
                             }
 

@@ -17,8 +17,8 @@ public class msgController {
 
     @PostMapping("/send_msg")
     public String msgFromClient(@RequestBody String send_msg){
-        Client.sendflag =true;
         Client.msgToSend=send_msg;
+        Client.sendflag =true;
         return "msg sent successfully!!";
     }
 
@@ -39,23 +39,6 @@ public class msgController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
-//@PostMapping("/receive_msg")
-//public ResponseEntity<String> receiveMessage(
-//        @RequestBody String message,
-//        @RequestHeader(name = "X-Source", required = false) String source
-//) {
-//    if ("Java".equals(source)) {
-//        // Message sent from Java file
-//        // Process the message accordingly
-//        System.out.println("Received message from Java: " + message);
-//        return ResponseEntity.status(HttpStatus.OK).body("Message received from Java: " + message);
-//    } else {
-//        // Message sent from JavaScript
-//        // Process the message accordingly
-//        System.out.println("Received message from JavaScript: " + message);
-//        return ResponseEntity.status(HttpStatus.OK);
-//    }
-//}
 
     @PostMapping("/Client")
     public void StartClient(  @RequestParam String ipAddress,

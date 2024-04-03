@@ -28,6 +28,7 @@ let initscreen = document.querySelector('.init-screen');
 let bgAnimation = document.querySelector('.bgAnimation');
 let bodyElement = document.querySelector('body');
 
+var songIndex;
 var track_index = 0;
 var isPlaying = false;
 let isRandom = false;
@@ -40,8 +41,8 @@ let urlParams = new URLSearchParams(window.location.search);
 const ipAddress = urlParams.get('ip');
 const port = urlParams.get('port');
 
-if(urlParams.get('participant_type')==="guest"){
-    document.querySelector('.end-btn').innerText='Leave Collab';
+if (urlParams.get('participant_type') === "guest") {
+    document.querySelector('.end-btn').innerText = 'Leave Collab';
 }
 // Display IP address and port
 document.getElementById('textToCopy').innerText = `${ipAddress}:${port}`;
@@ -53,12 +54,12 @@ function loadTrack(track_index, songData) {
     reset();
 
     const isLoaded = loadedSongs.some(song => song.title === songData.title && song.movie === songData.movie);
-    let songIndex = -1;
+    songIndex = -1;
 
     if (!isLoaded) {
         loadedSongs.push(songData);
         songIndex = loadedSongs.length - 1;
-        // console.log(loadedSongs)
+        console.log(loadedSongs)
     } else {
         songIndex = loadedSongs.findIndex(song => song.title === songData.title && song.movie === songData.movie);
     }
@@ -327,47 +328,47 @@ usrbtn.addEventListener('click', function () {
 document.querySelector('.end-btn').addEventListener('click', function () {
     if (confirm("Want to end collab?")) {
 
-        // fetch(`http://localhost:8080/close_client`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded'
-        //     }
-        // }).then(response => {
-        //     if (response.ok) {
-        //         return response.text();
-        //     } else {
-        //         throw new Error('Failed to close client');
-        //     }
-        // }).then(data => {
-        //     console.log(data);
-        // }).catch(error => {
-        //     // Send error message back to the main thread
-        //     console.log({error: error.message});
-        // });
+        fetch(`http://localhost:8080/close_client`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Failed to close client');
+            }
+        }).then(data => {
+            console.log(data);
+        }).catch(error => {
+            // Send error message back to the main thread
+            console.log({error: error.message});
+        });
 
         console.log(urlParams.get('participant_type'));
-        if(urlParams.get('participant_type')==='host'){
+        if (urlParams.get('participant_type') === 'host') {
 
-            // fetch(`http://localhost:8080/close_server`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/x-www-form-urlencoded'
-            //     }
-            // }).then(response => {
-            //     if (response.ok) {
-            //         return response.text();
-            //     } else {
-            //         throw new Error('Failed to close server');
-            //     }
-            // }).then(data => {
-            //     console.log(data);
-            // }).catch(error => {
-            //     // Send error message back to the main thread
-            //     console.log({error: error.message});
-            // });
+            fetch(`http://localhost:8080/close_server`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Failed to close server');
+                }
+            }).then(data => {
+                console.log(data);
+            }).catch(error => {
+                // Send error message back to the main thread
+                console.log({error: error.message});
+            });
 
         }
-        const username=urlParams.get('username')
+        const username = urlParams.get('username')
         window.location.href = `collab.html?username=${username}`;
     }
 })
@@ -430,6 +431,7 @@ searchfld.addEventListener('keypress', function (event) {
                                 bgAnimation.classList.add('invisible');
                             }
                             bodyElement.style.setProperty('--opacity', '0.8');
+                            document.querySelector('.user-playing').textContent=urlParams.get('username')+' is playing now';
 
                             loadTrack(search_data.findIndex(item => item[0] === song.title && item[1] === song.movie), song);
                             sendMsg();
@@ -543,16 +545,23 @@ worker.onmessage = function (event) {
                             initscreen.classList.add('invisible');
                             bgAnimation.classList.add('invisible');
                         }
-                        loadTrack(search_data.findIndex(item => item[0] === songData.title && item[1] === songData.movie), songData);
+
+                        if (loadedSongs[songIndex].id !== songData.objectId) {
+                            loadTrack(search_data.findIndex(item => item[0] === songData.title && item[1] === songData.movie), songData);
+                            console.log("Alag hu")
+                        }
+
                         curr_track.currentTime = songinfo.currentTime;
                         isPlaying = songinfo.play_status;
-                        isPlaying ? pauseTrack() : playTrack();
+                        isPlaying ? playTrack() : pauseTrack();
                     })
                     .catch(error => {
                         console.error('Error fetching data:', error);
                     });
             } catch (e) {
                 console.log(part1);
+                bodyElement.style.setProperty('--name',part1.charAt(0).toUpperCase());
+                document.querySelector('.user-playing').textContent=part1+' is playing now';
             }
 
         }
@@ -590,9 +599,10 @@ async function fetchSongById(id) {
 
 
 function sendMsg() {
-    if(loadedSongs.length!==0) {
+    if (loadedSongs.length !== 0) {
         const trackData = {
-            objectId: loadedSongs[track_index].id,
+            objectId: loadedSongs[songIndex].id,
+            songName: loadedSongs[songIndex].title,
             currentTime: curr_track.currentTime,
             play_status: isPlaying
         };

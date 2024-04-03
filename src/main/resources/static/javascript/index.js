@@ -5,7 +5,7 @@ const about = document.querySelector('.about')
 let isUserSignedIn=false;
 document.addEventListener("DOMContentLoaded", function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const userName = urlParams.get('name');
+    const userName = urlParams.get('username');
 
     // Use the parameters as needed
     console.log('User Name:', userName);
@@ -77,8 +77,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Redirect to collaboration page if signed in
         startCollaborationButton.addEventListener('click', function () {
             const urlParams = new URLSearchParams(window.location.search);
-            const userName = urlParams.get('name');
-            const url = `collab.html?name=${userName}`;
+            const userName = urlParams.get('username');
+            const url = `collab.html?username=${userName}`;
             window.location.href = url;
         });
     } else {

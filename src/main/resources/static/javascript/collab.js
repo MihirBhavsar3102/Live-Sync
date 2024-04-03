@@ -54,7 +54,7 @@ startcollabbtn.addEventListener('click', function () {
             const ipAddress = ipv4Address;
             const port = 3000; // Use default port 80 if not specified
             const urlParams = new URLSearchParams(window.location.search);
-            const userName = urlParams.get('name');
+            const userName = urlParams.get('username');
             const participant="host";
 
             console.log('IP Address: ' + ipAddress + '\nPort: ' + port+'\nUsername:'+userName+'\nParticipant:'+participant);

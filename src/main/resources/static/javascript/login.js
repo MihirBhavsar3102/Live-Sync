@@ -21,7 +21,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         if (response.ok) {
             const user = await response.json();
             // Redirect to index page or do other actions on successful login
-            window.location.href = `index.html?name=${user.userName}`;
+            window.location.href = `index.html?username=${user.userName}`;
 
         } else {
             const errorMessage = await response.text();

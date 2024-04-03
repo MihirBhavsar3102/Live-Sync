@@ -40,7 +40,6 @@ public class ClientHandler implements Runnable{
             try{
                 isRunning=true;
                 messageFromClient=bufferedReader.readLine();
-                broadcastMessage(messageFromClient,false);
                 if(!isRunning){
                     closeEverything(socket,bufferedReader,bufferedWriter);
                     System.out.println("Client-handler closed");
@@ -48,6 +47,7 @@ public class ClientHandler implements Runnable{
                     System.out.println("Server closed");
                     break;
                 }
+                broadcastMessage(messageFromClient,false);
             }catch(IOException e){
                 closeEverything(socket,bufferedReader,bufferedWriter);
                 break;
