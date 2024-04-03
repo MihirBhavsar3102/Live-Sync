@@ -268,17 +268,7 @@ function toggleMode() {
     }
 }
 
-// $(document).ready(function() {
-//     $('.second-half').hover(function() {
-//         $('.track-art').stop().animate({
-//           width: '100px', height: '100px'
-//         }, 300);
-//     }, function() {
-//         $('.track-art').stop().animate({
-//             width: '200px', height: '200px' // Restore default color
-//         }, 300);
-//     });
-// });
+
 
 const expandbtn = document.querySelector('.expand-search')
 const closebtn = document.querySelector('.close-search')
@@ -325,46 +315,48 @@ usrbtn.addEventListener('click', function () {
 })
 
 document.querySelector('.end-btn').addEventListener('click', function () {
+
     if (confirm("Want to end collab?")) {
 
-        // fetch(`http://localhost:8080/close_client`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded'
-        //     }
-        // }).then(response => {
-        //     if (response.ok) {
-        //         return response.text();
-        //     } else {
-        //         throw new Error('Failed to close client');
-        //     }
-        // }).then(data => {
-        //     console.log(data);
-        // }).catch(error => {
-        //     // Send error message back to the main thread
-        //     console.log({error: error.message});
-        // });
+        fetch(`http://localhost:8080/close_client`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Failed to close client');
+            }
+        }).then(data => {
+            console.log(data);
+        }).catch(error => {
+            // Send error message back to the main thread
+            console.log({error: error.message});
+        });
 
         console.log(urlParams.get('participant_type'));
+
         if(urlParams.get('participant_type')==='host'){
 
-            // fetch(`http://localhost:8080/close_server`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/x-www-form-urlencoded'
-            //     }
-            // }).then(response => {
-            //     if (response.ok) {
-            //         return response.text();
-            //     } else {
-            //         throw new Error('Failed to close server');
-            //     }
-            // }).then(data => {
-            //     console.log(data);
-            // }).catch(error => {
-            //     // Send error message back to the main thread
-            //     console.log({error: error.message});
-            // });
+            fetch(`http://localhost:8080/close_server`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Failed to close server');
+                }
+            }).then(data => {
+                console.log(data);
+            }).catch(error => {
+                // Send error message back to the main thread
+                console.log({error: error.message});
+            });
 
         }
         const username=urlParams.get('username')
@@ -422,6 +414,7 @@ searchfld.addEventListener('keypress', function (event) {
                         resultDiv.appendChild(titlePara);
 
                         resultDiv.addEventListener('click', function () {
+
                             if (playerscreen.classList.contains('invisible')) {
                                 playerscreen.classList.remove('invisible');
                             }
@@ -429,10 +422,13 @@ searchfld.addEventListener('keypress', function (event) {
                                 initscreen.classList.add('invisible');
                                 bgAnimation.classList.add('invisible');
                             }
+
                             bodyElement.style.setProperty('--opacity', '0.8');
+                            document.querySelector('.user-playing').innerText=`${urlParams.get('username')} is playing now`
 
                             loadTrack(search_data.findIndex(item => item[0] === song.title && item[1] === song.movie), song);
                             sendMsg();
+
                         });
 
                         // Append the new div to the search result container
@@ -524,12 +520,14 @@ worker.onmessage = function (event) {
             sendMsg();
 
         } else if (data.message !== previousMessage) {
+
             let firstColonIndex = data.message.indexOf(":");
             if (firstColonIndex !== -1) {
                 var part1 = data.message.slice(0, firstColonIndex);
                 var part2 = data.message.slice(firstColonIndex + 1);
             }
             console.log("loadtrack");
+
             try {
                 const songinfo = JSON.parse(part2);
                 fetchSongById(songinfo.objectId)
@@ -553,6 +551,9 @@ worker.onmessage = function (event) {
                     });
             } catch (e) {
                 console.log(part1);
+                bodyElement.style.setProperty('--name', part1.charAt(0).toUpperCase());
+                document.querySelector('.user-playing').innerText=`${part1} is playing now`;
+
             }
 
         }
