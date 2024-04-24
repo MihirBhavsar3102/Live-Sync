@@ -425,8 +425,8 @@ document.querySelector('.end-btn').addEventListener('click', function () {
             headers: {
                 'Content-Type': 'text/plain'
             },
-            // body: JSON.stringify(trackData)
-            body: JSON.stringify({send_msg,closeFlag})
+            body: JSON.stringify(send_msg)
+            // body: JSON.stringify({send_msg,closeFlag})
 
         })
             .then(response => response.text())
@@ -710,12 +710,15 @@ function sendMsg() {
 
         }
 
+        const closeFlag=false;
+
         fetch(`http://localhost:8080/send_msg`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({trackData, false})
+            // body: JSON.stringify({trackData, closeFlag})
+            body: JSON.stringify(trackData)
 
         })
             .then(response => response.text())

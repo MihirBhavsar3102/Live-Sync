@@ -24,16 +24,16 @@ public class msgController {
 //    }
 
     @PostMapping("/send_msg")
-    public String msgFromClient(@RequestBody String send_msg,boolean closeFlag){
+//    public String msgFromClient(@RequestBody String send_msg,boolean closeFlag){
+    public String msgFromClient(@RequestBody String send_msg){
         Client.msgToSend=send_msg;
 //        System.out.println("Send=>"+send_msg);
         Client.sendflag =true;
-        if(closeFlag)
-        {
+
            if (send_msg=="Client"){
             Client.sendflag =true;
             Client.isRunning=false;}
-        }
+
         return "msg sent successfully!!";
     }
 
