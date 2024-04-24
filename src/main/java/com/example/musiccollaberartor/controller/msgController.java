@@ -15,11 +15,25 @@ import java.net.Socket;
 @RestController
 public class msgController {
 
+//    @PostMapping("/send_msg")
+//    public String msgFromClient(@RequestBody String send_msg){
+//        Client.msgToSend=send_msg;
+////        System.out.println("Send=>"+send_msg);
+//        Client.sendflag =true;
+//        return "msg sent successfully!!";
+//    }
+
     @PostMapping("/send_msg")
-    public String msgFromClient(@RequestBody String send_msg){
+    public String msgFromClient(@RequestBody String send_msg,boolean closeFlag){
         Client.msgToSend=send_msg;
 //        System.out.println("Send=>"+send_msg);
         Client.sendflag =true;
+        if(closeFlag)
+        {
+           if (send_msg=="Client"){
+            Client.sendflag =true;
+            Client.isRunning=false;}
+        }
         return "msg sent successfully!!";
     }
 
@@ -74,18 +88,20 @@ public class msgController {
        }
     }
 
-    @PostMapping("/close_server")
-    public ResponseEntity<String> closeServer(){
-            ClientHandler.isRunning=false;
-//            Server.isRunning=false;
-            return ResponseEntity.status(HttpStatus.OK).body("Server closed successfully");
-    }
+//    @PostMapping("/close_server")
+//    public ResponseEntity<String> closeServer(){
+//            ClientHandler.isRunning=false;
+////            Server.isRunning=false;
+//            return ResponseEntity.status(HttpStatus.OK).body("Server closed successfully");
+//    }
 
-    @PostMapping("/close_client")
-    public ResponseEntity<String> closeClient(){
-            Client.isRunning=false;
-            return ResponseEntity.status(HttpStatus.OK).body("Client closed successfully");
-    }
+//    @PostMapping("/close_client")
+//    public ResponseEntity<String> closeClient(){
+////        Client.msgToSend="closing!!!!";
+////        Client.sendflag =true;
+//            Client.isRunning=false;
+//            return ResponseEntity.status(HttpStatus.OK).body("Client closed successfully");
+//    }
 
 
 

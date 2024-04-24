@@ -57,6 +57,8 @@ public class Client {
                     sendflag = false;
                 }
                 if(!isRunning){
+//                    bufferedWriter.write(username + ": closing bye bye!!");
+//                    bufferedWriter.newLine();
                     closeEverything();
                     System.out.println("Client closed");
                     break;

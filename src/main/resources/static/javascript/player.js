@@ -361,59 +361,72 @@ usrbtn.addEventListener('click', function () {
 document.querySelector('.end-btn').addEventListener('click', function () {
     if (confirm("Want to end collab?")) {
 
-        fetch(`http://localhost:8080/close_client`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }).then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error('Failed to close client');
-            }
-        }).then(data => {
-            console.log(data);
-        }).catch(error => {
-            // Send error message back to the main thread
-            console.log({error: error.message});
-        });
-
+        // fetch(`http://localhost:8080/close_client`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/x-www-form-urlencoded'
+        //     }
+        // }).then(response => {
+        //     if (response.ok) {
+        //         return response.text();
+        //     } else {
+        //         throw new Error('Failed to close client');
+        //     }
+        // }).then(data => {
+        //     console.log(data);
+        // }).catch(error => {
+        //     // Send error message back to the main thread
+        //     console.log({error: error.message});
+        // });
+let sendData="";
         console.log(urlParams.get('participant_type'));
         if (urlParams.get('participant_type') === 'host') {
+sendData={
+    send_msg:"Host",
+    closeFlag: true
+}
 
-            fetch(`http://localhost:8080/close_server`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error('Failed to close server');
-                }
-            }).then(data => {
-                console.log(data);
-            }).catch(error => {
-                // Send error message back to the main thread
-                console.log({error: error.message});
-            });
 
-            fetch(`http://localhost:8080/send_msg`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                // body: JSON.stringify(trackData)
-                body: "End collab!!"
 
-            })
-                .then(response => response.text())
-                .then(data => console.log(data))
-                .catch(error => console.error('Error:', error));
+            // fetch(`http://localhost:8080/close_server`, {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/x-www-form-urlencoded'
+            //     }
+            // }).then(response => {
+            //     if (response.ok) {
+            //         return response.text();
+            //     } else {
+            //         throw new Error('Failed to close server');
+            //     }
+            // }).then(data => {
+            //     console.log(data);
+            // }).catch(error => {
+            //     // Send error message back to the main thread
+            //     console.log({error: error.message});
+            // });
+
 
         }
+        else {
+            sendData={
+                send_msg:"Client",
+                closeFlag: true
+            }
+        }
+        fetch(`http://localhost:8080/send_msg`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            // body: JSON.stringify(trackData)
+            body: JSON.stringify(sendData)
+
+        })
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+
         const username = urlParams.get('username')
         window.location.href = `collab.html?username=${username}`;
     }
@@ -594,11 +607,13 @@ worker.onmessage = function (event) {
 
         }
 
-        else if(data.message === "End collab!!"){
+        else if(data.message.slice(data.message.indexOf(':')+1)=== 'End collab!!'){
             //Host ended the collab
 
-            if(isPlaying){pauseTrack();}
-            alert("Host has ended the collab...");
+
+            // if(isPlaying){pauseTrack();}
+            const username = urlParams.get('username');
+            // alert("Host has ended the collab...");
             window.location.href = `collab.html?username=${username}`;
 
         }
@@ -687,12 +702,17 @@ function sendMsg() {
             play_status: isPlaying
         };
         console.log(JSON.stringify(trackData))
+        const sendData={
+          send_msg:trackData,
+            closeFlag:false
+
+        }
         fetch(`http://localhost:8080/send_msg`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(trackData)
+            body: JSON.stringify(sendData)
 
         })
             .then(response => response.text())
