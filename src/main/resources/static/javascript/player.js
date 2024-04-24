@@ -360,82 +360,91 @@ usrbtn.addEventListener('click', function () {
 })
 
 document.querySelector('.end-btn').addEventListener('click', function () {
-    if (confirm("Want to end collab?")) {
 
-        // fetch(`http://localhost:8080/close_client`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded'
-        //     }
-        // }).then(response => {
-        //     if (response.ok) {
-        //         return response.text();
-        //     } else {
-        //         throw new Error('Failed to close client');
-        //     }
-        // }).then(data => {
-        //     console.log(data);
-        // }).catch(error => {
-        //     // Send error message back to the main thread
-        //     console.log({error: error.message});
-        // });
-        let sendData = "";
-        let send_msg;
-        let closeFlag;
+        if(urlParams.get('participant_type') === 'host'){
 
-        console.log(urlParams.get('participant_type'));
-        if (urlParams.get('participant_type') === 'host') {
-            // sendData = {
-            //     send_msg: "Host",
-            //     closeFlag: true
-            // }
+            if (confirm("Want to end collab?")) {
 
-            send_msg="Host"
-            closeFlag=true
+                fetch(`http://localhost:8080/send_msg`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain'
+                    },
+                    // body: JSON.stringify(send_msg)
+                    body: 'End collab!!'
+                    // body: JSON.stringify({send_msg,closeFlag})
 
-            // fetch(`http://localhost:8080/close_server`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/x-www-form-urlencoded'
-            //     }
-            // }).then(response => {
-            //     if (response.ok) {
-            //         return response.text();
-            //     } else {
-            //         throw new Error('Failed to close server');
-            //     }
-            // }).then(data => {
-            //     console.log(data);
-            // }).catch(error => {
-            //     // Send error message back to the main thread
-            //     console.log({error: error.message});
-            // });
+                })
+                    .then(response => response.text())
+                    .then(data => console.log(data))
+                    .catch(error => console.error('Error:', error));
 
 
-        } else {
-            // sendData = {
-            //     send_msg: "Client",
-            //     closeFlag: true
-            // }
-            send_msg="Client";
-            closeFlag=true;
+                fetch(`http://localhost:8080/close_client`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Failed to close client');
+                    }
+                }).then(data => {
+                    console.log(data);
+                }).catch(error => {
+                    // Send error message back to the main thread
+                    console.log({error: error.message});
+                });
+
+                fetch(`http://localhost:8080/close_server`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Failed to close server');
+                    }
+                }).then(data => {
+                    console.log(data);
+                }).catch(error => {
+                    // Send error message back to the main thread
+                    console.log({error: error.message});
+                });
+
+            }
+
+        }else{
+            if(confirm("Want to leave collab?")){
+
+                fetch(`http://localhost:8080/close_client`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Failed to close client');
+                    }
+                }).then(data => {
+                    console.log(data);
+                }).catch(error => {
+                    // Send error message back to the main thread
+                    console.log({error: error.message});
+                });
+
+            }
         }
-        fetch(`http://localhost:8080/send_msg`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-            body: JSON.stringify(send_msg)
-            // body: JSON.stringify({send_msg,closeFlag})
-
-        })
-            .then(response => response.text())
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
 
         const username = urlParams.get('username')
         window.location.href = `collab.html?username=${username}`;
-    }
+
 })
 
 const search_data = [];
