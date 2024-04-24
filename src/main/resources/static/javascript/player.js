@@ -580,10 +580,12 @@ worker.onmessage = function (event) {
                             bgAnimation.classList.add('invisible');
                         }
 
-                        if (loadedSongs[songIndex].id !== songData.objectId) {
-                            loadTrack(search_data.findIndex(item => item[0] === songData.title && item[1] === songData.movie), songData);
-                            console.log("Alag hu")
-                        }
+                        // if (loadedSongs[songIndex].id !== songData.objectId) {
+                        //     loadTrack(search_data.findIndex(item => item[0] === songData.title && item[1] === songData.movie), songData);
+                        //     console.log("Alag hu")
+                        // }
+
+                        loadTrack(search_data.findIndex(item => item[0] === songData.title && item[1] === songData.movie), songData);
 
                         curr_track.currentTime = songinfo.currentTime;
                         isPlaying = songinfo.play_status;
