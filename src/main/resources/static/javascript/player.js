@@ -74,6 +74,39 @@ function loadTrack(track_index, songData) {
     dominant_bg_color(songData);
     playTrack();
 }
+//
+// // Modify loadTrack function to accept track index as parameter
+// function loadTrack(trackIndex, songData) {
+//     // Your existing code for loading a track
+// }
+//
+// // Modify message handler to load track upon receiving a message
+// worker.onmessage = function (event) {
+//     const data = event.data;
+//
+//     if (data.message) {
+//         // Handle message content, then load track if necessary
+//         // For example:
+//         if (data.message.endsWith(':')) {
+//             // Handle user info message
+//         } else if (data.message !== previousMessage) {
+//             // Handle track load message
+//             const songInfo = JSON.parse(data.message);
+//             // Assuming songInfo contains track index and song data
+//             loadTrack(songInfo.trackIndex, songInfo.songData);
+//         }
+//     } else if (data.error) {
+//         // Handle error
+//     }
+// }
+//
+// // Example of how to load initial track on page load (if needed)
+window.addEventListener('load', function () {
+    // Example: Load the first track in loadedSongs array
+    if (loadedSongs.length > 0) {
+        loadTrack(0, loadedSongs[0]);
+    }
+});
 
 function dominant_bg_color(songData) {
 
@@ -525,7 +558,8 @@ worker.onmessage = function (event) {
             });
             sendMsg();
 
-        } else if (data.message !== previousMessage) {
+        }
+        else if (data.message !== previousMessage) {
             let firstColonIndex = data.message.indexOf(":");
             if (firstColonIndex !== -1) {
                 var part1 = data.message.slice(0, firstColonIndex);

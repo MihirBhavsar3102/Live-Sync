@@ -23,7 +23,7 @@ function validateInput() {
         var parts = input.split(':');
 
         const urlParams = new URLSearchParams(window.location.search);
-        const userName = urlParams.get('name');
+        const userName = urlParams.get('username');
         const participant="guest";
         alert(parts[0] + " " + parts[1]);
         startClient(parts[0], parts[1], userName)
