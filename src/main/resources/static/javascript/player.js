@@ -560,6 +560,27 @@ worker.onmessage = function (event) {
                     });
             } catch (e) {
                 console.log(part1);
+
+                if(part1==='SERVER'){
+                    const nameDiv=document.createElement('.div');
+                    nameDiv.textContent=part2;
+                    nameDiv.classList.add('pop-up');
+                    document.querySelector('.pop-up-container').appendChild(nameDiv);
+
+                    // Fade in the pop-up
+                    setTimeout(() => {
+                        nameDiv.style.opacity = '1';
+                    }, 100); // Adjust the delay if needed
+
+                    // Remove the pop-up after a certain time (e.g., 3 seconds)
+                    setTimeout(() => {
+                        nameDiv.style.opacity = '0'; // Fade out
+                        setTimeout(() => {
+                            nameDiv.remove(); // Remove from DOM
+                        }, 500); // Adjust timing to match the transition duration
+                    }, 3000); // 3000 milliseconds = 3 seconds
+                }
+
                 bodyElement.style.setProperty('--name',part1.charAt(0).toUpperCase());
                 document.querySelector('.user-playing').textContent=part1+' is playing now';
             }
@@ -621,6 +642,7 @@ function sendMsg() {
     }
 
 }
+
 
 
 
