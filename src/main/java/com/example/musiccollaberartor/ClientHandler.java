@@ -25,7 +25,7 @@ public class ClientHandler implements Runnable{
             this.oos=new ObjectOutputStream(socket.getOutputStream());
             this.clientUsername=bufferedReader.readLine(); //Waiting for the Client to send the message
             clientHandlers.add(this);
-            broadcastMessage("SERVER: "+clientUsername+" has entered the chat!",true);
+            broadcastMessage(clientUsername+" has entered the chat!",true);
         }catch(IOException e){
             closeEverything(socket,bufferedReader,bufferedWriter);
         }
@@ -61,7 +61,7 @@ public class ClientHandler implements Runnable{
 
                 if(isArray){
                     clientHandler.oos.writeUTF("aRrAy");
-                    clientHandler.oos.writeObject(getUsernames());
+                    clientHandler.oos.writeObject(getUsernames(messageToSend));
                     clientHandler.oos.flush();
                 }
                 else{
@@ -100,11 +100,12 @@ public class ClientHandler implements Runnable{
         }
     }
 
-    public static List<String> getUsernames() {
+    public static List<String> getUsernames(String msg) {
         List<String> usernames = new ArrayList<>();
         for(ClientHandler clientHandler:clientHandlers){
             usernames.add(clientHandler.clientUsername);
         }
+        usernames.add(msg);
         return usernames;
     }
 }

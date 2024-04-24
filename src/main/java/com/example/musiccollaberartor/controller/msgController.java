@@ -18,6 +18,7 @@ public class msgController {
     @PostMapping("/send_msg")
     public String msgFromClient(@RequestBody String send_msg){
         Client.msgToSend=send_msg;
+//        System.out.println("Send=>"+send_msg);
         Client.sendflag =true;
         return "msg sent successfully!!";
     }
@@ -28,7 +29,7 @@ public class msgController {
         if(Client.newflag){
 
             for(String content: Client.usernames){
-                message +=content+":";
+                message += content+":";
             }
             Client.newflag=false;
         }
@@ -37,6 +38,7 @@ public class msgController {
         Client.receiveflag=true;
 
         }
+//        System.out.println("Receive=>"+message);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 

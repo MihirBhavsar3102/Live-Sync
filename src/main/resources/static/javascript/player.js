@@ -400,6 +400,19 @@ document.querySelector('.end-btn').addEventListener('click', function () {
                 console.log({error: error.message});
             });
 
+            fetch(`http://localhost:8080/send_msg`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                // body: JSON.stringify(trackData)
+                body: "End collab!!"
+
+            })
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+
         }
         const username = urlParams.get('username')
         window.location.href = `collab.html?username=${username}`;
@@ -541,7 +554,9 @@ worker.onmessage = function (event) {
             // Clear previous content in userResultContainer
             userResultContainer.innerHTML = '';
 
-            messageParts.forEach(part => {
+            for (let i = 0; i < messageParts.length - 1; i++) {
+                const part = messageParts[i];
+
                 const resultDiv = document.createElement('div');
                 resultDiv.classList.add('result');
 
@@ -555,10 +570,39 @@ worker.onmessage = function (event) {
                 resultDiv.appendChild(paragraph);
 
                 userResultContainer.appendChild(resultDiv);
-            });
+            }
+
+            const nameDiv=document.createElement('div');
+            nameDiv.textContent=messageParts[messageParts.length-1];
+            nameDiv.classList.add('pop-up');
+            document.querySelector('.pop-up-container').appendChild(nameDiv);
+
+            // Fade in the pop-up
+            setTimeout(() => {
+                nameDiv.style.opacity = '1';
+            }, 100); // Adjust the delay if needed
+
+            // Remove the pop-up after a certain time (e.g., 3 seconds)
+            setTimeout(() => {
+                nameDiv.style.opacity = '0'; // Fade out
+                setTimeout(() => {
+                    nameDiv.remove(); // Remove from DOM
+                }, 500); // Adjust timing to match the transition duration
+            }, 3000); // 3000 milliseconds = 3 seconds
+
             sendMsg();
 
         }
+
+        else if(data.message === "End collab!!"){
+            //Host ended the collab
+
+            if(isPlaying){pauseTrack();}
+            alert("Host has ended the collab...");
+            window.location.href = `collab.html?username=${username}`;
+
+        }
+
         else if (data.message !== previousMessage) {
             let firstColonIndex = data.message.indexOf(":");
             if (firstColonIndex !== -1) {
@@ -597,32 +641,11 @@ worker.onmessage = function (event) {
             } catch (e) {
                 console.log(part1);
 
-                if(part1==='SERVER'){
-                    const nameDiv=document.createElement('.div');
-                    nameDiv.textContent=part2;
-                    nameDiv.classList.add('pop-up');
-                    document.querySelector('.pop-up-container').appendChild(nameDiv);
-
-                    // Fade in the pop-up
-                    setTimeout(() => {
-                        nameDiv.style.opacity = '1';
-                    }, 100); // Adjust the delay if needed
-
-                    // Remove the pop-up after a certain time (e.g., 3 seconds)
-                    setTimeout(() => {
-                        nameDiv.style.opacity = '0'; // Fade out
-                        setTimeout(() => {
-                            nameDiv.remove(); // Remove from DOM
-                        }, 500); // Adjust timing to match the transition duration
-                    }, 3000); // 3000 milliseconds = 3 seconds
-                }
-
                 bodyElement.style.setProperty('--name',part1.charAt(0).toUpperCase());
                 document.querySelector('.user-playing').textContent=part1+' is playing now';
             }
 
         }
-
         previousMessage = data.message;
     } else if (data.error) {
         // console.error('Error:', data.error);
