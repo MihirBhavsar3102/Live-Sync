@@ -74,6 +74,7 @@ function loadTrack(track_index, songData) {
     dominant_bg_color(songData);
     playTrack();
 }
+
 //
 // // Modify loadTrack function to accept track index as parameter
 // function loadTrack(trackIndex, songData) {
@@ -378,15 +379,19 @@ document.querySelector('.end-btn').addEventListener('click', function () {
         //     // Send error message back to the main thread
         //     console.log({error: error.message});
         // });
-let sendData="";
+        let sendData = "";
+        let send_msg;
+        let closeFlag;
+
         console.log(urlParams.get('participant_type'));
         if (urlParams.get('participant_type') === 'host') {
-sendData={
-    send_msg:"Host",
-    closeFlag: true
-}
+            // sendData = {
+            //     send_msg: "Host",
+            //     closeFlag: true
+            // }
 
-
+            send_msg="Host"
+            closeFlag=true
 
             // fetch(`http://localhost:8080/close_server`, {
             //     method: 'POST',
@@ -407,12 +412,13 @@ sendData={
             // });
 
 
-        }
-        else {
-            sendData={
-                send_msg:"Client",
-                closeFlag: true
-            }
+        } else {
+            // sendData = {
+            //     send_msg: "Client",
+            //     closeFlag: true
+            // }
+            send_msg="Client";
+            closeFlag=true;
         }
         fetch(`http://localhost:8080/send_msg`, {
             method: 'POST',
@@ -420,7 +426,7 @@ sendData={
                 'Content-Type': 'text/plain'
             },
             // body: JSON.stringify(trackData)
-            body: JSON.stringify(sendData)
+            body: JSON.stringify({send_msg,closeFlag})
 
         })
             .then(response => response.text())
@@ -490,7 +496,7 @@ searchfld.addEventListener('keypress', function (event) {
                                 bgAnimation.classList.add('invisible');
                             }
                             bodyElement.style.setProperty('--opacity', '0.8');
-                            document.querySelector('.user-playing').textContent=urlParams.get('username')+' is playing now';
+                            document.querySelector('.user-playing').textContent = urlParams.get('username') + ' is playing now';
 
                             loadTrack(search_data.findIndex(item => item[0] === song.title && item[1] === song.movie), song);
                             sendMsg();
@@ -585,8 +591,8 @@ worker.onmessage = function (event) {
                 userResultContainer.appendChild(resultDiv);
             }
 
-            const nameDiv=document.createElement('div');
-            nameDiv.textContent=messageParts[messageParts.length-1];
+            const nameDiv = document.createElement('div');
+            nameDiv.textContent = messageParts[messageParts.length - 1];
             nameDiv.classList.add('pop-up');
             document.querySelector('.pop-up-container').appendChild(nameDiv);
 
@@ -605,9 +611,7 @@ worker.onmessage = function (event) {
 
             sendMsg();
 
-        }
-
-        else if(data.message.slice(data.message.indexOf(':')+1)=== 'End collab!!'){
+        } else if (data.message.slice(data.message.indexOf(':') + 1) === 'End collab!!') {
             //Host ended the collab
 
 
@@ -616,9 +620,7 @@ worker.onmessage = function (event) {
             // alert("Host has ended the collab...");
             window.location.href = `collab.html?username=${username}`;
 
-        }
-
-        else if (data.message !== previousMessage) {
+        } else if (data.message !== previousMessage) {
             let firstColonIndex = data.message.indexOf(":");
             if (firstColonIndex !== -1) {
                 var part1 = data.message.slice(0, firstColonIndex);
@@ -656,8 +658,8 @@ worker.onmessage = function (event) {
             } catch (e) {
                 console.log(part1);
 
-                bodyElement.style.setProperty('--name',part1.charAt(0).toUpperCase());
-                document.querySelector('.user-playing').textContent=part1+' is playing now';
+                bodyElement.style.setProperty('--name', part1.charAt(0).toUpperCase());
+                document.querySelector('.user-playing').textContent = part1 + ' is playing now';
             }
 
         }
@@ -702,17 +704,18 @@ function sendMsg() {
             play_status: isPlaying
         };
         console.log(JSON.stringify(trackData))
-        const sendData={
-          send_msg:trackData,
-            closeFlag:false
+        const sendData = {
+            send_msg: trackData,
+            closeFlag: false
 
         }
+
         fetch(`http://localhost:8080/send_msg`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(sendData)
+            body: JSON.stringify({trackData, false})
 
         })
             .then(response => response.text())
