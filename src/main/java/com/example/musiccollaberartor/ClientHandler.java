@@ -40,11 +40,16 @@ public class ClientHandler implements Runnable{
             try{
                 isRunning=true;
                 messageFromClient=bufferedReader.readLine();
-                if(messageFromClient=="Client"){
-                    clientHandlers.remove(clientUsername);
+                String[] string_spilt =messageFromClient.split(":");
+                if(string_spilt[1]=="Client"){
+                    for(ClientHandler clientHandler:clientHandlers){
+                        if(clientHandler.clientUsername.equals(string_spilt[0])){
+                            clientHandlers.remove(clientHandler);
+                        }
+                    }
                     System.out.println("Client closed");
                 }
-                else if (messageFromClient=="Host") {
+                else if (string_spilt[1]=="Host") {
                     closeEverything(socket,bufferedReader,bufferedWriter);
                     System.out.println("Client-handler closed");
                     Server.closeServerSocket();
