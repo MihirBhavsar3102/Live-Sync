@@ -1,7 +1,6 @@
 package com.example.musiccollaberartor.controller;
 
 import com.example.musiccollaberartor.model.User;
-import com.example.musiccollaberartor.repository.SongRepository;
 import com.example.musiccollaberartor.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

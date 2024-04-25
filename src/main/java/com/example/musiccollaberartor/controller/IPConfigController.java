@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 @RestController
 @RequestMapping("/api")
@@ -42,27 +41,7 @@ public class IPConfigController {
         }
     }
 
-    // Method to parse IPv4 address from ipconfig output
-    // Method to parse IPv4 address from ipconfig output
-//    private String parseIPv4Address(String ipConfigOutput) {
-//        // Regular expression pattern to match IPv4 address
-//        String ipv4Pattern = "\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b";
-//
-//        // Create a pattern object with the IPv4 pattern
-//        Pattern pattern = Pattern.compile(ipv4Pattern);
-//
-//        // Create a matcher object to apply the pattern to the ipConfigOutput
-//        Matcher matcher = pattern.matcher(ipConfigOutput);
-//
-//        // Find the first match (IPv4 address)
-//        if (matcher.find()) {
-//            // Return the matched IPv4 address
-//            return matcher.group();
-//        } else {
-//            // Return null if IPv4 address is not found
-//            return null;
-//        }
-//    }
+
 
     // Method to parse IPv4 address for Wi-Fi adapter from ipconfig output
     private String parseWiFiIPv4Address(String ipConfigOutput) {
