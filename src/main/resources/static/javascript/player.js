@@ -360,13 +360,13 @@ usrbtn.addEventListener('click', function () {
 })
 
 document.querySelector('.end-btn').addEventListener('click', function () {
-
+    let msg="";
     if (urlParams.get('participant_type') === 'host') {
 
-        let msg="";
+
         if (confirm("Want to end collab?")) {
 
-            msg="Host";
+            msg = "Host";
             // fetch(`http://localhost:8080/close_client`, {
             //     method: 'POST',
             //     headers: {
@@ -403,9 +403,13 @@ document.querySelector('.end-btn').addEventListener('click', function () {
             //     console.log({error: error.message});
             // });
 
-    } else {
+        }
+    }
+    else {
 
             msg = "Client";
+        const username = urlParams.get('username')
+        window.location.href = `collab.html?username=${username}`;
 
         }
 
@@ -423,11 +427,10 @@ document.querySelector('.end-btn').addEventListener('click', function () {
             .then(response => response.text())
             .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
-        }
 
 
-    const username = urlParams.get('username')
-    window.location.href = `collab.html?username=${username}`;
+
+
 
 })
 
