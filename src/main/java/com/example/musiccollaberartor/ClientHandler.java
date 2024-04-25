@@ -67,9 +67,12 @@ public class ClientHandler implements Runnable{
                 }
                 else{
                     if(!clientHandler.clientUsername.equals(clientUsername)){
+                        try{
                         clientHandler.oos.writeUTF(messageToSend);
                         clientHandler.bufferedWriter.newLine();
-                        clientHandler.oos.flush();
+                        clientHandler.oos.flush();}
+                        catch(Exception e ){
+                        }
                     }
                 }
 
