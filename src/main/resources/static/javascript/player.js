@@ -362,71 +362,75 @@ usrbtn.addEventListener('click', function () {
 document.querySelector('.end-btn').addEventListener('click', function () {
 
     const username = urlParams.get('username')
-    if (urlParams.get('participant_type') === 'host') {
+    const query = "Want to " + ((urlParams.get('participant_type') === 'host') ? "end" : "leave") + " collab?";
 
-        if (confirm("Want to end collab?")) {
-            fetch(`http://localhost:8080/close_server`, {
+    if (confirm(query)) {
+
+        fetch(`http://localhost:8080/close_client`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('Failed to close client');
+            }
+        }).then(data => {
+            console.log(data);
+        }).catch(error => {
+            // Send error message back to the main thread
+            console.log({error: error.message});
+        });
+
+
+        if (urlParams.get('participant_type') === 'host') {
+
+            ////////////////////////////////////////////////////////
+            fetch(`http://localhost:8080/send_msg`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error('Failed to close server');
-                }
-            }).then(data => {
-                console.log(data);
-            }).catch(error => {
-                // Send error message back to the main thread
-                console.log({error: error.message});
-            });
+                    'Content-Type': 'text/plain'
+                },
+                // body: JSON.stringify({trackData, closeFlag})
+                body: "End Collab"
 
-            window.location.href = `collab.html?username=${username}`;
+            })
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+            //////////////////////////////////////////////////////////
+
+            
+            ////////////////////////////////////////////////////////////
+            setTimeout(function() {
+
+                fetch(`http://localhost:8080/close_server`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Failed to close server');
+                    }
+                }).then(data => {
+                    console.log(data);
+                }).catch(error => {
+                    // Send error message back to the main thread
+                    console.log({error: error.message});
+                });
+
+            }, 3000);
+            ////////////////////////////////////////////////////////////
         }
 
-
-
-
+        window.location.href = `collab.html?username=${username}`;
 
     }
-
-
-    else {
-
-        if(confirm("Want to leave collab?")){
-
-            fetch(`http://localhost:8080/close_client`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }).then(response => {
-                if (response.ok) {
-                    return response.text();
-                } else {
-                    throw new Error('Failed to close client');
-                }
-            }).then(data => {
-                console.log(data);
-            }).catch(error => {
-                // Send error message back to the main thread
-                console.log({error: error.message});
-            });
-
-            window.location.href = `collab.html?username=${username}`;
-
-
-        }
-
-        }
-
-
-
-
-
-
 })
 
 const search_data = [];
@@ -567,6 +571,7 @@ worker.onmessage = function (event) {
             for (let i = 0; i < messageParts.length - 1; i++) {
                 const part = messageParts[i];
 
+
                 const resultDiv = document.createElement('div');
                 resultDiv.classList.add('result');
 
@@ -602,7 +607,7 @@ worker.onmessage = function (event) {
 
             sendMsg();
 
-        } else if (data.message.slice(data.message.indexOf(':') + 1) === 'Client') {
+        } else if (data.message.slice(data.message.indexOf(':') + 1) === 'End Collab') {
             //Host ended the collab
 
 
@@ -706,8 +711,6 @@ function sendMsg() {
             closeFlag: false
 
         }
-
-        const closeFlag = false;
 
         fetch(`http://localhost:8080/send_msg`, {
             method: 'POST',

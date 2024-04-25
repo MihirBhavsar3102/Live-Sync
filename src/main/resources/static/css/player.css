@@ -303,7 +303,7 @@ body::after {
 }
 
 .track-art::after {
-    content: "H";
+    content: var(--name);
     font-size: 25px;
     font-weight: 600;
     color: black;

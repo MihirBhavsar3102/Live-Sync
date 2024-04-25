@@ -52,6 +52,8 @@ header h1 img{
 header nav {
     display: flex;
     gap: 30px;
+    justify-content: center;
+    align-items: center;
 }
 
 header nav a {
