@@ -32,7 +32,8 @@ public class msgController {
 
            if (send_msg=="Client"){
             Client.sendflag =true;
-            Client.isRunning=false;}
+            Client.isRunning=false;
+           }
 
         return "msg sent successfully!!";
     }
