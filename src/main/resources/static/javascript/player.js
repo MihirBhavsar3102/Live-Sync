@@ -360,13 +360,13 @@ usrbtn.addEventListener('click', function () {
 })
 
 document.querySelector('.end-btn').addEventListener('click', function () {
-    let msg="";
-    if (urlParams.get('participant_type') === 'host') {
 
+        let msg="";
+    if (urlParams.get('participant_type') === 'host') {
 
         if (confirm("Want to end collab?")) {
 
-            msg = "Host";
+            msg="Host";
             // fetch(`http://localhost:8080/close_client`, {
             //     method: 'POST',
             //     headers: {
@@ -403,13 +403,17 @@ document.querySelector('.end-btn').addEventListener('click', function () {
             //     console.log({error: error.message});
             // });
 
-        }
     }
+    }
+
     else {
 
-            msg = "Client";
-        const username = urlParams.get('username')
-        window.location.href = `collab.html?username=${username}`;
+        if(confirm("Want to leave collab?")){
+
+        msg = "Client";
+            const username = urlParams.get('username')
+            window.location.href = `collab.html?username=${username}`;
+        }
 
         }
 
