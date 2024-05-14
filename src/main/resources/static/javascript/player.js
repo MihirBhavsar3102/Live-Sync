@@ -401,30 +401,46 @@ document.querySelector('.end-btn').addEventListener('click', function () {
                 .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));
             //////////////////////////////////////////////////////////
-
+            fetch(`http://localhost:8080/close_server`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Failed to close server');
+                }
+            }).then(data => {
+                console.log(data);
+            }).catch(error => {
+                // Send error message back to the main thread
+                console.log({error: error.message});
+            });fetch(`http://localhost:8080/close_server`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Failed to close server');
+                }
+            }).then(data => {
+                console.log(data);
+            }).catch(error => {
+                // Send error message back to the main thread
+                console.log({error: error.message});
+            });
             
             ////////////////////////////////////////////////////////////
-            setTimeout(function() {
-
-                fetch(`http://localhost:8080/close_server`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                }).then(response => {
-                    if (response.ok) {
-                        return response.text();
-                    } else {
-                        throw new Error('Failed to close server');
-                    }
-                }).then(data => {
-                    console.log(data);
-                }).catch(error => {
-                    // Send error message back to the main thread
-                    console.log({error: error.message});
-                });
-
-            }, 3000);
+            // setTimeout(function() {
+            //
+            //
+            //
+            // }, 1000);
             ////////////////////////////////////////////////////////////
         }
 
